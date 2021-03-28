@@ -39,6 +39,15 @@ The functional specification will be based on the [assessment criteria](https://
 
 **Wireframes**
 
+- **[Home Page](https://github.com/tpsantos2120/unboxit/blob/main/wireframes/Home_Page.png)**
+- **[Login Modal](https://github.com/tpsantos2120/unboxit/blob/main/wireframes/Login.png)**
+- **[Sign Up Modal](https://github.com/tpsantos2120/unboxit/blob/main/wireframes/Sign_Up.png)**
+- **[Dashboard Page](https://github.com/tpsantos2120/unboxit/blob/main/wireframes/Dashboard.png)**
+- **[Search Page](https://en.wikipedia.org/wiki/Bootstrap_%28front-end_framework%29)**
+- **[Settings](https://github.com/tpsantos2120/unboxit/blob/main/wireframes/Search.png)**
+- **[Full Preview](https://github.com/tpsantos2120/unboxit/blob/main/wireframes/Movie_and_Series_Full_Preview.png)**
+- **[Short Preview](https://github.com/tpsantos2120/unboxit/blob/main/wireframes/Movie_and_Series_Short_Preview.png)**
+
 **Database Structure**
 
 ## Surface
