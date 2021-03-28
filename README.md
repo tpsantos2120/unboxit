@@ -143,6 +143,30 @@ I have designed the database structure during the planning stage to help me stru
 
 # Technologies Used
 
+**Languages**
+- **[CSS](https://en.wikipedia.org/wiki/CSS)**
+- **[HTML](https://en.wikipedia.org/wiki/HTML)**
+- **[JavaScript](https://en.wikipedia.org/wiki/JavaScript)**
+- **[Python](https://www.python.org/)**
+
+**Libraries and Frameworks**
+- **[Font Awesome](https://fontawesome.com/)**
+- **[Bootstrap](https://en.wikipedia.org/wiki/Bootstrap_%28front-end_framework%29)**
+- **[Google Fonts](https://fonts.google.com/)**
+
+**Tools**
+
+- **[VSCode](https://en.wikipedia.org/wiki/Visual_Studio_Code)**
+- **[Git](https://git-scm.com/)**
+- **[GitHub](https://en.wikipedia.org/wiki/GitHub)**
+- **[MockFlow](https://mockflow.com/)**
+- **[Heroku](https://www.heroku.com/)**
+- **[W3C HTML Validation](https://validator.w3.org/)**
+- **[W3C CSS Validation](https://jigsaw.w3.org/css-validator/)**
+- **[MongoDB Atlas](https://www.mongodb.com/)**
+- **[Flask](https://flask.palletsprojects.com/en/1.1.x/)**
+- **[PyMongo](https://api.mongodb.com/python/current/tutorial.html)**
+
 # Resources
 
 # Implementation
