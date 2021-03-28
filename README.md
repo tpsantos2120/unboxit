@@ -128,6 +128,19 @@ I have designed the database structure during the planning stage to help me stru
 
 ## Surface
 
+-  **Design Choices**
+
+	- **Colours** - you can view my colour palette. The palette was created based on the Netflix website. I believe it brings the right colours for movie and tv series enthusiasts.
+	![Pallette](https://ik.imagekit.io/2a1in3cldn/Pallette_t2p3Xbrnuu2wL.png)
+	
+	- **Typography** - I will use Space Grotesk for headings and sub-headings and for the paragraphs it will be Jura. All these from [Google Fonts](https://fonts.google.com/).
+	
+	- **Images** - I will use images that are provided with the API Endpoints. Each movie or tv series will have their own poster image. 
+	
+	- **Logo** - I used [Canva](https://www.canva.com) to design logo and favicon. You can view this under **Resources** in this document.  The fonts used for the logo are Mont Thin and Alta which both are also from canva.
+	
+	- **Icons** - I will be using icons from Font Awesome. more in the **Resources** section in this document.
+
 # Technologies Used
 
 # Resources
