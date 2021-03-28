@@ -113,6 +113,19 @@ I have designed the database structure during the planning stage to help me stru
 | production_companies | Array|
 | networks | Array|
 
+**Proposed API Routes**
+
+>     - GET	/
+>     - GET	/dashboard
+>     - GET	/dashboard/id
+>     - GET	/search
+>     - GET	/search/id
+>     - GET	/api/watchlist
+>     - GET	/api/watchlist/id
+>     - POST  /api/watchlist/id
+>     - GET   /api/users/id
+>     - POST  /api/users
+
 ## Surface
 
 # Technologies Used
