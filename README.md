@@ -50,6 +50,69 @@ The functional specification will be based on the [assessment criteria](https://
 
 **Database Structure**
 
+I have designed the database structure during the planning stage to help me structure better the database and to also have a better sense of what I am doing. Below you will see the structure I will be using.
+ 
+ **Users**
+| Key |  Value |
+|:--:|:--:|
+| _id |  ObjectId|
+| firstname | String|
+| lastname | String|
+| username | String|
+| password | String|
+
+ **Watchlist**
+| Key |  Value |
+|:--:|:--:|
+| _id |  ObjectId|
+| user_id | String|
+| imdb_id | Array|
+
+ **Movie Details**
+| Key |  Value |
+|:--:|:--:|
+| _id |  ObjectId|
+| type | String|
+| title | String|
+| description | String|
+| year | String|
+| release_date | String|
+| imdb_id | String|
+| imdb_rating | String|
+| vote_count | String|
+| popularity | String|
+| youtube_trailer_key | String|
+| runtime | Number|
+| rated | Array|
+| genres | Array|
+| stars | Array|
+| directors | Array|
+| countries | Array|
+| language | Array|
+
+ **TV Series Details**
+| Key |  Value |
+|:--:|:--:|
+| _id |  ObjectId|
+| type | String|
+| title | String|
+| description | String|
+| release_date | String|
+| imdb_id | String|
+| imdb_rating | String|
+| vote_count | String|
+| popularity | String|
+| youtube_trailer_key | String|
+| rated | String|
+| runtime | Number|
+| year_started | String|
+| stars | Array|
+| creators | Array|
+| countries | Array|
+| language | Array|
+| production_companies | Array|
+| networks | Array|
+
 ## Surface
 
 # Technologies Used
