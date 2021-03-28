@@ -169,6 +169,16 @@ I have designed the database structure during the planning stage to help me stru
 
 # Resources
 
+- **Font Awesome & Iconify**
+- **Canva** 
+- **StackEdit**
+- **Bootstrap**
+- **Javascript**
+- **HTML**
+- **CSS**
+- **ImageKit** 
+- **Auto CSS Prefixer**
+
 # Implementation
 
 # Testing
