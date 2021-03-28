@@ -19,6 +19,16 @@ This is **UNBOXIT** a website where it allows you to search for Movies and TV Se
 
 - **User Stories**
 
+	- As a user, I will have to sign up if they wish to be able to save movies or tv series to my watchlist.
+	- As a user, I will be able to access a dashboard where I can view my watchlist and recommendations.
+	- As a user, I will not have to sign up if they wish to search for a movie.
+	- As a user, I will be able to add a movie or a tv series to my watchlist.
+	- As a user, I will be able to remove a movie or a tv series from my watchlist.
+	- As a user, I will be able to mark movies and tv series I have watched off of my watchlist.
+	- As a user, I will be able to change my password.
+	- As a user, I will be able to see trending movies and tv series.
+	- As a user, I will be able to get recommended movies or tv series based on my watchlist.
+
 ## Scope
 
 **Functional Specifications & Content Requirements**
