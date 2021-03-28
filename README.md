@@ -8,6 +8,15 @@ This is **UNBOXIT** a website where it allows you to search for Movies and TV Se
 
 - **User Goals**
 
+	- I will be able to easily navigate .
+	- All images and texts will have no distractions.
+	- It will allow me to search for a movies and tv series.
+	- I will be able to see more details about a movie by navigating to that specific movie.
+	- There will be a dashboard with a watchlist and recommendations in my profile.
+	- The website will have a watchlist for their users.
+	- It will be easy for me to remove / add movies and tv series to my watchlist.
+	- The website will have a visually appealing look and feel.
+
 - **User Stories**
 
 ## Scope
