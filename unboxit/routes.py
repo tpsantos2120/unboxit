@@ -1,22 +1,26 @@
-import json
-from bson import ObjectId
+from flask import session
 from unboxit import app, mongo
+from unboxit.json_encoder import JSONEncoder
+from werkzeug.security import generate_password_hash
 
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
+users = mongo.db.users
 
 
-@app.route("/")
-def home():
-    return test_db_connection()
+@app.route("/api/users", methods=['GET', 'POST'])
+def register_user():
+    if request.method == "POST":
+    user_exist = users.find_one({'username': 'noxx'})
 
-
-def test_db_connection():
-    existing_user = mongo.db.users.find_one(
-            {"username": "thiago"})
-    user = JSONEncoder().encode(existing_user)
-    return user
-
+    if user_exist:
+        return "User Exist"
+    else:
+        hashed_password = generate_password_hash("test")
+        new_user = {
+            'first_name': "Thi",
+            'last_name': "ago",
+            'username': "noxx",
+            'password': hashed_password
+        }
+        users.insert_one(new_user)
+        session["username"] = "Thiago"
+        return "Registered"
