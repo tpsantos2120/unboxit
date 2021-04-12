@@ -16,10 +16,8 @@ def register_user():
         flash('You are already registered!')
         return "You are already registered!"
 
-    if request.method  == "GET":
+    if request.method == "GET":
         user_exist = users.find_one({'username': 'noxx'})
-
-    if request.method == "POST":
         if user_exist:
             return "User Exist"
         else:
