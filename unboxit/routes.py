@@ -12,14 +12,14 @@ JWT_ALGORITHM = "HS256"
 @app.route("/api/users", methods=['GET', 'POST'])
 def register_user():
 
-    if 'username' in session:
-        flash('You are already registered!')
-        return "You are already registered!"
-
-    if request.method == "GET":
+    if request.method == "POST":
+        if 'username' in session:
+            flash('You are already registered!')
+            return "You are already registered!"
         user_exist = users.find_one({'username': 'noxx'})
         if user_exist:
-            return "User Exist"
+            flash('User Exist.')
+            return "User Exist."
         else:
             hashed_password = generate_password_hash("test")
             new_user = {
