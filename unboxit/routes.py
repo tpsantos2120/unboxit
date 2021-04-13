@@ -1,4 +1,4 @@
-from flask import session, request, flash
+from flask import session, request, flash, render_template
 from unboxit import app, mongo
 import jwt
 from unboxit.json_encoder import JSONEncoder
@@ -7,6 +7,12 @@ from werkzeug.security import generate_password_hash
 
 users = mongo.db.users
 JWT_ALGORITHM = "HS256"
+
+
+@app.route("/")
+def home():
+    return render_template('home.html', title='Home')
+
 
 
 @app.route("/api/users", methods=['GET', 'POST'])
