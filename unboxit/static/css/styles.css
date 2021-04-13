@@ -41,9 +41,9 @@
 }
 
 #search-section .card:hover {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
+  -webkit-transform: scale(1.01);
+  -moz-transform: scale(1.01);
+  -o-transform: scale(1.01);
 }
 
 #divider {
@@ -63,7 +63,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in;
 }
 
 .media-icons a{
