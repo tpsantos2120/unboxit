@@ -1,17 +1,17 @@
-{% extends 'layout/base.html' %} 
-{% block content %}
+{% extends 'layout/base.html' %} {% block content %}
 <section id="search-section">
-  <div class="container-fluid">
-    <div class="card card w-75 text-center">
-        <div class="card-header">
-          This is where the fun begins!
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Movies and TV Series</h5>
-          <input type="text" class="form-control w-75 " />
-          <a href="#" class="btn btn-outline-dark mt-2">Search</a>
-        </div>
+  <div class="container">
+    <img src="/static/img/movie_time_img.jpg" alt="Cartoon image about movie" />
+  </div>
+  <div class="container-fluid text-light">
+    <div class="card card text-center bg-dark w-75">
+      <div class="card-header">This is where the fun begins!</div>
+      <div class="card-body">
+        <h5 class="card-title">Movies and TV Series</h5>
+        <input type="text" class="form-control" />
+        <a href="#" class="btn btn-outline-light mt-2">Search</a>
       </div>
+    </div>
   </div>
 </section>
 {% endblock %}
