@@ -1,14 +1,14 @@
 from .db import db
-
+from flask_bcrypt import generate_password_hash
 
 class User(db.Document):
     first_name = db.StringField(required=True)
     last_name = db.StringField(required=True)
     username = db.StringField(required=True, unique=True)
     password = db.StringField(required=True)
-    movies = db.ListField(db.ReferenceField('Movies'), required=True)
-    tv_series = db.ListField(db.ReferenceField('TvSeries'), required=True)
-
+    
+    def hash_password(self):
+        self.password = generate_password_hash(self.password).decode('utf8')
 
 class Movie(db.Document):
     title = db.StringField(required=True)
