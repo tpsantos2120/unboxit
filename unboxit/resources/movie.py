@@ -9,4 +9,6 @@ class MoviesApi(Resource):
     def get(self):
         query = Movie.objects()
         movies = Movie.objects().to_json()
+        print(movies)
+        print(query)
         return Response(movies, mimetype="application/json", status=200)
