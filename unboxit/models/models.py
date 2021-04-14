@@ -11,18 +11,17 @@ class User(db.Document):
 
 
 class Movie(db.Document):
-    movie_type = db.StringField(required=True)
     title = db.StringField(required=True)
     description = db.StringField(required=True)
     year = db.StringField(required=True)
     release_date = db.StringField(required=True)
     imdb_id = db.StringField(required=True, unique=True)
-    imbd_rating = db.StringField(required=True)
+    imdb_rating = db.StringField(required=True)
     vote_count = db.StringField(required=True)
     popularity = db.StringField(required=True)
     youtube_trailer_key = db.StringField(required=True)
     runtime = db.IntField(required=True)
-    rated = db.ListField(db.StringField(), required=True)
+    rated = db.StringField(required=True)
     genres = db.ListField(db.StringField(), required=True)
     stars = db.ListField(db.StringField(), required=True)
     directors = db.ListField(db.StringField(), required=True)
@@ -31,7 +30,6 @@ class Movie(db.Document):
 
 
 class TvSeries(db.Document):
-    movie_type = db.StringField(required=True)
     title = db.StringField(required=True)
     description = db.StringField(required=True)
     year = db.StringField(required=True)
