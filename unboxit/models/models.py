@@ -1,5 +1,5 @@
 from .db import db
-from flask_bcrypt import generate_password_hash
+from flask_bcrypt import generate_password_hash, check_password_hash
 class Movie(db.Document):
     title = db.StringField(required=True)
     description = db.StringField(required=True)
@@ -48,3 +48,6 @@ class User(db.Document):
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
+    
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
