@@ -1,6 +1,6 @@
 
 from flask import Response, request
-from unboxit.models.models import Movie
+from unboxit.models.models import Movie, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 
