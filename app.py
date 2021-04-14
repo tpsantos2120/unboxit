@@ -13,6 +13,7 @@ app.config.from_pyfile('env.py')
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ.get('MONGO_URI')
 }
+app.secret_key = os.environ.get("SECRET_KEY")
 
 from unboxit.resources.routes import initialize_routes
 
