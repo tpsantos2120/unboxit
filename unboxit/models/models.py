@@ -6,7 +6,9 @@ class User(db.Document):
     last_name = db.StringField(required=True)
     username = db.StringField(required=True, unique=True)
     password = db.StringField(required=True)
-    
+    movies = db.ListField(db.ReferenceField('Movie', reverse_delete_rule=db.PULL))
+    tv_series = db.ListField(db.ReferenceField('TvSeries', reverse_delete_rule=db.PULL))
+
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
 
