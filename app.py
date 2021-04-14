@@ -4,7 +4,7 @@ from flask_restful import Api
 
 
 app = Flask(__name__)
-app.config.from_envvar('/env.py')
+app.config.from_pyfile('env.py')
 
 
 from unboxit.resources.routes import initialize_routes
