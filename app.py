@@ -1,12 +1,17 @@
-import os
-from unboxit import app
+from flask import Flask
+from unboxit.models.db import initialize_db
+from flask_restful import Api
 
-if __name__ == '__main__':
-    if os.environ.get('ENV_STATE') == "production":
-        app.config["ENV"] = "production"
-        app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')))
-    elif os.environ.get('ENV_STATE') == "development":
-        app.config["ENV"] = "development"
-        app.run(debug=os.environ.get("DEBUG"))
 
+app = Flask(__name__)
+app.config.from_envvar('/env.py')
+
+
+from unboxit.resources.routes import initialize_routes
+
+
+api = Api(app)
+
+
+initialize_db(app)
+initialize_routes(api)
