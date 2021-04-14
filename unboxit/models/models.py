@@ -1,17 +1,5 @@
 from .db import db
 from flask_bcrypt import generate_password_hash
-
-class User(db.Document):
-    first_name = db.StringField(required=True)
-    last_name = db.StringField(required=True)
-    username = db.StringField(required=True, unique=True)
-    password = db.StringField(required=True)
-    movies = db.ListField(db.ReferenceField('Movie', reverse_delete_rule=db.PULL))
-    tv_series = db.ListField(db.ReferenceField('TvSeries', reverse_delete_rule=db.PULL))
-
-    def hash_password(self):
-        self.password = generate_password_hash(self.password).decode('utf8')
-
 class Movie(db.Document):
     title = db.StringField(required=True)
     description = db.StringField(required=True)
@@ -48,3 +36,15 @@ class TvSeries(db.Document):
     language = db.ListField(db.StringField(), required=True)
     production_companies = db.ListField(db.StringField(), required=True)
     networks = db.ListField(db.StringField(), required=True)
+
+
+class User(db.Document):
+    first_name = db.StringField(required=True)
+    last_name = db.StringField(required=True)
+    username = db.StringField(required=True, unique=True)
+    password = db.StringField(required=True)
+    movies = db.ListField(db.ReferenceField('Movie', reverse_delete_rule=db.PULL))
+    tv_series = db.ListField(db.ReferenceField('TvSeries', reverse_delete_rule=db.PULL))
+
+    def hash_password(self):
+        self.password = generate_password_hash(self.password).decode('utf8')
