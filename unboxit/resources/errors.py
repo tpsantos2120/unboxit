@@ -4,9 +4,12 @@ class InternalServerError(HTTPException):
     pass
 class MovieNotExistsError(HTTPException):
     pass
+
 class MovieAlreadyExistsError(HTTPException):
     pass
 class MovieAlreadyExistsError(HTTPException):
+    pass
+class UnauthorizedError(HTTPException):
     pass
 
 errors = {
@@ -21,5 +24,9 @@ errors = {
      "MovieAlreadyExistsError": {
          "message": "Movie with given id already exists",
          "status": 400
+     },
+      "UnauthorizedError": {
+         "message": "Invalid username or password",
+         "status": 401
      }
 }
