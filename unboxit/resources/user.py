@@ -1,7 +1,7 @@
 import datetime
 from flask import Response, request
 from flask_jwt_extended import create_access_token
-from unboxit.models.models import User, WatchList
+from unboxit.models.models import User
 from flask_restful import Resource
 
 
@@ -11,8 +11,6 @@ class RegisterUserApi(Resource):
         user = User(**body)
         user.hash_password()
         user.save()
-        watchlist = WatchList(user_id=str(user.id))
-        watchlist.save()
         id = user.id
         return {'id': str(id)}, 200
 
@@ -20,7 +18,7 @@ class RegisterUserApi(Resource):
 class LoginUserApi(Resource):
     def post(self):
         body = request.get_json()
-        user = User.objects.get(username=body.get('username'))
+        user = User.objects.get(email=body.get('email'))
         authorized = user.check_password(body.get('password'))
         if not authorized:
             return {'response': "Access Denied"}, 403
