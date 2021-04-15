@@ -14,7 +14,7 @@ class MoviesApi(Resource):
 
     @jwt_required()
     def post(self):
-        #try:
+        try:
             user_id = get_jwt_identity()
             body = request.get_json()
             user = User.objects.get(id=user_id)
@@ -24,9 +24,9 @@ class MoviesApi(Resource):
             user.save()
             id = movie.id
             return {'id': str(id)}, 200
-        # except DoesNotExist:
-        #     raise MovieNotExistsError
-        # except NotUniqueError:
-        #     raise MovieAlreadyExistsError
-        # except Exception as e:
-        #     raise InternalServerError
+        except DoesNotExist:
+            raise MovieNotExistsError
+        except NotUniqueError:
+            raise MovieAlreadyExistsError
+        except Exception as e:
+            raise InternalServerError
