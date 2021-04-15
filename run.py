@@ -1,5 +1,5 @@
 import os
-from app import app
+from unboxit.app import app
 
 if __name__ == '__main__':
     if os.environ.get('ENV_STATE') == "production":
