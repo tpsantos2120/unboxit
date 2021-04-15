@@ -6,3 +6,6 @@ class Home(Resource):
     def get(self):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('views/home.html'),200,headers)
+    def post(self):
+        body = request.get_json()
+        return {"render":body}
