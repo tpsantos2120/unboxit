@@ -12,6 +12,12 @@ class MovieAlreadyExistsError(HTTPException):
 class UnauthorizedError(HTTPException):
     pass
 
+class EmailAlreadyExistsError(HTTPException):
+    pass
+
+class SchemaValidationError(HTTPException):
+    pass
+
 errors = {
     "InternalServerError": {
         "message": "Something went wrong internally",
@@ -28,5 +34,13 @@ errors = {
       "UnauthorizedError": {
          "message": "Invalid username or password",
          "status": 401
+     },
+     "EmailAlreadyExistsError": {
+         "message": "User with given email address already exists",
+         "status": 400
+     },
+     "SchemaValidationError": {
+         "message": "Request is missing required fields",
+         "status": 400
      }
 }
