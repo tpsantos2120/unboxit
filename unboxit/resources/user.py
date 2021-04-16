@@ -3,18 +3,31 @@ from flask import Response, request
 from flask_jwt_extended import create_access_token
 from unboxit.models.models import User
 from flask_restful import Resource
-from mongoengine.errors import DoesNotExist
-from unboxit.resources.errors import InternalServerError,UnauthorizedError
+from mongoengine.errors import DoesNotExist, FieldDoesNotExist, NotUniqueError
+from unboxit.resources.errors import InternalServerError, UnauthorizedError \
+ , SchemaValidationError, EmailAlreadyExistsError
 
 
 class RegisterUserApi(Resource):
     def post(self):
-        body = request.get_json()
-        user = User(**body)
-        user.hash_password()
-        user.save()
-        id = user.id
-        return {'id': str(id)}, 200
+        try:
+            body = request.form
+            user = User(**body)
+            user.hash_password()
+            user.save()
+            expires = datetime.timedelta(days=7)
+            access_token = create_access_token(
+                identity=str(user.id), expires_delta=expires)
+            return {
+                "response": "User registered successfully.",
+                'token': access_token
+            }, 200
+        except FieldDoesNotExist:
+            raise SchemaValidationError
+        except NotUniqueError:
+            raise EmailAlreadyExistsError
+        except Exception as e:
+            raise InternalServerError
 
 
 class LoginUserApi(Resource):
@@ -29,7 +42,7 @@ class LoginUserApi(Resource):
             access_token = create_access_token(
                 identity=str(user.id), expires_delta=expires)
             return {
-                "response": "Logged in successfully",
+                "response": "Logged in successfully.",
                 'token': access_token
             }, 200
         except (UnauthorizedError, DoesNotExist):
