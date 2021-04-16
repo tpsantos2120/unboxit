@@ -1,11 +1,13 @@
 
-from flask import Response, request, render_template, make_response, url_for, session
+from flask import Response, request, render_template, make_response, url_for, redirect
 from flask_restful import Resource
 
 class Home(Resource):
     def get(self):
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('views/home.html'),200,headers)
-    def post(self):
-        body = request.get_json()
-        return {"render":body}
+        cookie_exist = request.cookies.get('token')
+        if cookie_exist:
+            return redirect(url_for('dashboard'))
+        else:    
+            headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('views/home.html'),200,headers)
+  
