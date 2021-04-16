@@ -9,8 +9,8 @@ class Login(Resource):
         body = request.form
         url_root = request.url_root
         response = requests.post(url_root + 'api/auth/login',
-                                 data={'email': body.get('email'),
-                                       'password': body.get('password')
+                                 data={'email': body.get('login-email'),
+                                       'password': body.get('login-password')
                                        })
         json_response = response.json()
         if response.status_code == 200:
