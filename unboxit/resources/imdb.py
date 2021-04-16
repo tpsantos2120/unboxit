@@ -50,7 +50,45 @@ class GetSimilarMovies(Resource):
         print(response.text)
         return response.json()
 
+class GetShowsByTitle(Resource):
+    def get(self):
+        configs = GetIMDBConfigs()
+        url = configs.get_url()
+        headers = configs.get_headers()
+        querystring = {"type": "get-shows-by-title", "title": "thrones"}
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        print(response.text)
+        return response.json()
 
+class GetShowDetails(Resource):
+    def get(self):
+        configs = GetIMDBConfigs()
+        url = configs.get_url()
+        headers = configs.get_headers()
+        querystring = {"type": "get-show-details", "imdb": "tt2741602"}
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        print(response.text)
+        return response.json()
+
+class GetShowImages(Resource):
+    def get(self):
+        configs = GetIMDBConfigs()
+        url = configs.get_url()
+        headers = configs.get_headers()
+        querystring = {"type": "get-show-images-by-imdb", "imdb": "tt2741602"}
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        print(response.text)
+        return response.json()
+
+class GetSimilarShows(Resource):
+    def get(self):
+        configs = GetIMDBConfigs()
+        url = configs.get_url()
+        headers = configs.get_headers()
+        querystring = {"type": "get-similar-shows", "imdb": "tt2741602","page":"1"}
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        print(response.text)
+        return response.json()
 class GetIMDBConfigs():
     def get_headers(self):
         self.headers = {
