@@ -1,24 +1,24 @@
 <!-- Modal -->
-<form action="{{ url_for('login') }}" name="login" id="login_form" method="POST">
+<form action="{{ url_for('login') }}" id="login-form" method="POST">
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+          <h5 class="modal-title" id="loginModalLabel">Login</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>        
         
         <div class="modal-body">
           <div class="mb-3 row">
-            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <label for="email" class="col-sm-2 col-form-label sr-only">Email:</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="email" id="email">
+              <input type="text" class="form-control" name="login-email" id="login-email" placeholder="Email">
             </div>
           </div>
           <div class="mb-3 row">
-            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <label for="password" class="col-sm-2 col-form-label sr-only">Password:</label>
             <div class="col-sm-10">
-              <input type="password" class="form-control" name="password" id="password">
+              <input type="password" class="form-control" name="login-password" id="login-password" placeholder="Password">
             </div>
           </div>
         </div>
