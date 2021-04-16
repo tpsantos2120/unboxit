@@ -13,7 +13,6 @@ class Login(Resource):
                                        'password': body.get('password')
                                        })
         json_response = response.json()
-        print(json_response["token"])
         if response.status_code == 200:
             res = make_response(redirect(url_for('dashboard')))
             res.set_cookie('token', json_response["token"], httponly=True)
