@@ -44,7 +44,7 @@ class TvSeries(db.Document):
 class User(db.Document):
     first_name = db.StringField(required=True)
     last_name = db.StringField(required=True)
-    email = db.EmailField(required=True, unique=True)
+    email = db.StringField(required=True, unique=True)
     username = db.StringField(required=True)
     password = db.StringField(required=True)
     movies = db.ListField(db.ReferenceField('Movie', reverse_delete_rule=db.PULL))
