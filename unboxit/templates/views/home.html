@@ -1,9 +1,9 @@
 {% extends 'layout/base.html' %} {% block content %} {% include
 '/components/carousel.html' %}
-<form id="search-form">
-  <section id="search-section">
-    <div class="container-fluid text-light">
-      <div class="card card text-center bg-dark w-50">
+<section id="search-section">
+  <form id="search-form ">
+    <div class="container-fluid text-light p-5 ">
+      <div class="card card text-center bg-dark w-75  mx-auto">
         <div class="card-body">
           <input
             type="text"
@@ -27,9 +27,9 @@
         </div>
       </div>
     </div>
-  </section>
-</form>
-<section id="divider" class="h-75 section">
-  <div id="movies" class="m-1"></div>
+  </form>
+</section>
+<section id="divider">
+  <div id="movies" class="p-0"></div>
 </section>
 {% endblock %}
