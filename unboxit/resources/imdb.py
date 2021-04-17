@@ -1,7 +1,6 @@
 from flask import Response, request, render_template, make_response, url_for, redirect
 from flask_restful import Resource
 from ratelimit import limits, sleep_and_retry
-from flask_paginate import Pagination, get_page_parameter
 import requests
 import os
 
@@ -20,16 +19,17 @@ class GetMoviesByTitle(Resource):
         query_by_title_response = requests.request(
             "GET", url, headers=headers, params=query_string)
         movies = query_by_title_response.json()
-        for movie in movies['movie_results']:
-            response = requests.request(
-                "GET", request.url_root + "/get-movies-images-by-imdb/"+movie['imdb_id'])
-            movies_details = response.json()
-            response_result.append(movies_details)
-        # page = request.args.get(get_page_parameter(), type=int, default=1)
-        # pagination = Pagination(
-        #     page=page, total=len(response_result), search=False, record_name='movies')
-        headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('views/movies.html', movies=response_result, view=True))
+        print(movies)
+        if not movies['search_results'] == 0:
+            for movie in movies['movie_results']:
+                response = requests.request(
+                    "GET", request.url_root + "/get-movies-images-by-imdb/"+movie['imdb_id'])
+                movies_details = response.json()
+                response_result.append(movies_details)
+                headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('views/movies.html', results=response_result, view=True))
+        else:
+            return{"response": "Movie Not Found", "status_code": 400}
 
 
 class GetMovieDetails(Resource):
@@ -89,12 +89,15 @@ class GetShowsByTitle(Resource):
             "GET", url, headers=headers, params=query_string)
         shows = query_by_title_response.json()
         print(shows)
-        for show in shows['tv_results']:
-            response = requests.request(
-                "GET", request.url_root + "/get-show-images-by-imdb/"+show['imdb_id'])
-            shows_details = response.json()
-            response_result.append(shows_details)
-        return response_result
+        if not shows['search_results'] == 0:
+            for show in shows['tv_results']:
+                response = requests.request(
+                    "GET", request.url_root + "/get-show-images-by-imdb/"+show['imdb_id'])
+                shows_details = response.json()
+                response_result.append(shows_details)
+            return make_response(render_template('views/movies.html', results=response_result, view=True))
+        else:
+            return {"response": "Show Not Found", "status_code": 400}
 
 
 class GetShowDetails(Resource):
