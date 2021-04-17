@@ -1,18 +1,19 @@
 {% block content %} 
 {% if movies %} 
-<div class="uk-slider-container-offset" uk-slider="sets: true">
+<div class="p-3" uk-slider="sets: true">
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
       <ul class="uk-slider-items uk-child-width-1-4@s uk-grid uk-margin">
         {% for movie in movies %}
         {% if not movie.poster == "" %}
         <li>
-          <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge">
-            <div class="uk-card-media-top">
-                <img data-src="{{ movie.poster }}" width="300" height="550" alt="{{movie.title}}" uk-img>
+          <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge ">
+            
+            <div class="uk-card-media-bottom">
+                <img data-src="{{ movie.poster }}"  alt="{{movie.title}}" uk-img>
             </div>
-            <div class="uk-card-body">
+            <!-- <div class="uk-card-body">
               <h3 class="uk-card-title">{{movie.title}}</h3>
-            </div>
+            </div> -->
           </div>
         </li>
         {% endif %} 
