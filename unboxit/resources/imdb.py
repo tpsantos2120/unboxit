@@ -24,7 +24,8 @@ class GetMoviesByTitle(Resource):
                 "GET", request.url_root + "/get-movies-images-by-imdb/"+movie['imdb_id'])
             movies_details = response.json()
             response_result.append(movies_details)
-        return response_result
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('views/movies.html', movies=response_result, view=True))  
 
 
 class GetMovieDetails(Resource):
