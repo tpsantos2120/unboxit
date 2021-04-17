@@ -1,6 +1,7 @@
 from flask import Response, request, render_template, make_response, url_for, redirect
 from flask_restful import Resource
 from ratelimit import limits, sleep_and_retry
+from flask_paginate import Pagination, get_page_parameter
 import requests
 import os
 
@@ -24,8 +25,11 @@ class GetMoviesByTitle(Resource):
                 "GET", request.url_root + "/get-movies-images-by-imdb/"+movie['imdb_id'])
             movies_details = response.json()
             response_result.append(movies_details)
+        # page = request.args.get(get_page_parameter(), type=int, default=1)
+        # pagination = Pagination(
+        #     page=page, total=len(response_result), search=False, record_name='movies')
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('views/movies.html', movies=response_result, view=True))  
+        return make_response(render_template('views/movies.html', movies=response_result, view=True))
 
 
 class GetMovieDetails(Resource):
