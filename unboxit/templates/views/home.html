@@ -6,6 +6,10 @@
       <div class="card card text-center bg-dark w-75">
         <div class="card-body">
           <input type="text" class="form-control" value="" id="search-input" name="title" placeholder="Search Query..." />
+          <select class="selectpicker">
+            <option>Tv Shows</option>
+            <option>Movies</option>
+          </select>          
           <input type="button" class="form-control" id="search-button" value="Find" placeholder="Search" />
         </div>
       </div>
@@ -13,6 +17,7 @@
 </section>
 </form>
 <section id="divider">
-  <div class="container-fluid divider"></div>
+  <div id="movies"></div>
 </section>
+
 {% endblock %}
