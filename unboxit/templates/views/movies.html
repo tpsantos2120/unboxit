@@ -1,19 +1,16 @@
 {% block content %} 
-{% if movies %} 
+{% if results %} 
 <div class="p-3" uk-slider="sets: true">
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
       <ul class="uk-slider-items uk-child-width-1-4@s uk-grid uk-margin">
-        {% for movie in movies %}
-        {% if not movie.poster == "" %}
+        {% for result in results %}
+        {% if not result.poster == "" %}
         <li>
           <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge ">
             
             <div class="uk-card-media-bottom">
-                <img data-src="{{ movie.poster }}"  alt="{{movie.title}}" uk-img>
+                <img data-src="{{ result.poster }}"  alt="{{result.title}}" uk-img>
             </div>
-            <!-- <div class="uk-card-body">
-              <h3 class="uk-card-title">{{movie.title}}</h3>
-            </div> -->
           </div>
         </li>
         {% endif %} 
