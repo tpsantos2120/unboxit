@@ -1,27 +1,39 @@
 {% extends 'layout/base.html' %} {% block content %} {% include
 '/components/carousel.html' %}
 <section id="search-section">
-  <form id="search-form ">
-    <div class="uk-card uk-card-default uk-card-small uk-card-body">
-      <div class="uk-margin">
-        <input
-          class="uk-input"
-          type="text"
-          name="search"
-          id="search-input"
-          placeholder="Input"
-        />
+  <div class="uk-container uk-container-expand">
+    <form id="search-form">
+      <div class="uk-card uk-card-default uk-card-small uk-card-body">
+        <div class="uk-margin">
+          <input
+            class="uk-input"
+            type="text"
+            name="search"
+            id="search-input"
+            placeholder="Search..."
+          />
+        </div>
+        <div>
+          <ul class="uk-child-width-expand uk-tab" id="tabs" data-uk-tab>
+            <li><a href="#" id="tv-shows">TV Shows</a></li>
+            <li><a href="#" id="movies">Movies</a></li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <ul class="uk-child-width-expand uk-tab" id="tabs" data-uk-tab>
-          <li><a href="#" id="tv-shows">TV Shows</a></li>
-          <li><a href="#" id="movies">Movies</a></li>
-        </ul>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </section>
 <section id="divider">
-  <div id="movies" class="p-0"></div>
+  <div id="result" class="p-0"></div>
+  <div id="user-feedback" class="uk-flex-top" data-uk-modal>
+    <div
+      class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding"
+    >
+      <div class="uk-position-top-center">
+        <div id="spinner"></div>
+      </div>
+      <div id="user-message"></div>
+    </div>
+  </div>
 </section>
 {% endblock %}
