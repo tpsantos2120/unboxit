@@ -34,7 +34,7 @@ html, body {
 
 #search-section input {
   margin: auto;
-  border: 3px solid var(--black);
+  /* border: 3px solid var(--black); */
   border-radius: 0;
 }
 
