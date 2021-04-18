@@ -1,4 +1,5 @@
 from flask import Response, request, render_template, make_response, url_for, redirect
+from flask.helpers import flash
 from flask_restful import Resource
 from ratelimit import limits, sleep_and_retry
 import requests
@@ -29,6 +30,7 @@ class GetMoviesByTitle(Resource):
                 headers = {'Content-Type': 'text/html'}
             return make_response(render_template('views/movies.html', results=response_result, view=True))
         else:
+            flash('Movie not found')
             return{"response": "Movie Not Found", "status_code": 400}
 
 
@@ -97,6 +99,7 @@ class GetShowsByTitle(Resource):
                 response_result.append(shows_details)
             return make_response(render_template('views/movies.html', results=response_result, view=True))
         else:
+            flash('Show not found')
             return {"response": "Show Not Found", "status_code": 400}
 
 
