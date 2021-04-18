@@ -9,7 +9,8 @@
           <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge ">
             
             <div class="uk-card-media-bottom">
-                <img data-src="{{ result.poster }}"  alt="{{result.title}}" uk-img>
+              {{result.imdb_id}}
+              <a href="{{url_for('viewdetails', id=result.IMDB, image=result.poster)}}"><img data-src="{{ result.poster }}"  alt="{{result.title}}" uk-img></a>  
             </div>
           </div>
         </li>
