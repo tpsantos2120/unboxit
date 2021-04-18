@@ -4,55 +4,71 @@ function form_submit() {
   document.getElementById("search-form").submit();
 }
 
-// const searchButton = document.querySelector("#search-button");
+let typingTimer,
+  doneTypingInterval = 3000,
+  $input = $("#search-input");
+const POST = "post",
+  GET = "get",
+  DELETE = "delete",
+  PUT = "put",
+  TV_SHOWS = "TV Shows",
+  MOVIES = "Movies",
+  QUERY_MOVIES = "/get-movies-by-title/",
+  QUERY_TV_SHOWS = "/get-shows-by-title/";
 
-// const queryHandler = async (e) => {
-//   //e.preventDefault();
-//   const searchInput = document.querySelector("#search-input");
-//   console.log(searchInput.value);
-//   const response = await getData("/get-shows-by-title/" + searchInput.value);
-//   const movies = document.querySelector("#movies");
-
-//   let output = "";
-//   for (const movie of response) {
-//     console.log(movie);
-//     output += `<div class="card" style="width: 18rem;">`;
-//     output += `<img src="${movies.poster}" class="card-img-top" alt="...">`;
-//     output += `<div class="card-body">`;
-//     output += `<h5 class="card-title">${movie.title}</h5>`;
-//     output += `<a href="#" class="btn btn-primary">View Details</a>`;
-//     output += `</div>`;
-//     output += `</div>`;
-//   }
-//   movies.innerHTML = output;
-// };
-
-// searchButton.addEventListener("click", queryHandler);
-
-// async function getData(url) {
-//   // Default options are marked with *
-//   const response = await fetch(url, {
-//     method: "GET", // *GET, POST, PUT, DELETE, etc.
-//     headers: {
-//       "Content-Type": "application/json",
-//       // 'Content-Type': 'application/x-www-form-urlencoded',
-//     },
-//   });
-//   return response.json(); // parses JSON response into native JavaScript objects
-// }
-
-$("#search-button").click(function(){
-  var text = $("#search-input").val();
-  console.log(text)
-  $.ajax({
-    url: "/get-movies-by-title/"+ text,
-    type: "get",
-    success: function (response) {
-      console.log(response)
-      $("#movies").html(response);
-    },
-    error: function(xhr) {
-      //Do Something to handle error
-    }
-  });
+$input.on("keyup", function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
 });
+
+$input.on("keydown", function () {
+  clearTimeout(typingTimer);
+});
+
+function doneTyping() {
+  apiRequestHandler((urlBuilder(getUserInput())));
+}
+
+function getUserInput() {
+  const searchInput = $("#search-input").val();
+  const queryType = $("#tabs").find("li.uk-active").text();
+  return (userInput = { queryType: queryType, searchInput: searchInput });
+}
+
+function urlBuilder(query) {
+  if (query.queryType && query.searchInput) {
+    query.searchInput = query.searchInput.replace(" ", "+");
+    console.log(query.searchInput)
+    if (query.queryType == TV_SHOWS) {
+      return (url = { url: QUERY_TV_SHOWS + query.searchInput, method: GET });
+    } else if (query.queryType == MOVIES) {
+      return (url = { url: QUERY_MOVIES + query.searchInput, method: GET });
+    }
+  }
+}
+
+function apiRequestHandler(query) {
+  startSpinner();
+  $("#search-input").val("");
+  $.ajax({
+    url: query.url,
+    type: query.method,
+    success: function (response) {
+      endSpinner();
+      $("#result").html(response);
+    },
+    error: function (error) {
+      endSpinner();
+      console.log(error);
+    },
+  });
+}
+
+function startSpinner() {
+  $("#spinner").attr("uk-spinner", "");
+  $("#user-message").text("Please, bear with us a moment we are searching our books!");
+  UIkit.modal("#user-feedback").show();
+}
+function endSpinner() {
+  UIkit.modal("#user-feedback").hide();
+}
