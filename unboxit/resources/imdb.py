@@ -20,7 +20,6 @@ class GetMoviesByTitle(Resource):
         query_by_title_response = requests.request(
             "GET", url, headers=headers, params=query_string)
         movies = query_by_title_response.json()
-        print(movies)
         if not movies['search_results'] == 0:
             for movie in movies['movie_results']:
                 response = requests.request(
@@ -28,9 +27,9 @@ class GetMoviesByTitle(Resource):
                 movies_details = response.json()
                 response_result.append(movies_details)
                 headers = {'Content-Type': 'text/html'}
+            print(response_result)
             return make_response(render_template('views/movies.html', results=response_result, view=True))
         else:
-            flash('Movie not found')
             return{"response": "Movie Not Found", "status_code": 400}
 
 
@@ -59,7 +58,6 @@ class GetMoviesImagesByImdb(Resource):
         headers = configs.get_headers()
         query_string = configs.get_query_string(
             request.endpoint, id, None, None)
-        print(query_string)
         response = requests.request(
             "GET", url, headers=headers, params=query_string)
         return response.json()
@@ -90,7 +88,6 @@ class GetShowsByTitle(Resource):
         query_by_title_response = requests.request(
             "GET", url, headers=headers, params=query_string)
         shows = query_by_title_response.json()
-        print(shows)
         if not shows['search_results'] == 0:
             for show in shows['tv_results']:
                 response = requests.request(
@@ -99,7 +96,6 @@ class GetShowsByTitle(Resource):
                 response_result.append(shows_details)
             return make_response(render_template('views/movies.html', results=response_result, view=True))
         else:
-            flash('Show not found')
             return {"response": "Show Not Found", "status_code": 400}
 
 
@@ -124,7 +120,6 @@ class GetShowImagesByImdb(Resource):
         headers = configs.get_headers()
         query_string = configs.get_query_string(
             request.endpoint, id, None, None)
-        print(query_string)
         response = requests.request(
             "GET", url, headers=headers, params=query_string)
         return response.json()
