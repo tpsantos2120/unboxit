@@ -9,3 +9,9 @@ class Dashboard(Resource):
             return make_response(render_template('views/dashboard.html'),200,headers)
         else:
             return redirect(url_for('home'))
+
+class ViewDetails(Resource):
+    def get(self, id):
+        print(id)
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('views/view_details.html'),200,headers)
