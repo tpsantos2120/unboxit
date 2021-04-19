@@ -10,7 +10,6 @@ from .imdb import GetMoviesByTitle, GetMoviesImagesByImdb, GetShowsByTitle, GetS
 
 
 def initialize_routes(api):
-    print(api)
     api.add_resource(MoviesApi, '/api/movies')
     api.add_resource(RegisterUserApi, '/api/auth/register')
     api.add_resource(LoginUserApi, '/api/auth/login')
@@ -18,7 +17,7 @@ def initialize_routes(api):
     api.add_resource(Login, '/login')
     api.add_resource(Register, '/register')
     api.add_resource(Dashboard, '/dashboard')
-    api.add_resource(ViewDetails, '/view-details/<id>/<image>')
+    api.add_resource(ViewDetails, '/view-details/')
     api.add_resource(GetMoviesByTitle, '/get-movies-by-title/<title>', endpoint="get-movies-by-title")
     api.add_resource(GetMovieDetails, '/get-movie-details/<id>', endpoint="get-movie-details")
     api.add_resource(GetMoviesImagesByImdb, '/get-movies-images-by-imdb/<id>', endpoint="get-movies-images-by-imdb")
