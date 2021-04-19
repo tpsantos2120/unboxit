@@ -3,28 +3,30 @@
 <section id="search-section">
   <div class="uk-flex-center">
     <form id="search-form">
-      <div class="uk-card uk-card-default uk-card-small uk-card-body">
+      <div class="uk-card uk-card-secondary uk-card-small uk-card-body uk-dark ">
+        <div>
+          <ul class="uk-child-width-expand uk-tab uk-dark" id="tabs" data-uk-tab>
+            <li><a href="#" id="tv-shows">TV Shows</a></li>
+            <li><a href="#" id="movies">Movies</a></li>
+          </ul>
+        </div>
         <div class="uk-margin">
           <input
-            class="uk-input"
+            class="uk-input uk-dark"
             type="text"
             name="search"
             id="search-input"
             placeholder="Search..."
           />
         </div>
-        <div>
-          <ul class="uk-child-width-expand uk-tab" id="tabs" data-uk-tab>
-            <li><a href="#" id="tv-shows">TV Shows</a></li>
-            <li><a href="#" id="movies">Movies</a></li>
-          </ul>
-        </div>
+        
       </div>
     </form>
   </div>
 </section>
 <section id="divider">
   <div id="result" class="p-0"></div>
+  <div id="result-full-details"></div>
   <div id="user-feedback" class="uk-flex-top" data-uk-modal>
     <div
       class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding"
