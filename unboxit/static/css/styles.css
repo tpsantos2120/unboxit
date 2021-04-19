@@ -19,6 +19,12 @@ html, body {
   height: 50vw;
 }
 
+#search-form{
+  padding-top: 20vw;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 
 #search-section .card {
   border: 3px solid var(--black);
