@@ -65,8 +65,7 @@
             <a
               class="nav-link"
               href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#loginModal"
+              uk-toggle="target: #modal-close-default"
               ><i class="fas fa-sign-in-alt m-1"></i>Settings</a
             >
           </li>
@@ -84,6 +83,7 @@
       </div>
     </div>
   </nav>
+  {% include '/components/settings_modal.html' %}
   {% include '/components/register_modal.html' %} {% include
   '/components/login_modal.html' %} {% include '/components/purpose_modal.html'
   %}
