@@ -6,11 +6,9 @@
         {% for result in results %}
         {% if not result.poster == "" %}
         <li>
-          <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge ">
-            
+          <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge results">
             <div class="uk-card-media-bottom">
-              {{result.imdb_id}}
-              <a href="{{url_for('viewdetails', id=result.IMDB, image=result.poster)}}"><img data-src="{{ result.poster }}"  alt="{{result.title}}" uk-img></a>  
+              <a href="#"><img data-src="{{ result.poster }}"  alt="{{result.title}}" uk-img imdb="{{result.IMDB}}"></a>  
             </div>
           </div>
         </li>
