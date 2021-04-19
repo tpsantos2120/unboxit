@@ -1,39 +1,48 @@
 from flask import Response, request, render_template, make_response, url_for, session, redirect
 from flask_restful import Resource
+from flask_jwt_extended import verify_jwt_in_request, decode_token, set_access_cookies
 import requests
+
 
 class Dashboard(Resource):
     def get(self):
-        cookie_exist = request.cookies.get('token')
+        cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'])
         if cookie_exist:
-            headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/dashboard.html', title="Dashboard", logged_in=True),200,headers)
+            first_name = cookie_exist[1]['sub']['first_name']
+            last_name = cookie_exist[1]['sub']['last_name']
+            headers = {
+                'Content-Type': 'text/html'
+            }
+            return make_response(render_template('views/dashboard.html', title="Dashboard", 
+            logged_in=True, first_name=first_name, last_name=last_name), 200, headers)
         else:
             return redirect(url_for('home'))
+
 
 class ViewDetails(Resource):
     def get(self):
         id = request.args.get('id')
         query_type = request.args.get('type')
-        print(query_type,id)
+        print(query_type, id)
         if query_type == "Movies":
             response = requests.request(
-                    "GET", request.url_root + "/get-movie-details/"+id)
+                "GET", request.url_root + "/get-movie-details/"+id)
             result_details = response.json()
-        elif query_type =="TV Shows":
+        elif query_type == "TV Shows":
             response = requests.request(
-                    "GET", request.url_root + "/get-show-details/"+id)
+                "GET", request.url_root + "/get-show-details/"+id)
             result_details = response.json()
         print(result_details)
         if result_details:
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/view_details.html', result=result_details),200,headers)
+            return make_response(render_template('views/view_details.html', result=result_details), 200, headers)
+
 
 class DashboardSearch(Resource):
     def get(self):
         cookie_exist = request.cookies.get('token')
         if cookie_exist:
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/dashboard_search.html', title="Dashboard Search", logged_in=True),200,headers)
+            return make_response(render_template('views/dashboard_search.html', title="Dashboard Search", logged_in=True), 200, headers)
         else:
             return redirect(url_for('home'))
