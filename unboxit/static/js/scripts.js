@@ -5,7 +5,7 @@ function form_submit() {
 }
 
 let typingTimer,
-  doneTypingInterval = 3000,
+  doneTypingInterval = 2000,
   $input = $("#search-input");
 const POST = "post",
   GET = "get",
@@ -26,7 +26,7 @@ $input.on("keydown", function () {
 });
 
 function doneTyping() {
-  apiRequestHandler((urlBuilder(getUserInput())));
+  apiRequestHandler(urlBuilder(getUserInput()));
 }
 
 function getUserInput() {
@@ -38,24 +38,28 @@ function getUserInput() {
 function urlBuilder(query) {
   if (query.queryType && query.searchInput) {
     query.searchInput = query.searchInput.replace(" ", "+");
-    console.log(query.searchInput)
+    console.log(query.searchInput);
     if (query.queryType == TV_SHOWS) {
-      return (url = { url: QUERY_TV_SHOWS + query.searchInput, method: GET });
+      return (url = { url: QUERY_TV_SHOWS + query.searchInput, method: GET, type:query.queryType });
     } else if (query.queryType == MOVIES) {
-      return (url = { url: QUERY_MOVIES + query.searchInput, method: GET });
+      return (url = { url: QUERY_MOVIES + query.searchInput, method: GET, type:query.queryType });
     }
   }
 }
 
 function apiRequestHandler(query) {
+  console.log(query)
+
   startSpinner();
   $("#search-input").val("");
   $.ajax({
     url: query.url,
     type: query.method,
     success: function (response) {
+      console.log(response)
       endSpinner();
       $("#result").html(response);
+      handleEachResult(query.type);
     },
     error: function (error) {
       endSpinner();
@@ -64,9 +68,45 @@ function apiRequestHandler(query) {
   });
 }
 
+function handleEachResult(query) {
+  document.querySelectorAll(".results").forEach((item) => {
+    item.addEventListener("click", (item) => {
+      const id = $(item.target).attr("imdb");
+      const image = $(item.target).attr("data-src");
+      console.log(query)
+      $.ajax({
+        url: "/view-details/?id=" + id +"&type="+ query.type,
+        type: "get",
+        success: function (response) {
+          $("#result-full-details").append(response);
+          $(".uk-background-cover").css(
+            "background-image",
+            "url(" + image + ")"
+          );
+          UIkit.modal("#view-details-modal").show();
+          $(".close-details-modal").click(function () {
+            $("#view-details-modal").remove();
+            $("#modal-media-youtube").remove();
+          });
+          $(".close-video-modal").click(function () {
+            $("#view-details-modal").remove();
+            $("#modal-media-youtube").remove();
+          });
+    
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    });
+  });
+}
+
 function startSpinner() {
   $("#spinner").attr("uk-spinner", "");
-  $("#user-message").text("Please, bear with us a moment we are searching our books!");
+  $("#user-message").text(
+    "Please, bear with us a moment whilst we are searching our books!"
+  );
   UIkit.modal("#user-feedback").show();
 }
 function endSpinner() {
