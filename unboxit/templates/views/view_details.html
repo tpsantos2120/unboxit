@@ -15,7 +15,8 @@
         <h6>Year: {{result.year}}</h6>
         <h6>IMDB Rating: {{result.imdb_rating}}</h6>
         <h6>Popularity: {{result.popularity}}</h6>
-        <h6>Runtime:{{result.runtime}}mins</h6>
+        <h6>Runtime: {{result.runtime}}mins</h6>
+        {% if not result.youtube_trailer_key == "" %}
         <a
           class="uk-button uk-button-default open-video"
           href="#modal-media-youtube"
@@ -39,6 +40,12 @@
             ></iframe>
           </div>
         </div>
+        {% endif %} {% if logged_in == True %}
+        <a class="uk-button uk-button-default" href="#"
+          >Add To Watchlist</a
+        >
+        <a class="uk-button uk-button-default" href="#">Remove</a>
+        {% endif %}
         <!-- <ul uk-accordion="collapsible: false">
           <li class="uk-open">
             <a class="uk-accordion-title" href="#">Genres</a>
