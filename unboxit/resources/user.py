@@ -16,9 +16,14 @@ class RegisterUserApi(Resource):
             user = User(**body)
             user.hash_password()
             user.save()
-            expires = datetime.timedelta(days=7)
+            expires = datetime.timedelta(days=30)
+            user_details = {
+                "user_id":str(user.id),
+                "first_name": user.first_name,
+                "last_name": user.last_name
+            }
             access_token = create_access_token(
-                identity=str(user.id), expires_delta=expires)
+                identity=user_details, expires_delta=expires)
             return {
                 "response": "User registered successfully.",
                 'token': access_token
@@ -40,9 +45,14 @@ class LoginUserApi(Resource):
             authorized = user.check_password(body.get('password'))
             if not authorized:
                 return {'response': "Access Denied"}, 403
-            expires = datetime.timedelta(days=7)
+            expires = datetime.timedelta(days=30)
+            user_details = {
+                "user_id":str(user.id),
+                "first_name": user.first_name,
+                "last_name": user.last_name
+            }
             access_token = create_access_token(
-                identity=str(user.id), expires_delta=expires)
+                identity=user_details, expires_delta=expires)
             return {
                 "response": "Logged in successfully.",
                 'token': access_token
