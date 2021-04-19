@@ -1,7 +1,8 @@
-function form_submit() {
-  document.getElementById("login-form").submit();
+function form_submit_register() {
   document.getElementById("register-form").submit();
-  document.getElementById("search-form").submit();
+}
+function form_submit_login() {
+  document.getElementById("login-form").submit();
 }
 
 let typingTimer,
@@ -56,7 +57,6 @@ function apiRequestHandler(query) {
     url: query.url,
     type: query.method,
     success: function (response) {
-      console.log(response)
       endSpinner();
       $("#result").html(response);
       handleEachResult(query.type);
@@ -75,7 +75,7 @@ function handleEachResult(query) {
       const image = $(item.target).attr("data-src");
       console.log(query)
       $.ajax({
-        url: "/view-details/?id=" + id +"&type="+ query.type,
+        url: "/view-details/?id=" + id +"&type="+ query,
         type: "get",
         success: function (response) {
           $("#result-full-details").append(response);
