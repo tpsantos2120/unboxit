@@ -1,3 +1,4 @@
+from .logout import Logout
 from .movie import MoviesApi
 from .user import RegisterUserApi
 from .user import LoginUserApi
@@ -15,6 +16,7 @@ def initialize_routes(api):
     api.add_resource(LoginUserApi, '/api/auth/login')
     api.add_resource(Home, '/')
     api.add_resource(Login, '/login')
+    api.add_resource(Logout, '/logout')
     api.add_resource(Register, '/register')
     api.add_resource(Dashboard, '/dashboard')
     api.add_resource(DashboardSearch, '/dashboard/search')
