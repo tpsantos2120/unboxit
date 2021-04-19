@@ -10,7 +10,6 @@ class GetMoviesByTitle(Resource):
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, title):
-        print(title)
         response_result = []
         configs = GetIMDBConfigs()
         url = configs.get_url()
@@ -28,7 +27,7 @@ class GetMoviesByTitle(Resource):
                 response_result.append(movies_details)
                 headers = {'Content-Type': 'text/html'}
             print(response_result)
-            return make_response(render_template('views/movies.html', results=response_result, view=True))
+            return make_response(render_template('views/view_result.html', results=response_result, view=True))
         else:
             return{"response": "Movie Not Found", "status_code": 400}
 
@@ -37,7 +36,6 @@ class GetMovieDetails(Resource):
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, id):
-        print(id)
         configs = GetIMDBConfigs()
         url = configs.get_url()
         headers = configs.get_headers()
@@ -52,7 +50,6 @@ class GetMoviesImagesByImdb(Resource):
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, id):
-        print(id)
         configs = GetIMDBConfigs()
         url = configs.get_url()
         headers = configs.get_headers()
@@ -65,7 +62,6 @@ class GetMoviesImagesByImdb(Resource):
 
 class GetSimilarMovies(Resource):
     def get(self, id):
-        print(id)
         configs = GetIMDBConfigs()
         url = configs.get_url()
         headers = configs.get_headers()
@@ -78,7 +74,6 @@ class GetSimilarMovies(Resource):
 
 class GetShowsByTitle(Resource):
     def get(self, title):
-        print(title)
         response_result = []
         configs = GetIMDBConfigs()
         url = configs.get_url()
@@ -94,14 +89,13 @@ class GetShowsByTitle(Resource):
                     "GET", request.url_root + "/get-show-images-by-imdb/"+show['imdb_id'])
                 shows_details = response.json()
                 response_result.append(shows_details)
-            return make_response(render_template('views/movies.html', results=response_result, view=True))
+            return make_response(render_template('views/view_result.html', results=response_result, view=True))
         else:
             return {"response": "Show Not Found", "status_code": 400}
 
 
 class GetShowDetails(Resource):
     def get(self, id):
-        print(id)
         configs = GetIMDBConfigs()
         url = configs.get_url()
         headers = configs.get_headers()
@@ -114,7 +108,6 @@ class GetShowDetails(Resource):
 
 class GetShowImagesByImdb(Resource):
     def get(self, id):
-        print(id)
         configs = GetIMDBConfigs()
         url = configs.get_url()
         headers = configs.get_headers()
@@ -127,7 +120,6 @@ class GetShowImagesByImdb(Resource):
 
 class GetSimilarShows(Resource):
     def get(self, id):
-        print(id)
         configs = GetIMDBConfigs()
         url = configs.get_url()
         headers = configs.get_headers()
