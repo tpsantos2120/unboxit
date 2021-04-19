@@ -12,6 +12,7 @@ class RegisterUserApi(Resource):
     def post(self):
         try:
             body = request.form
+            print(body.get('email'))
             user = User(**body)
             user.hash_password()
             user.save()
@@ -34,6 +35,7 @@ class LoginUserApi(Resource):
     def post(self):
         try:
             body = request.form
+            print("login api",body)
             user = User.objects.get(email=body.get('email'))
             authorized = user.check_password(body.get('password'))
             if not authorized:
