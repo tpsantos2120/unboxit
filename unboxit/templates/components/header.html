@@ -65,16 +65,14 @@
             <a
               class="nav-link"
               href="#"
-              uk-toggle="target: #modal-close-default"
+              uk-toggle="target: #settings-modal"
               ><i class="fas fa-sign-in-alt m-1"></i>Settings</a
             >
           </li>
           <li class="nav-item">
             <a
               class="nav-link"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#registerModal"
+              href="{{url_for('logout')}}"
               ><i class="fas fa-user-plus m-1"></i>Logout</a
             >
           </li>
