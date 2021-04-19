@@ -1,3 +1,72 @@
-{% extends 'layout/base.html' %} {% block content %}
-<h1>Dashboard</h1>
-{% endblock %}
+{% block content %} {% if result %}
+<div id="view-details-modal" class="uk-modal-full" uk-modal>
+  <div class="uk-modal-dialog">
+    <button
+      class="uk-modal-close-full uk-close-large close-details-modal"
+      type="button"
+      uk-close
+    ></button>
+    <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
+      <div class="uk-background-cover" uk-height-viewport></div>
+      <div class="uk-padding-large">
+        <h2 class="uk-modal-title">{{result.title}}</h2>
+        <h6>Description</h6>
+        <p>{{result.description}}</p>
+        <h6>Year: {{result.year}}</h6>
+        <h6>IMDB Rating: {{result.imdb_rating}}</h6>
+        <h6>Popularity: {{result.popularity}}</h6>
+        <h6>Runtime:{{result.runtime}}mins</h6>
+        <a
+          class="uk-button uk-button-default open-video"
+          href="#modal-media-youtube"
+          uk-toggle
+          >Watch Now</a
+        >
+        <div id="modal-media-youtube" class="uk-flex-top" uk-modal>
+          <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
+            <button
+              class="uk-modal-close-outside close-video-modal"
+              type="button"
+              uk-close
+            ></button>
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/{{result.youtube_trailer_key}}"
+              width="1920"
+              height="1080"
+              frameborder="0"
+              uk-video
+              uk-responsive
+            ></iframe>
+          </div>
+        </div>
+        <!-- <ul uk-accordion="collapsible: false">
+          <li class="uk-open">
+            <a class="uk-accordion-title" href="#">Genres</a>
+            <div class="uk-accordion-content">
+              {% for genre in result.genres %}
+              <p>{{genre}}</p>
+              {% endfor %}
+            </div>
+          </li>
+          <li class="uk-open">
+            <a class="uk-accordion-title" href="#">Stars</a>
+            <div class="uk-accordion-content">
+              {% for star in result.stars %}
+              <p>{{star}}</p>
+              {% endfor %}
+            </div>
+          </li>
+          <li class="uk-open">
+            <a class="uk-accordion-title" href="#">Directors</a>
+            <div class="uk-accordion-content">
+              {% for director in result.directors %}
+              <p>{{director}}</p>
+              {% endfor %}
+            </div>
+          </li>
+        </ul> -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} {% endblock %}
