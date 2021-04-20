@@ -1,5 +1,5 @@
 import os
-from unboxit.app import app
+from unboxit import app
 from gevent.pywsgi import WSGIServer
 
 

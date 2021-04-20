@@ -6,11 +6,12 @@ from unboxit.models.db import initialize_db
 from flask_restful import Api
 from flask_bcrypt import Bcrypt
 from unboxit.resources.errors import errors
+if os.path.exists("env.py"):
+    import env
 
 app = Flask(__name__)
-#app.config.from_pyfile('env.py')
 app.config['MONGODB_SETTINGS'] = {
-    'host': os.environ.get('MONGO_URI')
+    'host': os.environ.get("MONGO_URI"),
 }
 app.secret_key = os.environ.get("SECRET_KEY")
 
