@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 from unboxit.resources.errors import errors
 
 app = Flask(__name__)
-app.config.from_pyfile('env.py')
+#app.config.from_pyfile('env.py')
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ.get('MONGO_URI')
 }
