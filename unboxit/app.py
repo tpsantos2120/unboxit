@@ -1,9 +1,9 @@
 import os
+from unboxit.resources.jwt import initialize_jwt
 from flask import Flask
 from flask import render_template
 from unboxit.models.db import initialize_db
 from flask_restful import Api
-from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from unboxit.resources.errors import errors
 
@@ -23,7 +23,9 @@ from unboxit.resources.routes import initialize_routes
 
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
-jwt = JWTManager(app)
 
+
+initialize_jwt(app)
 initialize_db(app)
 initialize_routes(api)
+
