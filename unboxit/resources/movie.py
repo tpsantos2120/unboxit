@@ -12,11 +12,12 @@ class MoviesApi(Resource):
         movies = Movie.objects().to_json()
         return Response(movies, mimetype="application/json", status=200)
 
-    @jwt_required()
+    @jwt_required(locations=['headers', 'cookies'])
     def post(self):
         try:
-            user_id = get_jwt_identity()
+            user_id = get_jwt_identity(locations=['headers', 'cookies'])
             body = request.get_json()
+            print(body)
             user = User.objects.get(id=user_id)
             movie = Movie(**body, added_by=user)
             movie.save()
