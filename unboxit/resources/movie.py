@@ -10,16 +10,16 @@ from mongoengine.errors import DoesNotExist, NotUniqueError
 from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError
 import json
 class MoviesApi(Resource):
+    @jwt_required(locations=['headers', 'cookies'])
     def get(self):
-        cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'], optional=True)
-        if cookie_exist:  
-            extract_id = cookie_exist  
-            print(cookie_exist[0:3])
-            #user = User.objects.get(id=identity['user_id'])
-            #print(user.id)
-            #movies = Movie.objects(user.movies).to_json()
-            #print(movies)
-            return Response(cookie_exist, mimetype="application/json", status=200)
+        identity = get_jwt_identity()
+        movies = []
+        if identity:  
+            user = User.objects.get(id=identity['user_id'])
+            for movie in user.movies:
+                user_movies = Movie.objects.get(id=movie.id).to_json()
+                movies.append(user_movies)
+            return Response(movies, mimetype="application/json", status=200)
 
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
