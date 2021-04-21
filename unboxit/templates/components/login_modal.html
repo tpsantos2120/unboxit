@@ -1,5 +1,5 @@
 <!-- Modal -->
-<form action="{{ url_for('login') }}" id="login-form" method="POST">
+<form action="" id="login-form" method="">
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
     <div class="modal-dialog  modal-lg modal-dialog-centered">
       <div class="modal-content">
@@ -7,7 +7,6 @@
           <h5 class="modal-title" id="loginModalLabel">Login</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>        
-        
         <div class="modal-body">
           <div class="mb-3 row">
             <label for="email" class="col-sm-2 col-form-label sr-only">Email:</label>
@@ -24,10 +23,43 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button onclick="form_submit_login()" type="button" class="btn btn-primary">Login</button>
+          <button type="button" class="btn btn-primary" id="login-button">Login</button>
         </div>
       
       </div>
     </div>
   </div>
 </form>
+{% block script %}
+<script>
+  $(function () {
+    $('#login-button').bind('click', function() {
+      const email = $("#login-email").val();
+      const password = $("#login-password").val();
+      const url = "/api/auth/login"
+      $.ajax({
+        url: url,
+        type: "post",
+        data: {email:email, password:password},
+        success: function (response) {
+          window.location.replace("/dashboard")
+        },
+        error: function (error) {
+          if (error.status == 401){
+            $("#login-email").addClass("uk-form-danger");
+            $("#login-password").addClass("uk-form-danger");
+          }
+        },
+      });
+    });
+    // function userFeedback(userFeedback){
+    //   UIkit.notification({
+    //         message: userFeedback.message || userFeedback.responseJSON.message,
+    //         status: userFeedback.message ? "success" : "warning",
+    //         pos: "top-center",
+    //         timeout: 5000,
+    //       });
+    // }
+  });
+</script>
+{% endblock %}
