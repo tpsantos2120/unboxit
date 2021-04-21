@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 from mongoengine.errors import DoesNotExist, NotUniqueError
 from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError
-
+import json
 class MoviesApi(Resource):
     def get(self):
         movies = Movie.objects().to_json()
@@ -14,20 +14,19 @@ class MoviesApi(Resource):
 
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
-        try:
-            user_id = get_jwt_identity(locations=['headers', 'cookies'])
-            body = request.get_json()
-            print(body)
-            user = User.objects.get(id=user_id)
-            movie = Movie(**body, added_by=user)
+        try:   
+            identity = get_jwt_identity()
+            body = request.form.get('data')            
+            user = User.objects.get(id=identity['user_id'])
+            movie = Movie(**json.loads(body), added_by=user)
             movie.save()
             user.update(add_to_set__movies=movie)
             user.save()
-            id = movie.id
-            return {'id': str(id)}, 200
+            return {'message': "Movie added successfully!"}, 200
         except DoesNotExist:
             raise MovieNotExistsError
         except NotUniqueError:
+            print("fuck you")
             raise MovieAlreadyExistsError
         except Exception as e:
             raise InternalServerError
