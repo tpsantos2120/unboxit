@@ -112,26 +112,8 @@ function startSpinner() {
 function endSpinner() {
   UIkit.modal("#user-feedback").hide();
 }
-console.log(document.cookie)
 function save() {
   $(function() {
-    $('a#watchlist-form').bind('click', function() {
-      $.ajax({
-        url: "/api/movies",
-        type: "post",
-        data: {
-          title: $('input[name="a"]').val(),
-          description: $('input[name="b"]').val()
 
-        },
-        beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer ');},
-        success: function (response) {
-         console.log(response)
-        },
-        error: function (error) {
-          console.log(error);
-        },
-      });
-    });
-  });
+  })
 }
