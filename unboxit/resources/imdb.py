@@ -23,25 +23,32 @@ class SearchMovies(Resource):
                 response = imdb.request_query(url, headers, querystring)
                 movies_images = response.json()
                 response_result.append(movies_images)
+                print(response_result)
             headers = {'Content-Type': 'text/html'}
-            print(headers)
-            return make_response(render_template('views/view_search.html', results=response_result, view=True), 200, headers)
+            return make_response(render_template('views/view_search.html', type="movies", results=response_result, view=True), 200, headers)
         else:
             return{"response": "Movie Not Found", "status_code": 400}
 
 
-class GetMovieDetails(Resource):
+class SearchMovieDetails(Resource):
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, id):
-        configs = IMDBConfigs()
-        url = configs.get_url()
-        headers = configs.get_headers()
-        query_string = configs.get_query_string(
-            request.endpoint, id, None, None)
-        response = requests.request(
-            "GET", url, headers=headers, params=query_string)
-        return response.json()
+        cookie_exist = request.cookies.get("access_token_cookie")
+        logged_in = False
+        if cookie_exist:
+            logged_in = True
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-movie-details", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        movie_details = response.json()
+        movie_details.pop('status')
+        movie_details.pop('status_message')
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('components/view_search_details.html', logged_in=logged_in, result=movie_details), 200, headers)
 
 
 class GetMoviesImagesByImdb(Resource):
@@ -71,38 +78,50 @@ class GetSimilarMovies(Resource):
 
 
 class SearchTvShows(Resource):
+    @sleep_and_retry
+    @limits(calls=5, period=1)
     def get(self, title):
         response_result = []
-        configs = IMDBConfigs()
-        url = configs.get_url()
-        headers = configs.get_headers()
-        query_string = configs.get_query_string(
-            request.endpoint, None, title, None)
-        query_by_title_response = requests.request(
-            "GET", url, headers=headers, params=query_string)
-        shows = query_by_title_response.json()
-        if not shows['search_results'] == 0:
-            for show in shows['tv_results']:
-                response = requests.request(
-                    "GET", request.url_root + "/get-show-images-by-imdb/"+show['imdb_id'])
-                shows_details = response.json()
-                response_result.append(shows_details)
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {"type": "get-shows-by-title", "title": title}
+        response = imdb.request_query(url, headers, querystring)
+        tv_shows = response.json()
+        print(tv_shows)
+        if tv_shows['search_results'] > 0:
+            for show in tv_shows['tv_results']:
+                querystring = {
+                    "type": "get-show-images-by-imdb", "imdb": show['imdb_id']}
+                response = imdb.request_query(url, headers, querystring)
+                tv_shows_images = response.json()
+                response_result.append(tv_shows_images)
+                print(response_result)
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/view_result.html', results=response_result, view=True), 200, headers)
+            return make_response(render_template('views/view_search.html', type="tvshows", results=response_result, view=True), 200, headers)
         else:
-            return {"response": "Show Not Found", "status_code": 400}
+            return{"response": "Movie Not Found", "status_code": 400}
 
 
-class GetShowDetails(Resource):
+class SearchShowDetails(Resource):
+    @sleep_and_retry
+    @limits(calls=5, period=1)
     def get(self, id):
-        configs = IMDBConfigs()
-        url = configs.get_url()
-        headers = configs.get_headers()
-        query_string = configs.get_query_string(
-            request.endpoint, id, None, None)
-        response = requests.request(
-            "GET", url, headers=headers, params=query_string)
-        return response.json()
+        cookie_exist = request.cookies.get("access_token_cookie")
+        logged_in = False
+        if cookie_exist:
+            logged_in = True
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-details", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        tv_show_details = response.json()
+        tv_show_details.pop('status')
+        tv_show_details.pop('status_message')
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('components/view_search_details.html', logged_in=logged_in, result=tv_show_details), 200, headers)
 
 
 class GetShowImagesByImdb(Resource):

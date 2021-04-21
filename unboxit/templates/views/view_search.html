@@ -1,35 +1,107 @@
-{% block content %}
-{% if results %} 
+{% block content %} {% if results %}
 <div class="p-3" uk-slider="sets: true">
-    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
-      <ul class="uk-slider-items uk-child-width-1-4@s uk-grid uk-margin">
-        {% for result in results %}
-        {% if not result.poster == "" %}
-        <li>
-          <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge results">
-            <div class="uk-card-media-bottom">
-              <a href="#"><img data-src="{{ result.poster }}"  alt="{{result.title}}" uk-img imdb="{{result.IMDB}}"></a>  
-            </div>
+  <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+    <ul class="uk-slider-items uk-child-width-1-4@s uk-grid uk-margin">
+      {% for result in results %} {% if not result.poster == "" %}
+      <li>
+        <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge results">
+          <div class="uk-card-media-bottom">
+            <a href="#"
+              ><img
+                data-src="{{ result.poster }}"
+                type="{{type}}"
+                alt="{{result.title}}"
+                uk-img
+                imdb="{{result.IMDB}}"
+            /></a>
           </div>
-        </li>
-        {% endif %} 
-        {% endfor %}
-      </ul>
-      <a
-        class="uk-position-center-left uk-position-small uk-hidden-hover"
-        href="#"
-        uk-slidenav-previous
-        uk-slider-item="previous"
-      ></a>
-      <a
-        class="uk-position-center-right uk-position-small uk-hidden-hover"
-        href="#"
-        uk-slidenav-next
-        uk-slider-item="next"
-      ></a>
-    </div>
-  
-    <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+        </div>
+      </li>
+      {% endif %} {% endfor %}
+    </ul>
+    <a
+      class="uk-position-center-left uk-position-small uk-hidden-hover"
+      href="#"
+      uk-slidenav-previous
+      uk-slider-item="previous"
+    ></a>
+    <a
+      class="uk-position-center-right uk-position-small uk-hidden-hover"
+      href="#"
+      uk-slidenav-next
+      uk-slider-item="next"
+    ></a>
   </div>
-  {% endif %} 
+
+  <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+</div>
+{% endif %} {% endblock %} {% block script %}
+<script>
+  $(function () {
+    $(".results").bind("click", function (e) {
+      const imdbID = $(e.target).attr("imdb");
+      const type = $(e.target).attr("type");
+      const image = $(e.target).attr("data-src");
+      if (type == "movies") {
+        var url = "/search/movie-details/" + imdbID;
+        $.ajax({
+          url: url,
+          type: "get",
+          success: function (response) {
+            $("#result-full-details").append(response);
+            $(".uk-background-cover").css(
+              "background-image",
+              "url(" + image + ")"
+            );
+            UIkit.modal("#view-details-modal").show();
+            $(".close-details-modal").click(function () {
+              $("#view-details-modal").remove();
+              $("#modal-media-youtube").remove();
+            });
+            $(".close-video-modal").click(function () {
+              $("#view-details-modal").remove();
+              $("#modal-media-youtube").remove();
+            });
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      } else if (type == "tvshows") {
+        var url = "/search/show-details/" + imdbID;
+        $.ajax({
+          url: url,
+          type: "get",
+          success: function (response) {
+            $("#result-full-details").append(response);
+            $(".uk-background-cover").css(
+              "background-image",
+              "url(" + image + ")"
+            );
+            UIkit.modal("#view-details-modal").show();
+            $(".close-details-modal").click(function () {
+              $("#view-details-modal").remove();
+              $("#modal-media-youtube").remove();
+            });
+            $(".close-video-modal").click(function () {
+              $("#view-details-modal").remove();
+              $("#modal-media-youtube").remove();
+            });
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      }
+      function userFeedback(userFeedback) {
+        UIkit.notification({
+          message: userFeedback.message || userFeedback.responseJSON.message,
+          status: userFeedback.message ? "success" : "warning",
+          pos: "top-center",
+          timeout: 5000,
+        });
+      }
+    });
+  });
+</script>
 {% endblock %}

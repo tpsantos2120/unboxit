@@ -6,7 +6,7 @@ from .home import Home
 from .login import Login
 from .register import Register
 from .app_api import Dashboard, DashboardSearch, ViewDetails
-from .imdb import SearchMovies, GetMoviesImagesByImdb, SearchTvShows, GetShowDetails, GetMovieDetails \
+from .imdb import SearchMovieDetails, SearchMovies, GetMoviesImagesByImdb, SearchTvShows, SearchShowDetails, SearchMovieDetails \
 , GetMoviesImagesByImdb, GetShowImagesByImdb, GetSimilarMovies, GetSimilarShows
 
 
@@ -22,10 +22,10 @@ def initialize_routes(api):
     api.add_resource(DashboardSearch, '/dashboard/search')
     api.add_resource(ViewDetails, '/view-details/')
     api.add_resource(SearchMovies, '/search/movies/<title>')
-    api.add_resource(GetMovieDetails, '/get-movie-details/<id>', endpoint="get-movie-details")
+    api.add_resource(SearchMovieDetails, '/search/movie-details/<id>')
     api.add_resource(GetMoviesImagesByImdb, '/get-movies-images-by-imdb/<id>', endpoint="get-movies-images-by-imdb")
     api.add_resource(GetSimilarMovies, '/get-similar-movies/<id>', endpoint="get-similar-movies")
     api.add_resource(SearchTvShows, '/search/tv-shows/<title>')
-    api.add_resource(GetShowDetails, '/get-show-details/<id>', endpoint="get-show-details")
+    api.add_resource(SearchShowDetails, '/search/show-details/<id>', endpoint="get-show-details")
     api.add_resource(GetShowImagesByImdb, '/get-show-images-by-imdb/<id>', endpoint="get-show-images-by-imdb")
     api.add_resource(GetSimilarShows, '/get-similar-shows/<id>', endpoint="get-similar-shows")
