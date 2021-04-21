@@ -9,12 +9,14 @@ from flask_restful import Resource
 from mongoengine.errors import DoesNotExist, NotUniqueError
 from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError
 import json
+
+
 class MoviesApi(Resource):
     @jwt_required(locations=['headers', 'cookies'])
     def get(self):
         identity = get_jwt_identity()
         movies = []
-        if identity:  
+        if identity:
             user = User.objects.get(id=identity['user_id'])
             for movie in user.movies:
                 user_movies = Movie.objects.get(id=movie.id).to_json()
@@ -31,5 +33,12 @@ class MoviesApi(Resource):
         user.update(add_to_set__movies=movie)
         user.save()
         return {'message': "Movie added successfully!"}, 200
- 
 
+
+class MovieApi(Resource):
+    @jwt_required(locations=['headers', 'cookies'])
+    def delete(self, id):
+        identity = get_jwt_identity()
+        movie = Movie.objects.get(id=id, added_by=identity['user_id'])
+        movie.delete()
+        return '', 200
