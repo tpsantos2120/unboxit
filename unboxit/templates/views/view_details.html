@@ -94,16 +94,13 @@
                 Directors
               </button>
               <div uk-dropdown>
-                {% if result.directors%} 
-                {% for director in result.directors[0:5] %}
+                {% if result.directors%} {% for director in
+                result.directors[0:5] %}
                 <li>{{director}}</li>
-                {% endfor %}
-                {% endif %}
-                {% if result.creators%} 
-                {% for director in result.creators[0:5] %}
+                {% endfor %} {% endif %} {% if result.creators%} {% for director
+                in result.creators[0:5] %}
                 <li>{{director}}</li>
-                {% endfor %}
-                {% endif %}
+                {% endfor %} {% endif %}
               </div>
             </div>
           </div>
@@ -153,4 +150,32 @@
     </div>
   </div>
 </div>
-{% endif %} {% endblock %}
+{% endif %} {% endblock %} {% block script %}
+<script>
+  $(function () {
+    $('a#watchlist-form').bind('click', function() {
+      var url = "{{url_for('moviesapi')}}";
+      var data ='{{ result|tojson }}'; 
+      $.ajax({
+        url: url,
+        type: "post",
+        data: {data:data},
+        success: function (response) {
+          userFeedback(response);
+        },
+        error: function (error) {
+          userFeedback(error);
+        },
+      });
+    });
+    function userFeedback(userFeedback){
+      UIkit.notification({
+            message: userFeedback.message || userFeedback.responseJSON.message,
+            status: userFeedback.message ? "success" : "warning",
+            pos: "top-center",
+            timeout: 5000,
+          });
+    }
+  });
+</script>
+{% endblock %}
