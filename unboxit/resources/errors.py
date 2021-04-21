@@ -28,7 +28,7 @@ errors = {
          'status': 400
      },
      "MovieAlreadyExistsError": {
-         "message": "Movie with given id already exists",
+         "message": "Movie has already been added.",
          "status": 400
      },
       "UnauthorizedError": {
