@@ -23,12 +23,20 @@ class Dashboard(Resource):
     @jwt.expired_token_loader
     def my_expired_token_callback(jwt_header, jwt_payload):
         return redirect(url_for('home'))
+    @jwt.unauthorized_loader
+    def invalid_token_callback(callback): 
+        return redirect(url_for('home'))
 
 
 class ViewDetails(Resource):
     def get(self):
         id = request.args.get('id')
         query_type = request.args.get('type')
+        cookie_exist = request.cookies.get("access_token_cookie")
+        logged_in = False
+        print(cookie_exist)
+        if cookie_exist:
+            logged_in = True
         if query_type and id:
             print(query_type, id)
             if query_type == "Movies":
@@ -42,7 +50,7 @@ class ViewDetails(Resource):
             print(result_details)
             if result_details:
                 headers = {'Content-Type': 'text/html'}
-                return make_response(render_template('views/view_details.html', result=result_details), 200, headers)
+                return make_response(render_template('views/view_details.html', logged_in=logged_in, result=result_details), 200, headers)
         else:
             return redirect(url_for('home'))
 
@@ -54,6 +62,7 @@ class DashboardSearch(Resource):
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template('views/dashboard_search.html', title="Dashboard Search", logged_in=True), 200, headers)
         else:
+           
             return redirect(url_for('home'))
 
     @jwt.expired_token_loader
