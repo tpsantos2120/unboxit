@@ -42,7 +42,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button onclick="form_submit_register()" type="button" class="btn btn-primary">Signup</button>
+            <button type="button" class="btn btn-primary" id='register-button'>Signup</button>
           </div>
         </div>
         </div>
@@ -52,17 +52,20 @@
   {% block script %}
 <script>
   $(function () {
-    $('#login-button').bind('click', function() {
+    $('#register-button').bind('click', function() {
       const firstName = $("#firstname").val();
       const lastName = $("#lastname").val();
       const username = $("#username").val();
       const email = $("#email").val();
       const password = $("#password").val();
       const url = "/api/auth/register"
+
+      console.log(username,lastName, email)
       $.ajax({
         url: url,
         type: "post",
-        data: {email:email, password:password},
+        data: {email:email, password:password, first_name:firstName
+          , last_name:lastName, username:username},
         success: function (response) {
           window.location.replace("/dashboard")
         },
