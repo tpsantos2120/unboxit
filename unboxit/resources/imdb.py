@@ -6,6 +6,9 @@ import os
 
 
 class SearchMovies(Resource):
+    """
+    Query movies from IMBD API
+    """
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, title):
@@ -23,7 +26,6 @@ class SearchMovies(Resource):
                 response = imdb.request_query(url, headers, querystring)
                 movies_images = response.json()
                 response_result.append(movies_images)
-                print(response_result)
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template('views/view_search.html', type="movies", results=response_result, view=True), 200, headers)
         else:
@@ -37,6 +39,7 @@ class SearchMovieDetails(Resource):
         cookie_exist = request.cookies.get("access_token_cookie")
         logged_in = False
         if cookie_exist:
+            #is_added = flag_movie()
             logged_in = True
         imdb = IMDBConfigs()
         url = imdb.get_url()
@@ -49,6 +52,7 @@ class SearchMovieDetails(Resource):
         movie_details.pop('status_message')
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('components/view_search_details.html', logged_in=logged_in, result=movie_details), 200, headers)
+
 
 
 class GetMoviesImagesByImdb(Resource):
@@ -88,7 +92,6 @@ class SearchTvShows(Resource):
         querystring = {"type": "get-shows-by-title", "title": title}
         response = imdb.request_query(url, headers, querystring)
         tv_shows = response.json()
-        print(tv_shows)
         if tv_shows['search_results'] > 0:
             for show in tv_shows['tv_results']:
                 querystring = {
