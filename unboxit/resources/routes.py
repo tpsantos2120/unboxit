@@ -5,7 +5,7 @@ from .user import LoginUserApi
 from .home import Home
 from .login import Login
 from .register import Register
-from .dashboard import Dashboard, DashboardSearch, ViewDetails
+from .app_api import Dashboard, DashboardSearch, ViewDetails
 from .imdb import SearchMovies, GetMoviesImagesByImdb, SearchTvShows, GetShowDetails, GetMovieDetails \
 , GetMoviesImagesByImdb, GetShowImagesByImdb, GetSimilarMovies, GetSimilarShows
 
