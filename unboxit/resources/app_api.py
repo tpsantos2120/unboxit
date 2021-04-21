@@ -15,45 +15,22 @@ class Dashboard(Resource):
             headers = {
                 'Content-Type': 'text/html'
             }
+            response = requests.request("GET", request.url_root + '/api/movies')
             return make_response(render_template('views/dashboard.html', title="Dashboard",
                                                  logged_in=True, first_name=first_name, last_name=last_name), 200, headers)
         else:
             return redirect(url_for('home'))
-
-    @jwt.expired_token_loader
-    def my_expired_token_callback(jwt_header, jwt_payload):
-        return redirect(url_for('home'))
-    @jwt.unauthorized_loader
+    @jwt.token_verification_failed_loader
     def invalid_token_callback(callback): 
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))        
 
+    # @jwt.expired_token_loader
+    # def my_expired_token_callback(jwt_header, jwt_payload):
+    #     return redirect(url_for('home'))
 
-class ViewDetails(Resource):
-    def get(self):
-        id = request.args.get('id')
-        query_type = request.args.get('type')
-        cookie_exist = request.cookies.get("access_token_cookie")
-        logged_in = False
-        if cookie_exist:
-            logged_in = True
-        if query_type and id:
-            print(query_type, id)
-            if query_type == "Movies":
-                response = requests.request(
-                    "GET", request.url_root + "/get-movie-details/"+id)
-                result_details = response.json()
-            elif query_type == "TV Shows":
-                response = requests.request(
-                    "GET", request.url_root + "/get-show-details/"+id)
-                result_details = response.json()
-            result_details.pop('status')
-            result_details.pop('status_message')
-            if result_details:
-                headers = {'Content-Type': 'text/html'}
-                return make_response(render_template('views/view_details.html', logged_in=logged_in, result=result_details), 200, headers)
-        else:
-            return redirect(url_for('home'))
-
+    # @jwt.unauthorized_loader
+    # def invalid_token_callback(callback):
+    #     return redirect(url_for('home'))
 
 class DashboardSearch(Resource):
     def get(self):
@@ -62,7 +39,6 @@ class DashboardSearch(Resource):
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template('views/dashboard_search.html', title="Dashboard Search", logged_in=True), 200, headers)
         else:
-           
             return redirect(url_for('home'))
 
     @jwt.expired_token_loader
