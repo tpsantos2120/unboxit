@@ -121,7 +121,7 @@
           <div>
             <a
               class="uk-button uk-button-default uk-margin-small-bottom"
-              id="watchlist-form"
+              id="watchlist-button"
               href="#"
               >Add</a
             >
@@ -153,7 +153,7 @@
 {% endif %} {% endblock %} {% block script %}
 <script>
   $(function () {
-    $('a#watchlist-form').bind('click', function() {
+    $('a#watchlist-button').bind('click', function() {
       var url = "{{url_for('moviesapi')}}";
       var data ='{{ result|tojson }}'; 
       $.ajax({
@@ -175,6 +175,7 @@
             pos: "top-center",
             timeout: 5000,
           });
+          $('a#watchlist-button').attr('disabled', " ");
     }
   });
 </script>
