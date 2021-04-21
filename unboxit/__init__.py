@@ -16,7 +16,7 @@ app.config['MONGODB_SETTINGS'] = {
 app.secret_key = os.environ.get("SECRET_KEY")
 
 def page_not_found(e):
-  return render_template('views/error.html'), 404
+  return render_template('components/error.html'), 404
 
 app.register_error_handler(404, page_not_found)
 
