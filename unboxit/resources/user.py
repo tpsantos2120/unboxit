@@ -1,6 +1,8 @@
 import datetime
 from flask import Response, request
+from flask.helpers import make_response
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended.utils import set_access_cookies
 from unboxit.models.models import User
 from flask_restful import Resource
 from mongoengine.errors import DoesNotExist, FieldDoesNotExist, NotUniqueError
@@ -24,10 +26,12 @@ class RegisterUserApi(Resource):
             }
             access_token = create_access_token(
                 identity=user_details, expires_delta=expires)
-            return {
+            res = make_response({
                 "response": "User registered successfully.",
                 'token': access_token
-            }, 200
+            }, 200)
+            set_access_cookies(res, access_token)
+            return res
         except FieldDoesNotExist:
             raise SchemaValidationError
         except NotUniqueError:
@@ -44,7 +48,7 @@ class LoginUserApi(Resource):
             user = User.objects.get(email=body.get('email'))
             authorized = user.check_password(body.get('password'))
             if not authorized:
-                return {'response': "Access Denied"}, 403
+                raise UnauthorizedError
             expires = datetime.timedelta(days=30)
             user_details = {
                 "user_id":str(user.id),
@@ -53,10 +57,12 @@ class LoginUserApi(Resource):
             }
             access_token = create_access_token(
                 identity=user_details, expires_delta=expires)
-            return {
-                "response": "Logged in successfully.",
-                'token': access_token
-            }, 200
+            res = make_response({
+                "response": "You have logged in successfully.",
+                'status': 200
+            }, 200)
+            set_access_cookies(res, access_token)
+            return res
         except (UnauthorizedError, DoesNotExist):
             raise UnauthorizedError
         except Exception as e:
