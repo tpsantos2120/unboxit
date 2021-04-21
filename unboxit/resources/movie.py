@@ -26,7 +26,7 @@ class MoviesApi(Resource):
         except DoesNotExist:
             raise MovieNotExistsError
         except NotUniqueError:
-            print("fuck you")
             raise MovieAlreadyExistsError
         except Exception as e:
             raise InternalServerError
+
