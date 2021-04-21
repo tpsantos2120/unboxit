@@ -34,7 +34,6 @@ class ViewDetails(Resource):
         query_type = request.args.get('type')
         cookie_exist = request.cookies.get("access_token_cookie")
         logged_in = False
-        print(cookie_exist)
         if cookie_exist:
             logged_in = True
         if query_type and id:
@@ -47,7 +46,8 @@ class ViewDetails(Resource):
                 response = requests.request(
                     "GET", request.url_root + "/get-show-details/"+id)
                 result_details = response.json()
-            print(result_details)
+            result_details.pop('status')
+            result_details.pop('status_message')
             if result_details:
                 headers = {'Content-Type': 'text/html'}
                 return make_response(render_template('views/view_details.html', logged_in=logged_in, result=result_details), 200, headers)
