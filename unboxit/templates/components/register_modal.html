@@ -51,43 +51,6 @@
   </form>
   {% block script %}
 <script>
-  $(function () {
-    $('#register-button').bind('click', function() {
-      const firstName = $("#firstname").val();
-      const lastName = $("#lastname").val();
-      const username = $("#username").val();
-      const email = $("#email").val();
-      const password = $("#password").val();
-      const url = "/api/auth/register"
-
-      console.log(username,lastName, email)
-      $.ajax({
-        url: url,
-        type: "post",
-        data: {email:email, password:password, first_name:firstName
-          , last_name:lastName, username:username},
-        success: function (response) {
-          window.location.replace("/dashboard")
-        },
-        error: function (error) {
-          if (error.status == 401){
-            $("#firstname").addClass("uk-form-danger");
-            $("#lastname").addClass("uk-form-danger");
-            $("#username").addClass("uk-form-danger");
-            $("#email").addClass("uk-form-danger");
-            $("#password").addClass("uk-form-danger");
-          }
-        },
-      });
-    });
-    // function userFeedback(userFeedback){
-    //   UIkit.notification({
-    //         message: userFeedback.message || userFeedback.responseJSON.message,
-    //         status: userFeedback.message ? "success" : "warning",
-    //         pos: "top-center",
-    //         timeout: 5000,
-    //       });
-    // }
-  });
+ 
 </script>
 {% endblock %}
