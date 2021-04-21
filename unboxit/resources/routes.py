@@ -3,7 +3,7 @@ from .movie import MoviesApi
 from .user import RegisterUserApi
 from .user import LoginUserApi
 from .home import Home
-from .app_api import Dashboard, DashboardSearch, ViewDetails
+from .app_api import Dashboard, DashboardSearch
 from .imdb import SearchMovieDetails, SearchMovies, GetMoviesImagesByImdb, SearchTvShows, SearchShowDetails, SearchMovieDetails \
 , GetMoviesImagesByImdb, GetShowImagesByImdb, GetSimilarMovies, GetSimilarShows
 
@@ -16,7 +16,6 @@ def initialize_routes(api):
     api.add_resource(Logout, '/logout')
     api.add_resource(Dashboard, '/dashboard')
     api.add_resource(DashboardSearch, '/dashboard/search')
-    api.add_resource(ViewDetails, '/view-details/')
     api.add_resource(SearchMovies, '/search/movies/<title>')
     api.add_resource(SearchMovieDetails, '/search/movie-details/<id>')
     api.add_resource(GetMoviesImagesByImdb, '/get-movies-images-by-imdb/<id>', endpoint="get-movies-images-by-imdb")
