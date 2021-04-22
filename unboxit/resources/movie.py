@@ -32,7 +32,11 @@ class MoviesApi(Resource):
         movie.save()
         user.update(add_to_set__movies=movie)
         user.save()
-        return {'message': "Movie added successfully!"}, 200
+        response = {"UserDeletion": {
+            "message": "Movie was deleted successfully.",
+            "status": 200
+        }}
+        return Response(response, mimetype="application/json", status=200)
 
 
 class MovieApi(Resource):
@@ -41,4 +45,13 @@ class MovieApi(Resource):
         identity = get_jwt_identity()
         movie = Movie.objects.get(id=id, added_by=identity['user_id'])
         movie.delete()
-        return '', 200
+        response = {"DeleteRequest": {
+            "message": "Movie was deleted successfully.",
+            "status": 200
+        }}
+        return Response(response, mimetype="application/json", status=200)
+
+    @jwt_required(locations=['headers', 'cookies'])
+    def get(self, id):
+        movie = Movie.objects.get(id=id).to_json()
+        return Response(movie, mimetype="application/json", status=200)
