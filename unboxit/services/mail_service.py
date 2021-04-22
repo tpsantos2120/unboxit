@@ -3,7 +3,7 @@ from unboxit.resources.errors import InternalServerError
 from flask_mail import Message
 
 from unboxit import app
-from unboxit import mail
+from .mail import mail
 
 
 def send_async_email(app, msg):
