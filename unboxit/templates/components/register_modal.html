@@ -1,50 +1,65 @@
-<form action="" id="register-form" method="POST">
-  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModal" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="registerModalLabel">Sign Up</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>        
-          <div class="modal-body ">
-            <div class="col">
-            <div class="mb-3 row">
-              <label for="email" class="col-sm-2 col-form-label sr-only">First Name:</label>
-              <div class="col-sm-10">
-                <input type="text" required class="form-control" name="firstname" id="firstname" placeholder="First Name">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="email" class="col-sm-2 col-form-label sr-only">Last Name:</label>
-              <div class="col-sm-10">
-                <input type="text"  required class="form-control" name="lastname" id="lastname" placeholder="Last Name">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="email" class="col-sm-2 col-form-label sr-only">Username:</label>
-              <div class="col-sm-10">
-                <input type="text"  required class="form-control" name="username" id="username" placeholder="Username">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="email" class="col-sm-2 col-form-label sr-only">Email:</label>
-              <div class="col-sm-10">
-                <input type="email"  required class="form-control" name="email" id="email" placeholder="Email">
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="password" class="col-sm-2 col-form-label sr-only">Password:</label>
-              <div class="col-sm-10">
-                <input type="password"  required class="form-control" name="password" id="password" placeholder="Password">
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id='register-button'>Signup</button>
-          </div>
-        </div>
-        </div>
-      </div>
+<div id="register-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
+    <div class="uk-alert-danger" hidden uk-alert id="register-alert">
+      <a class="uk-alert-close" uk-close></a>
+      <p>The details that you provided are wrong.</p>
     </div>
-  </form>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form action="" id="register-form" method="POST">
+      <h2 class="uk-modal-title">Sign Up</h2>
+      <div class="uk-margin">
+        <input
+          class="uk-input"
+          type="text"
+          name="firstname"
+          placeholder="First Name"
+          id="firstname"
+          required
+        />
+      </div>
+      <div class="uk-margin">
+        <input
+          class="uk-input"
+          type="text"
+          name="lastname"
+          placeholder="Last Name"
+          id="lastname"
+          required
+        />
+      </div>
+      <div class="uk-margin">
+        <input
+          class="uk-input"
+          type="text"
+          name="username"
+          placeholder="Username"
+          id="username"
+          required
+        />
+      </div>
+      <div class="uk-margin">
+        <input
+          class="uk-input"
+          type="text"
+          name="email"
+          placeholder="Email"
+          id="email"
+          required
+        />
+      </div>
+      <div class="uk-margin">
+        <input
+          class="uk-input"
+          type="password"
+          name="firstname"
+          placeholder="password"
+          id="password"
+          required
+        />
+      </div>
+    </form>
+    <a class="uk-button uk-button-default" href="" id="register-button"
+      >Sign Up</a
+    >
+  </div>
+</div>
