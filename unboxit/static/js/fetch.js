@@ -1,18 +1,18 @@
 const _apiHost = window.location.hostname;
 
-async function request(url, params, method = "GET") {
+async function request(url, data, method = "GET") {
+  console.log(data);
   const options = {
     method,
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(data),
   };
-
-  const response = await fetch(_apiHost + url, options);
+  console.log(url, options);
+  const response = await fetch(url, options);
   if (response.status !== 200) {
-    return generateErrorResponse(
-      "The server responded with an unexpected status."
-    );
+    return response;
   }
 
   const result = await response.json();
@@ -20,25 +20,25 @@ async function request(url, params, method = "GET") {
   return result;
 }
 
-function generateErrorResponse(message) {
-    return {
-      status : 'error',
-      message
-    };
-  }
-
-const get = (url, params) => {
-  return request(url, params);
+const get = (url, data) => {
+  return request(url, data);
 };
 
-const create = (url, params) => {
-  return request(url, params, "POST");
+const create = (url, data) => {
+  return request(url, data, "POST");
 };
 
-const update = (url, params) => {
-  return request(url, params, "PUT");
+const update = (url, data) => {
+  return request(url, data, "PUT");
 };
 
-const remove = (url, params) => {
-  return request(url, params, "DELETE");
+const remove = (url, data) => {
+  return request(url, data, "DELETE");
+};
+
+export default {
+  get,
+  create,
+  update,
+  remove,
 };
