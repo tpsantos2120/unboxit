@@ -1,3 +1,4 @@
+import Fetch from "./Fetch.js";
 // const ready = (id) => {
 //   let isIdExist = false;
 //   // If the body element and the #main element exist
@@ -17,13 +18,31 @@
 
 const loginButton = document.querySelector("#login-button");
 
-
-
-const handleLogin = () => {
+const handleLogin = (e) => {
   const email = document.querySelector("#login-email");
   const password = document.querySelector("#login-password");
   if (email && password) {
-    console.log(email.innerText, password.innerText)
+    loginUser(email, password);
   }
+  e.preventDefault();
 };
+
 loginButton.onclick = handleLogin;
+
+async function loginUser(email, password) {
+  const response = await Fetch.create("/api/auth/login", {
+    email: email.value,
+    password: password.value,
+  });
+  console.log(response);
+  if (response.status === 200) {
+    window.location.replace("/dashboard");
+  } else {
+    const alert = document.querySelector("#alert");
+    console.log(email, password);
+    email.classList.add("uk-form-danger");
+    password.classList.add("uk-form-danger");
+    alert.removeAttribute("hidden");
+  }
+  
+}
