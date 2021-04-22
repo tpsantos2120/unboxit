@@ -1,17 +1,31 @@
 <form action="" id="login-form" method="">
-  <!-- This is the modal with the default close button -->
   <div id="login-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
+      <div class="uk-alert-danger" hidden uk-alert id="login-alert">
+        <a class="uk-alert-close" uk-close></a>
+        <p>
+          The login details provided are not correct.
+        </p>
+      </div>
       <button class="uk-modal-close-default" type="button" uk-close></button>
       <h2 class="uk-modal-title">Login</h2>
       <div class="uk-margin">
-        <input class="uk-input" type="text" placeholder="Email" id="login-email"/>
+        <input
+          class="uk-input"
+          type="text"
+          placeholder="Email"
+          id="login-email"
+        />
       </div>
       <div class="uk-margin">
-        <input class="uk-input" type="text" placeholder="Password" id="login-password"/>
+        <input
+          class="uk-input"
+          type="text"
+          placeholder="Password"
+          id="login-password"
+        />
       </div>
       <a class="uk-button uk-button-default" href="" id="login-button">Login</a>
     </div>
   </div>
 </form>
-
