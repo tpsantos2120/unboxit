@@ -2,6 +2,13 @@ const _apiHost = window.location.hostname;
 
 async function request(url, params, method = 'GET') {
 
+    const options = {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    };
+    
     
   
 }
