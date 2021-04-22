@@ -1,65 +1,17 @@
-<!-- Modal -->
 <form action="" id="login-form" method="">
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
-    <div class="modal-dialog  modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginModalLabel">Login</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>        
-        <div class="modal-body">
-          <div class="mb-3 row">
-            <label for="email" class="col-sm-2 col-form-label sr-only">Email:</label>
-            <div class="col-sm-10">
-              <input type="text" required class="form-control" name="login-email" id="login-email" placeholder="Email">
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="password" class="col-sm-2 col-form-label sr-only">Password:</label>
-            <div class="col-sm-10">
-              <input type="password" required class="form-control" name="login-password" id="login-password" placeholder="Password">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="login-button">Login</button>
-        </div>
-      
+  <!-- This is the modal with the default close button -->
+  <div id="login-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <h2 class="uk-modal-title">Login</h2>
+      <div class="uk-margin">
+        <input class="uk-input" type="text" placeholder="Email" id="login-email"/>
       </div>
+      <div class="uk-margin">
+        <input class="uk-input" type="text" placeholder="Password" id="login-password"/>
+      </div>
+      <a class="uk-button uk-button-default" href="" id="login-button">Login</a>
     </div>
   </div>
 </form>
-{% block script %}
-<script>
-  $(function () {
-    $('#login-button').bind('click', function() {
-      const email = $("#login-email").val();
-      const password = $("#login-password").val();
-      const url = "/api/auth/login"
-      $.ajax({
-        url: url,
-        type: "post",
-        data: {email:email, password:password},
-        success: function (response) {
-          window.location.replace("/dashboard")
-        },
-        error: function (error) {
-          if (error.status == 401){
-            $("#login-email").addClass("uk-form-danger");
-            $("#login-password").addClass("uk-form-danger");
-          }
-        },
-      });
-    });
-    // function userFeedback(userFeedback){
-    //   UIkit.notification({
-    //         message: userFeedback.message || userFeedback.responseJSON.message,
-    //         status: userFeedback.message ? "success" : "warning",
-    //         pos: "top-center",
-    //         timeout: 5000,
-    //       });
-    // }
-  });
-</script>
-{% endblock %}
+

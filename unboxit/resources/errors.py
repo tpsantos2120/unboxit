@@ -18,6 +18,9 @@ class EmailAlreadyExistsError(HTTPException):
 class SchemaValidationError(HTTPException):
     pass
 
+class EmailDoesnotExistsError(Exception):
+    pass
+
 errors = {
     "InternalServerError": {
         "message": "Something went wrong internally",
@@ -42,5 +45,9 @@ errors = {
      "SchemaValidationError": {
          "message": "Request is missing required fields",
          "status": 400
-     }
+     },
+     "EmailDoesnotExistsError": {
+         "message": "Couldn't find the user with given email address",
+         "status": 400
+     },
 }
