@@ -20,10 +20,10 @@ def page_not_found(e):
   return render_template('components/error.html'), 404
 
 app.register_error_handler(404, page_not_found)
+mail = Mail(app)
 
 from unboxit.resources.routes import initialize_routes
 
-mail = Mail(app)
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
 

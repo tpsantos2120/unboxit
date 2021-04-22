@@ -1,7 +1,7 @@
 from unboxit.resources.errors import EmailDoesnotExistsError
 from flask_restful import Resource
 from flask import request, render_template
-from unboxit.models import User
+from unboxit.models.models import User
 from unboxit.services.mail_service import send_email
 from flask_jwt_extended import create_access_token
 
@@ -22,10 +22,10 @@ class ForgotPassword(Resource):
         expires = datetime.timedelta(hours=24)
         reset_token = create_access_token(str(user.id), expires_delta=expires)
 
-        return send_email('[Movie-bag] Reset Your Password',
-                              sender='support@movie-bag.com',
+        return send_email('[Unboxit] Reset Your Password',
+                              sender='support@unboxit.com',
                               recipients=[user.email],
-                              text_body=render_template('email/reset_password.txt',
+                              text_body=render_template('components/reset_password.txt',
                                                         url=url + reset_token),
-                              html_body=render_template('email/reset_password.html',
+                              html_body=render_template('components/reset_password.html',
                                                         url=url + reset_token))
