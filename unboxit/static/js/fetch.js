@@ -7,18 +7,18 @@ async function request(url, params, method = 'GET') {
 }
 
 
-function get(url, params) {
+const get = (url, params) => {
   return request(url, params);
 }
 
-function create(url, params) {
+const create = (url, params) => {
   return request(url, params, "POST");
 }
 
-function update(url, params) {
+const update = (url, params) => {
   return request(url, params, "PUT");
 }
 
-function remove(url, params) {
+const remove = (url, params) => {
   return request(url, params, "DELETE");
 }
