@@ -6,6 +6,7 @@ from unboxit.models.db import initialize_db
 from flask_restful import Api
 from flask_bcrypt import Bcrypt
 from unboxit.resources.errors import errors
+from flask_mail import Mail
 if os.path.exists("env.py"):
     import env
 
@@ -22,6 +23,7 @@ app.register_error_handler(404, page_not_found)
 
 from unboxit.resources.routes import initialize_routes
 
+mail = Mail(app)
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
 
