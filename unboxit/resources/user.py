@@ -11,25 +11,33 @@ from unboxit.resources.errors import InternalServerError, UnauthorizedError, Sch
 
 class RegisterUserApi(Resource):
     def post(self):
-        body = request.form
-        print(body)
-        user = User(**body)
-        user.hash_password()
-        user.save()
-        expires = datetime.timedelta(days=30)
-        user_details = {
-            "user_id": str(user.id),
-            "first_name": user.first_name,
-            "last_name": user.last_name
-        }
-        access_token = create_access_token(
-            identity=user_details, expires_delta=expires)
-        res = make_response({
-            "response": "User registered successfully.",
-            'token': access_token
-        }, 200)
-        set_access_cookies(res, access_token)
-        return res
+        try:
+            body = request.get_json()
+            print(body)
+            user = User(**body)
+            user.hash_password()
+            user.save()
+            expires = datetime.timedelta(days=30)
+            user_details = {
+                "user_id": str(user.id),
+                "first_name": user.first_name,
+                "last_name": user.last_name
+            }
+            access_token = create_access_token(
+                identity=user_details, expires_delta=expires)
+            res = make_response({
+                "response": "User registered successfully.",
+                'token': access_token,
+                "status": 200
+            }, 200)
+            set_access_cookies(res, access_token)
+            return res
+        except FieldDoesNotExist:
+            raise SchemaValidationError
+        except NotUniqueError:
+            raise EmailAlreadyExistsError
+        except Exception as e:
+            raise InternalServerError
 
 
 class LoginUserApi(Resource):
