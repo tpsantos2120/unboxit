@@ -8,8 +8,13 @@ async function request(url, params, method = 'GET') {
           'Content-Type': 'application/json'
         }
     };
+
+    const response = await fetch(_apiHost + url, options);
+
     
-    
+    const result = await response.json();
+
+    return result;
   
 }
 
