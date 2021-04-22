@@ -35,8 +35,7 @@ class RegisterUserApi(Resource):
 class LoginUserApi(Resource):
     def post(self):
         try:
-            body = request.form
-            print("login api", body)
+            body = request.get_json()
             user = User.objects.get(email=body.get('email'))
             authorized = user.check_password(body.get('password'))
             if not authorized:
