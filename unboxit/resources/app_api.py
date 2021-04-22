@@ -15,23 +15,11 @@ class Dashboard(Resource):
             headers = {
                 'Content-Type': 'text/html'
             }
-            print(request.url_root)
-            response = requests.request("GET", request.url_root + 'api/movies')
             return make_response(render_template('views/dashboard.html', title="Dashboard",
                                                  logged_in=True, first_name=first_name, last_name=last_name), 200, headers)
         else:
             return redirect(url_for('home'))
-    # @jwt.token_verification_failed_loader
-    # def invalid_token_callback(callback): 
-    #     return redirect(url_for('home'))        
 
-    # @jwt.expired_token_loader
-    # def my_expired_token_callback(jwt_header, jwt_payload):
-    #     return redirect(url_for('home'))
-
-    # @jwt.unauthorized_loader
-    # def invalid_token_callback( callback):
-    #     return redirect(url_for('home'))
 
 class DashboardSearch(Resource):
     def get(self):
