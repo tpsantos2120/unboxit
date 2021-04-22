@@ -150,33 +150,4 @@
     </div>
   </div>
 </div>
-{% endif %} {% endblock %} {% block script %}
-<script>
-  $(function () {
-    $('a#watchlist-button').bind('click', function() {
-      var url = "{{url_for('moviesapi')}}";
-      var data ='{{ result|tojson }}'; 
-      $.ajax({
-        url: url,
-        type: "post",
-        data: {data:data},
-        success: function (response) {
-          userFeedback(response);
-        },
-        error: function (error) {
-          userFeedback(error);
-        },
-      });
-    });
-    function userFeedback(userFeedback){
-      UIkit.notification({
-            message: userFeedback.message || userFeedback.responseJSON.message,
-            status: userFeedback.message ? "success" : "warning",
-            pos: "top-center",
-            timeout: 5000,
-          });
-          $('a#watchlist-button').attr('disabled', " ");
-    }
-  });
-</script>
-{% endblock %}
+{% endif %} {% endblock %} 
