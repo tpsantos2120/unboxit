@@ -31,7 +31,9 @@
   type="text/css"
   href="{{ url_for('static', filename='css/styles.css') }}"
 />
-<script defer src="{{url_for('static', filename='js/scripts.js')}}"></script>
+<script defer src="{{url_for('static', filename='js/fetch.js')}}"></script>
+<script defer src="{{url_for('static', filename='js/login.js')}}"></script>
+
 
 {% if title %}
 <title>UNBOXIT - {{ title }}</title>
