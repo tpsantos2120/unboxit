@@ -1,5 +1,5 @@
 {% block content %} {% if results %}
-<div class="p-3" uk-slider="sets: true">
+<div class="uk-background-secondary uk-light" uk-slider="sets: true" id="result-slider">
   <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
     <ul class="uk-slider-items uk-child-width-1-4@s uk-grid uk-margin">
       {% for result in results %} {% if not result.poster == "" %}
