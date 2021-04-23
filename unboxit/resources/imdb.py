@@ -1,4 +1,4 @@
-from flask import Response, request, render_template, make_response, url_for, redirect
+from flask import Response, request, render_template, make_response, url_for, redirect, jsonify
 from flask_restful import Resource
 from ratelimit import limits, sleep_and_retry
 import requests
@@ -27,9 +27,9 @@ class SearchMovies(Resource):
                 movies_images = response.json()
                 response_result.append(movies_images)
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/view_search.html', type="movies", results=response_result, view=True), 200, headers)
+            return make_response(jsonify( render_template('views/view_results.html', type="movies", results=response_result, view=True)), 200, headers)
         else:
-            return{"response": "Movie Not Found", "status_code": 400}
+            return{"response": "Movie Not Found", "status": 400}
 
 
 class SearchMovieDetails(Resource):
@@ -101,9 +101,9 @@ class SearchTvShows(Resource):
                 response_result.append(tv_shows_images)
                 print(response_result)
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/view_search.html', type="tvshows", results=response_result, view=True), 200, headers)
+            return make_response(jsonify( render_template('views/view_results.html', type="shows", results=response_result, view=True)), 200, headers)
         else:
-            return{"response": "Movie Not Found", "status_code": 400}
+            return{"response": "Movie Not Found", "status": 400}
 
 
 class SearchShowDetails(Resource):
