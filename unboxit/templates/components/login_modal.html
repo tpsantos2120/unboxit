@@ -1,20 +1,17 @@
-<form action="" id="login-form" method="">
-  <div id="login-modal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
-      <div class="uk-alert-danger" hidden uk-alert id="login-alert">
-        <a class="uk-alert-close" uk-close></a>
-        <p>
-          The login details provided are not correct.
-        </p>
-      </div>
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <h2 class="uk-modal-title">Login</h2>
+<div id="login-modal" class="uk-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <h2 class="uk-modal-title">Login</h2>
+    <form id="login-form">
       <div class="uk-margin">
         <input
           class="uk-input"
           type="text"
           placeholder="Email"
-          id="login-email"
+          id="loginEmail"
+          name="loginEmail"
+          required
+          autocomplete="off"
         />
       </div>
       <div class="uk-margin">
@@ -22,10 +19,18 @@
           class="uk-input"
           type="text"
           placeholder="Password"
-          id="login-password"
+          id="loginPassword"
+          name="loginPassword"
+          autocomplete="off"
         />
       </div>
-      <a class="uk-button uk-button-default" href="" id="login-button">Login</a>
-    </div>
+      <button
+        class="uk-button uk-button-default"
+        type="submit"
+        href=""
+        required
+        >Login</button
+      >
+    </form>
   </div>
-</form>
+</div>
