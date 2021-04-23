@@ -1,19 +1,18 @@
 import Fetch from "./fetch.js";
 
-const ready = () =>  {
-  if (document.body && document.querySelector(".results")) {
-    console.log("yessss")
-    searchDetails();
-    return;
-  }
+// const ready = () => {
+//   if (document.body && document.querySelector(".results")) {
+//     console.log("yessss");
+//     searchDetails();
+//     return;
+//   }
 
-  window.requestAnimationFrame(ready);
-};
+//   window.requestAnimationFrame(ready);
+// };
 
-window.requestAnimationFrame(ready);
+// window.requestAnimationFrame(ready);
 
 const handleSearchDetails = (e) => {
-  
   const id = e.target.getAttribute("imdb");
   const type = e.target.getAttribute("type");
   console.log(id);
@@ -37,7 +36,10 @@ const findMovieDetails = async (id) => {
   const viewMovieDetails = document.querySelector("#view-result-details");
   const movieDetails = await Fetch.get("/search/movie/details/", id);
   console.log(movieDetails, viewMovieDetails);
-  viewMovieDetails.classList.add("uk-margin-large")
+  viewMovieDetails.classList.add("uk-margin-large");
+  viewMovieDetails.classList.add("uk-margin-bottom-large");
+
+  removeChildrenEl(viewMovieDetails);
   viewMovieDetails.innerHTML = movieDetails;
 };
 
@@ -45,8 +47,19 @@ const findShowDetails = async (id) => {
   const viewShowDetails = document.querySelector("#view-result-details");
   const showDetails = await Fetch.get("/search/show/details/", id);
   console.log(showDetails, viewShowDetails);
-  viewShowDetails.classList.add("uk-margin-large")
+  viewShowDetails.classList.add("uk-margin-large");
+  viewShowDetails.classList.add("uk-margin-bottom-large");
+  removeChildrenEl(viewShowDetails);
   viewShowDetails.innerHTML = showDetails;
 };
 
-const appendResultDetails = (showDetails) => {};
+const removeChildrenEl = (node) => {
+  while (node.firstChild) {
+    node.removeChild(node.lastChild);
+  }
+};
+
+export default {
+  
+  searchDetails
+};
