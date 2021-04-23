@@ -1,4 +1,4 @@
-import Fetch from "./Fetch.js";
+import fetch from "./fetch.js";
 
 $(document).ready(function () {
   $("#search-form").validate( {
@@ -41,7 +41,7 @@ $(document).ready(function () {
 });
 
 async function searchShow(query) {
-  const response = await Fetch.get("/search/shows/", query);
+  const response = await fetch.get("/search/shows/", query);
   if (response.status === 400) {
     stopSpinner();
     userFeedback("Sorry we could not find what you searched!");
@@ -57,7 +57,7 @@ async function searchShow(query) {
 }
 
 async function searchMovie(query) {
-  const response = await Fetch.get("/search/movies/", query);
+  const response = await fetch.get("/search/movies/", query);
   if (response.status === 400) {
     stopSpinner();
     userFeedback("Sorry we could not find what you searched!");
