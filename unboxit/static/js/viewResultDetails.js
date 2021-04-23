@@ -1,4 +1,4 @@
-import Fetch from "./Fetch.js";
+import Fetch from "./fetch.js";
 
 const ready = () =>  {
   if (document.body && document.querySelector(".results")) {
