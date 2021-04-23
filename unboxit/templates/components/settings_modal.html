@@ -1,16 +1,15 @@
-<form action="" id="settings-form" method="">
-  <!-- This is the modal with the default close button -->
+<form id="settings-form">
   <div id="settings-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
       <button class="uk-modal-close-default" type="button" uk-close></button>
       <h2 class="uk-modal-title">Change Password</h2>
       <div class="uk-margin">
-        <input class="uk-input" type="text" placeholder="New Password" />
+        <input class="uk-input" type="text" placeholder="New Password" id="newPassword" name="newPassword"/>
       </div>
       <div class="uk-margin">
-        <input class="uk-input" type="text" placeholder="New Password" />
+        <input class="uk-input" type="text" placeholder="Reapeat Password"id="repeatPassword" name="repeatPassword" />
       </div>
-      <a class="uk-button uk-button-default" href="">Save</a>
+      <button class="uk-button uk-button-default" type="submit" href="">Save</button>
     </div>
   </div>
 </form>
