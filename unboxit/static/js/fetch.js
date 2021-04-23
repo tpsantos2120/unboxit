@@ -1,25 +1,23 @@
 async function request(url, data, method = "GET") {
-  console.log(data);
-
   const options = {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    method
   };
 
   if (data) {
-    if (method === 'GET') {
-      url += '/' + data.split(' ').join('+');;
+    if (method === "GET") {
+      url += data.split(" ").join("+");
     } else {
-      options.body = JSON.stringify(params);
+      options.body = JSON.stringify(data);
+      options.headers = {
+        "Content-Type": "application/json",
+      }
     }
   }
 
-  console.log(url, options);
+  console.log(url, options, data);
   const response = await fetch(url, options);
   if (response.status !== 200) {
-    return response;
+    return response.json();
   }
 
   const result = await response.json();
