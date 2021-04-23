@@ -21,7 +21,7 @@ def initialize_routes(api):
     api.add_resource(SearchMovieDetails, '/search/movie-details/<id>')
     api.add_resource(GetMoviesImagesByImdb, '/get-movies-images-by-imdb/<id>', endpoint="get-movies-images-by-imdb")
     api.add_resource(GetSimilarMovies, '/get-similar-movies/<id>', endpoint="get-similar-movies")
-    api.add_resource(SearchTvShows, '/search/tv-shows/<title>')
+    api.add_resource(SearchTvShows, '/search/shows/<title>')
     api.add_resource(SearchShowDetails, '/search/show-details/<id>', endpoint="get-show-details")
     api.add_resource(GetShowImagesByImdb, '/get-show-images-by-imdb/<id>', endpoint="get-show-images-by-imdb")
     api.add_resource(GetSimilarShows, '/get-similar-shows/<id>', endpoint="get-similar-shows")
