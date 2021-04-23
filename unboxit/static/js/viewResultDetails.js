@@ -1,6 +1,6 @@
 import Fetch from "../js/fetch.js";
 
-const ready = () => {
+const ready = () =>  {
   if (document.body && document.querySelector(".results")) {
     console.log("yessss")
     searchDetails();

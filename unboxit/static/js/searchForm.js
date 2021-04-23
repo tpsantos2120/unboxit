@@ -1,7 +1,7 @@
 import Fetch from "../js/fetch.js";
 
 $(document).ready(function () {
-  $("#search-form").validate({
+  $("#search-form").validate( {
     errorClass: "uk-form-danger",
     validClass: "uk-form-success",
     success: "uk-form-success",
