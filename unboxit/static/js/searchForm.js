@@ -50,6 +50,7 @@ async function searchShow(query) {
     }, 1000);
   } else {
     const viewResults = document.querySelector("#view-results");
+    viewResults.classList.add("uk-margin-large-top")
     viewResults.innerHTML = response;
     hideModal();
   }
@@ -65,6 +66,7 @@ async function searchMovie(query) {
     }, 1000);
   } else {
     const viewResults = document.querySelector("#view-results");
+    viewResults.classList.add("uk-margin-large-top")
     viewResults.innerHTML = response;
     hideModal();
   }
