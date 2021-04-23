@@ -1,14 +1,21 @@
-const _apiHost = window.location.hostname;
-
 async function request(url, data, method = "GET") {
   console.log(data);
+
   const options = {
     method,
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
   };
+
+  if (data) {
+    if (method === 'GET') {
+      url += '/' + data.split(' ').join('+');;
+    } else {
+      options.body = JSON.stringify(params);
+    }
+  }
+
   console.log(url, options);
   const response = await fetch(url, options);
   if (response.status !== 200) {
