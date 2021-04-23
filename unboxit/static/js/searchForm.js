@@ -1,4 +1,5 @@
 import Fetch from "./fetch.js";
+import Load from "./viewResultDetails.js";
 
 $(document).ready(function () {
   $("#search-form").validate( {
@@ -22,7 +23,6 @@ $(document).ready(function () {
       event.preventDefault();
       const type = document.querySelector("#tabs > li.uk-active > a");
       const query = document.querySelector("#search");
-
       if (type.innerText == "MOVIES") {
         userFeedback("Please wait whilst we search our books!");
         startSpinner();
@@ -50,8 +50,10 @@ async function searchShow(query) {
     }, 1000);
   } else {
     const viewResults = document.querySelector("#view-results");
+    removeChildrenEl(viewResults)
     viewResults.classList.add("uk-margin-large-top")
     viewResults.innerHTML = response;
+    Load.searchDetails()
     hideModal();
   }
 }
@@ -66,8 +68,10 @@ async function searchMovie(query) {
     }, 1000);
   } else {
     const viewResults = document.querySelector("#view-results");
+    removeChildrenEl(viewResults)
     viewResults.classList.add("uk-margin-large-top")
     viewResults.innerHTML = response;
+    Load.searchDetails()
     hideModal();
   }
 }
@@ -91,3 +95,9 @@ const showModal = () => {
 const hideModal = () => {
   UIkit.modal("#user-feedback").hide();
 };
+
+const removeChildrenEl  = (node) => {
+  while (node.firstChild) {
+    node.removeChild(node.lastChild);
+  }
+}
