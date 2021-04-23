@@ -22,15 +22,12 @@
             placeholder="Search..."
           />
         </div>
-        <div uk-spinner class="uk-position-center feedback"></div>
-        <div class="uk-position-center feedback">Waiting...</div>
         <div class="uk-margin">
           <button
             class="uk-button uk-button-default uk-width-1-1"
             type="submit"
             href=""
             required
-          
           >
             Search
           </button>
@@ -40,16 +37,19 @@
   </div>
 </section>
 <section id="divider">
-  <div id="result" class="p-0"></div>
-  <div id="result-full-details"></div>
+  <div id="view-results" class="p-0"></div>
+  <div id="view-result-details"></div>
   <div id="user-feedback" class="uk-flex-top" data-uk-modal>
     <div
       class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding"
     >
       <div class="uk-position-top-center">
-        <div id="spinner"></div>
+        <div id="spinner" class="uk-padding"></div>
       </div>
-      <div id="user-message"></div>
+      <div
+        id="user-message"
+        class="uk-padding uk-text-center uk-margin-top"
+      ></div>
     </div>
   </div>
 </section>
