@@ -16,18 +16,39 @@ import Fetch from "./Fetch.js";
 // // Initialize our ready() function
 // window.requestAnimationFrame(ready);
 
-const loginButton = document.querySelector("#login-button");
-
-const handleLogin = (e) => {
-  const email = document.querySelector("#login-email");
-  const password = document.querySelector("#login-password");
-  if (email && password) {
-    loginUser(email, password);
-  }
-  e.preventDefault();
-};
-
-loginButton.onclick = handleLogin;
+$(document).ready(function () {
+  $("#login-form").validate({
+    errorClass: "uk-form-danger",
+    validClass: "uk-form-success",
+    success: "uk-form-success",
+    focusInvalid: false,
+    focusCleanup: true,
+    rules: {
+      loginEmail: {
+        required: true,
+        email: true,
+      },
+      loginPassword: {
+        required: true,
+        minlength: 8,
+      },
+    },
+    messages: {
+      loginEmail: {
+        required: "Please enter your email.",
+      },
+      loginPassword: {
+        required: "Please enter your password.",
+      },
+    },
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      const email = document.querySelector("#loginEmail");
+      const password = document.querySelector("#loginPassword");
+      loginUser(email, password);
+    },
+  });
+});
 
 async function loginUser(email, password) {
   const response = await Fetch.create("/api/auth/login", {
@@ -38,11 +59,10 @@ async function loginUser(email, password) {
   if (response.status === 200) {
     window.location.replace("/dashboard");
   } else {
-    const alert = document.querySelector("#alert");
-    console.log(email, password);
-    email.classList.add("uk-form-danger");
-    password.classList.add("uk-form-danger");
-    alert.removeAttribute("hidden");
+    const validator = $("#login-form").validate();
+    validator.showErrors({
+      loginEmail: "Email is not valid.",
+      loginPassword: "Password is not valid.",
+    });
   }
-  
 }
