@@ -1,4 +1,4 @@
-import fetch from "./fetch.js";
+import Fetch from "./Fetch.js";
 
 $(document).ready(function () {
   $("#register-form").validate( {
@@ -60,7 +60,7 @@ $(document).ready(function () {
 });
 
 async function registerUser(firstName, lastName, userName, email, password) {
-  const response = await fetch.create("/api/auth/register", {
+  const response = await Fetch.create("/api/auth/register", {
     first_name: firstName.value,
     last_name: lastName.value,
     username: userName.value,

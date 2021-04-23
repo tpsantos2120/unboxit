@@ -1,4 +1,4 @@
-import fetch from "./fetch.js";
+import Fetch from "./Fetch.js";
 
 $(document).ready(function () {
   $("#login-form").validate( {
@@ -35,7 +35,7 @@ $(document).ready(function () {
 });
 
 async function loginUser(email, password) {
-  const response = await fetch.create("/api/auth/login", {
+  const response = await Fetch.create("/api/auth/login", {
     email: email.value,
     password: password.value,
   });

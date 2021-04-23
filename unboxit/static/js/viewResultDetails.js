@@ -1,4 +1,4 @@
-import fetch from "./fetch.js";
+import Fetch from "./Fetch.js";
 
 const ready = () =>  {
   if (document.body && document.querySelector(".results")) {
@@ -35,7 +35,7 @@ const searchDetails = () => {
 
 const findMovieDetails = async (id) => {
   const viewMovieDetails = document.querySelector("#view-result-details");
-  const movieDetails = await fetch.get("/search/movie/details/", id);
+  const movieDetails = await Fetch.get("/search/movie/details/", id);
   console.log(movieDetails, viewMovieDetails);
   viewMovieDetails.classList.add("uk-margin-large")
   viewMovieDetails.innerHTML = movieDetails;
@@ -43,7 +43,7 @@ const findMovieDetails = async (id) => {
 
 const findShowDetails = async (id) => {
   const viewShowDetails = document.querySelector("#view-result-details");
-  const showDetails = await fetch.get("/search/show/details/", id);
+  const showDetails = await Fetch.get("/search/show/details/", id);
   console.log(showDetails, viewShowDetails);
   viewShowDetails.classList.add("uk-margin-large")
   viewShowDetails.innerHTML = showDetails;
