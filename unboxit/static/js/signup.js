@@ -1,4 +1,4 @@
-import Fetch from "../js/fetch.js";
+import Fetch from "./Fetch.js";
 
 $(document).ready(function () {
   $("#register-form").validate( {
