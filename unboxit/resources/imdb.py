@@ -51,7 +51,7 @@ class SearchMovieDetails(Resource):
         movie_details.pop('status')
         movie_details.pop('status_message')
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('components/view_search_details.html', logged_in=logged_in, result=movie_details), 200, headers)
+        return make_response(jsonify(render_template('components/view_result_details.html', logged_in=logged_in, result=movie_details)), 200, headers)
 
 
 
@@ -124,7 +124,7 @@ class SearchShowDetails(Resource):
         tv_show_details.pop('status')
         tv_show_details.pop('status_message')
         headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('components/view_search_details.html', logged_in=logged_in, result=tv_show_details), 200, headers)
+        return make_response(jsonify(render_template('components/view_result_details.html', logged_in=logged_in, result=tv_show_details)), 200, headers)
 
 
 class GetShowImagesByImdb(Resource):
