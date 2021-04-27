@@ -27,7 +27,7 @@ class SearchMovies(Resource):
                 movies_images = response.json()
                 response_result.append(movies_images)
             headers = {'Content-Type': 'text/html'}
-            return make_response(jsonify( render_template('views/view_results.html', type="movies", results=response_result, view=True)), 200, headers)
+            return make_response(jsonify(render_template('views/view_results.html', type="movies", results=response_result, view=True)), 200, headers)
         else:
             return{"response": "Movie Not Found", "status": 400}
 
@@ -39,7 +39,6 @@ class SearchMovieDetails(Resource):
         cookie_exist = request.cookies.get("access_token_cookie")
         logged_in = False
         if cookie_exist:
-            #is_added = flag_movie()
             logged_in = True
         imdb = IMDBConfigs()
         url = imdb.get_url()
@@ -52,33 +51,6 @@ class SearchMovieDetails(Resource):
         movie_details.pop('status_message')
         headers = {'Content-Type': 'text/html'}
         return make_response(jsonify(render_template('components/view_result_details.html', logged_in=logged_in, result=movie_details)), 200, headers)
-
-
-
-class GetMoviesImagesByImdb(Resource):
-    @sleep_and_retry
-    @limits(calls=5, period=1)
-    def get(self, id):
-        configs = IMDBConfigs()
-        url = configs.get_url()
-        headers = configs.get_headers()
-        query_string = configs.get_query_string(
-            request.endpoint, id, None, None)
-        response = requests.request(
-            "GET", url, headers=headers, params=query_string)
-        return response.json()
-
-
-class GetSimilarMovies(Resource):
-    def get(self, id):
-        configs = IMDBConfigs()
-        url = configs.get_url()
-        headers = configs.get_headers()
-        query_string = configs.get_query_string(
-            request.endpoint, id, None, "1")
-        response = requests.request(
-            "GET", url, headers=headers, params=query_string)
-        return response.json()
 
 
 class SearchTvShows(Resource):
@@ -101,7 +73,7 @@ class SearchTvShows(Resource):
                 response_result.append(tv_shows_images)
                 print(response_result)
             headers = {'Content-Type': 'text/html'}
-            return make_response(jsonify( render_template('views/view_results.html', type="shows", results=response_result, view=True)), 200, headers)
+            return make_response(jsonify(render_template('views/view_results.html', type="shows", results=response_result, view=True)), 200, headers)
         else:
             return{"response": "Movie Not Found", "status": 400}
 
@@ -127,28 +99,89 @@ class SearchShowDetails(Resource):
         return make_response(jsonify(render_template('components/view_result_details.html', logged_in=logged_in, result=tv_show_details)), 200, headers)
 
 
-class GetShowImagesByImdb(Resource):
-    def get(self, id):
-        configs = IMDBConfigs()
-        url = configs.get_url()
-        headers = configs.get_headers()
-        query_string = configs.get_query_string(
-            request.endpoint, id, None, None)
-        response = requests.request(
-            "GET", url, headers=headers, params=query_string)
-        return response.json()
+class SearchTrendingMovies(Resource):
+    @sleep_and_retry
+    @limits(calls=5, period=1)
+    def get(self):
+        response = SearchTrendingMovies.trending_movies()
+        movies = response.json()
+        trending_movies = []
+        for movie in movies['movie_results']:
+            details = SearchTrendingMovies.trending_movies_details(movie['imdb_id'])
+            images = SearchTrendingMovies.trending_movies_images(movie['imdb_id'])
+            trending_details = details.json()
+            trending_details['poster'] = images.json().get('poster')
+            trending_movies.append(trending_details)
+        return trending_movies
+    
+    def trending_movies_images(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-movies-images-by-imdb", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
 
+    def trending_movies():
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-trending-movies", "page": 1}
+        response = imdb.request_query(url, headers, querystring)
+        return response
 
-class GetSimilarShows(Resource):
-    def get(self, id):
-        configs = IMDBConfigs()
-        url = configs.get_url()
-        headers = configs.get_headers()
-        query_string = configs.get_query_string(
-            request.endpoint, id, None, "1")
-        response = requests.request(
-            "GET", url, headers=headers, params=query_string)
-        return response.json()
+    def trending_movies_details(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-movie-details", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+class SearchTrendingShows(Resource):
+    @sleep_and_retry
+    @limits(calls=5, period=1)
+    def get(self):
+        response = SearchTrendingShows.trending_shows()
+        shows = response.json()
+        trending_shows = []
+        for show in shows['tv_results']:
+            details = SearchTrendingShows.trending_shows_details(show['imdb_id'])
+            images = SearchTrendingShows.trending_shows_images(show['imdb_id'])
+            trending_details = details.json()
+            trending_details['poster'] = images.json().get('poster')
+            trending_shows.append(trending_details)
+        return trending_shows
+    
+    def trending_shows_images(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-images-by-imdb", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+    def trending_shows():
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-trending-shows", "page": 1}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+    def trending_shows_details(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-details", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
 
 
 class IMDBConfigs():
