@@ -67,7 +67,6 @@ async function registerUser(firstName, lastName, userName, email, password) {
     password: password.value,
     email: email.value,
   });
-  console.log(response);
   if (response.status === 200) {
     window.location.replace("/dashboard");
   } else {
