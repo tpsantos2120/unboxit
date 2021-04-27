@@ -33,6 +33,10 @@ class EmailDoesnotExistsError(Exception):
     pass
 
 
+class SchemaValidationError(Exception):
+    pass
+
+
 errors = {
     "InternalServerError": {
         "message": "Something went wrong internally",
@@ -62,4 +66,8 @@ errors = {
         "message": "Couldn't find the user with given email address",
         "status": 400
     },
+    "SchemaValidationError": {
+        "message": "Request is missing required fields",
+        "status": 400
+    }
 }
