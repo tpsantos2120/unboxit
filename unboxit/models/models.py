@@ -15,6 +15,7 @@ class Movie(db.Document):
     vote_count = db.StringField()
     popularity = db.StringField()
     youtube_trailer_key = db.StringField()
+    review = db.StringField()
     runtime = db.IntField()
     stars = db.ListField(db.StringField() )
     directors = db.ListField(db.StringField() )
