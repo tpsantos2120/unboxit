@@ -1,9 +1,9 @@
+from bson import ObjectId
 from flask import request, render_template, make_response, url_for, redirect
-from flask.json import jsonify
 from flask_jwt_extended.view_decorators import jwt_required
 from flask_restful import Resource
 from flask_jwt_extended import verify_jwt_in_request
-from flask_jwt_extended import jwt_required, get_jwt_identity, get_current_user
+from flask_jwt_extended import jwt_required
 from .jwt import jwt
 import requests, json
 
@@ -26,7 +26,6 @@ class Dashboard(Resource):
                                                  logged_in=True, first_name=first_name, last_name=last_name), 200, headers)
         else:
             return redirect(url_for('home'))
-
 
 class DashboardSearch(Resource):
     def get(self):
