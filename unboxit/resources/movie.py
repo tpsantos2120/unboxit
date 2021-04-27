@@ -6,6 +6,7 @@ from requests.sessions import extract_cookies_to_jar
 from unboxit.models.models import Movie, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
+from bson import ObjectId, json_util
 from mongoengine.errors import DoesNotExist, NotUniqueError, ValidationError, FieldDoesNotExist
 from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError \
 , SchemaValidationError
@@ -22,7 +23,7 @@ class MoviesApi(Resource):
             for movie in user.movies:
                 user_movies = Movie.objects.get(id=movie.id).to_json()
                 movies.append(user_movies)
-            return movies
+            return json.loads(json_util.dumps(movies))
 
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
@@ -54,11 +55,11 @@ class MovieApi(Resource):
         identity = get_jwt_identity()
         movie = Movie.objects.get(id=id, added_by=identity['user_id'])
         movie.delete()
-        response = {"DeleteRequest": {
+        response = {
             "message": "Movie was deleted successfully.",
             "status": 200
-        }}
-        return Response(response, mimetype="application/json", status=200)
+        }
+        return response
 
     @jwt_required(locations=['headers', 'cookies'])
     def get(self, id):
@@ -67,12 +68,11 @@ class MovieApi(Resource):
 
     @jwt_required(locations=['headers', 'cookies'])
     def put(self, id):
-        identity = get_jwt_identity()
-        movie = Movie.objects.get(id=id, added_by=identity['user_id'])
         body = request.get_json()
+        print(body)
         Movie.objects.get(id=id).update(**body)
-        response = {"UpdateRequest": {
+        response = {
             "message": "Movie was edited successfully.",
             "status": 200
-        }}
-        return Response(response, mimetype="application/json", status=200)
+        }
+        return response
