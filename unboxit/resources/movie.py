@@ -26,17 +26,18 @@ class MoviesApi(Resource):
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
         identity = get_jwt_identity()
-        body = request.form.get('data')
+        body = request.get_json()
+        print(body)
         user = User.objects.get(id=identity['user_id'])
-        movie = Movie(**json.loads(body), added_by=user)
+        movie = Movie(**body, added_by=user)
         movie.save()
         user.update(add_to_set__movies=movie)
         user.save()
-        response = {"UserDeletion": {
+        response = {"ServerResponse": {
             "message": "Movie was added successfully.",
             "status": 200
         }}
-        return Response(response, mimetype="application/json", status=200)
+        return response
 
 
 class MovieApi(Resource):
