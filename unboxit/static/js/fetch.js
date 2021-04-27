@@ -4,7 +4,7 @@ async function request(url, data, method = "GET") {
   };
 
   if (data) {
-    if (method === "GET") {
+    if (method === "GET" || method === "DELETE") {
       url += data.split(" ").join("+");
     } else {
       options.body = JSON.stringify(data);
