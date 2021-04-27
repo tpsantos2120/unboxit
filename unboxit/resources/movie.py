@@ -6,8 +6,9 @@ from requests.sessions import extract_cookies_to_jar
 from unboxit.models.models import Movie, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
-from mongoengine.errors import DoesNotExist, NotUniqueError
-from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError
+from mongoengine.errors import DoesNotExist, NotUniqueError, ValidationError, FieldDoesNotExist
+from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError \
+, SchemaValidationError
 import json
 
 
@@ -21,23 +22,30 @@ class MoviesApi(Resource):
             for movie in user.movies:
                 user_movies = Movie.objects.get(id=movie.id).to_json()
                 movies.append(user_movies)
-            return Response(movies, mimetype="application/json", status=200)
+            return movies
 
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
-        identity = get_jwt_identity()
-        body = request.get_json()
-        print(body)
-        user = User.objects.get(id=identity['user_id'])
-        movie = Movie(**body, added_by=user)
-        movie.save()
-        user.update(add_to_set__movies=movie)
-        user.save()
-        response = {"ServerResponse": {
-            "message": "Movie was added successfully.",
-            "status": 200
-        }}
-        return response
+        try:
+            identity = get_jwt_identity()
+            body = request.get_json()
+            print(body)
+            user = User.objects.get(id=identity['user_id'])
+            movie = Movie(**body, added_by=user)
+            movie.save()
+            user.update(add_to_set__movies=movie)
+            user.save()
+            response = {"ServerResponse": {
+                "message": "Movie was added successfully.",
+                "status": 200
+            }}
+            return response
+        except (FieldDoesNotExist, ValidationError):
+            raise SchemaValidationError
+        except NotUniqueError:
+            raise MovieAlreadyExistsError
+        except Exception as e:
+            raise InternalServerError
 
 
 class MovieApi(Resource):
