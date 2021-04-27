@@ -75,7 +75,21 @@ const postData = async (id, image, type) => {
   });
   console.log(data);
   const saveDataResponse = await Fetch.create("/api/movies", data);
-  console.log(saveDataResponse)
+  if (saveDataResponse.status === 400) {
+    UIkit.notification({
+      message: 'It already exists in your watchlist.',
+      status: 'danger',
+      pos: 'top-center',
+      timeout: 5000
+  });
+  } else {
+    UIkit.notification({
+      message: 'It has been added to your watchlist.',
+      status: 'success',
+      pos: 'top-center',
+      timeout: 5000
+  });
+  }
 
 };
 
