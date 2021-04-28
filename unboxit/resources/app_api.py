@@ -6,7 +6,8 @@ from flask_jwt_extended import verify_jwt_in_request
 from flask_jwt_extended import jwt_required
 from .jwt import jwt
 import requests
-import json, random
+import json
+import random
 
 
 class Dashboard(Resource):
@@ -15,18 +16,26 @@ class Dashboard(Resource):
         cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'])
         if cookie_exist:
             watchlist = []
-            selected_ids = []
+            recommend = []
             first_name = cookie_exist[1]['sub']['first_name']
             last_name = cookie_exist[1]['sub']['last_name']
             treding_movies = Dashboard.fetch_treding_movies().json()
             json_data = Dashboard.fetch_watchlist().json()
             for data in json_data:
-                selected_ids.append(json.loads(data).get('imdb_id'))
+                recommend.append({"id": json.loads(data).get(
+                    'imdb_id'), "type": json.loads(data).get('media_type')})
                 watchlist.append(json.loads(data))
-            if selected_ids:
-                print(random.choice(selected_ids))
-            return make_response(render_template('views/dashboard.html', trending_movies=treding_movies, watchlist=watchlist, title="Dashboard",
-                                                 logged_in=True, first_name=first_name, last_name=last_name))
+            if recommend:
+                recommendation = Dashboard.fetch_recommendations(
+                    random.choice(recommend)).json()
+            return make_response(render_template('views/dashboard.html',
+                                                 trending_movies=treding_movies,
+                                                 watchlist=watchlist,
+                                                 recommendation=recommendation,
+                                                 title="Dashboard",
+                                                 logged_in=True,
+                                                 first_name=first_name,
+                                                 last_name=last_name))
         else:
             return redirect(url_for('home'))
 
@@ -42,10 +51,10 @@ class Dashboard(Resource):
             request.url_root + '/search/trending/movies')
         return trending_movies_response
 
-    def fetch_recommendations(id):
-        trending_movies_response = requests.get(
-            request.url_root + '/search/trending/movies')
-        return trending_movies_response
+    def fetch_recommendations(data):
+        recommended_response = requests.post(
+            request.url_root + 'recommend', data=data)
+        return recommended_response
 
 
 class DashboardSearch(Resource):
