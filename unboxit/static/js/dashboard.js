@@ -1,5 +1,42 @@
 import Fetch from "./fetch.js";
 
+const userFeedback = (message) => {
+  const userMessage = document.querySelector("#dashboard-message");
+  if (userMessage) {
+    userMessage.innerText = message;
+  }
+};
+const startSpinner = () => {
+  const spinner = document.querySelector("#dashboard-spinner");
+  if (spinner) {
+    spinner.setAttribute("uk-spinner", "");
+  }
+};
+const stopSpinner = () => {
+  const spinner = document.querySelector("#dashboard-spinner");
+  if (spinner) {
+    spinner.removeAttribute("uk-spinner", "");
+  }
+};
+
+const showModal = () => {
+  const dashboard = document.querySelector("#dashboard-feedback");
+  if (dashboard) {
+    UIkit.modal(dashboard, { bgClose: false }).show();
+  }
+};
+
+const hideModal = () => {
+  const dashboard = document.querySelector("#dashboard-feedback");
+  if (dashboard) {
+    UIkit.modal("#dashboard-feedback").hide();
+  }
+};
+
+userFeedback("loading dashboard..");
+startSpinner();
+showModal();
+
 const handleDelete = async (e) => {
   const id = e.target.getAttribute("imdb");
   const deleteResponse = await Fetch.remove("/api/movie/", id);
@@ -52,3 +89,9 @@ const handleReview = async (e) => {
 document.querySelectorAll(".review").forEach((item) => {
   item.onclick = handleReview;
 });
+
+const handleLoading = () => {
+  hideModal();
+};
+
+window.onload = handleLoading;
