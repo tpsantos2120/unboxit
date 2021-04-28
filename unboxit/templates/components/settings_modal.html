@@ -1,15 +1,29 @@
-<form id="settings-form">
-  <div id="settings-modal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <h2 class="uk-modal-title">Change Password</h2>
+<div id="settings-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body uk-background-secondary uk-light">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <h2 class="uk-modal-title">Change Password</h2>
+    <form id="settings-form">
       <div class="uk-margin">
-        <input class="uk-input" type="text" placeholder="New Password" id="newPassword" name="newPassword"/>
+        <input
+          class="uk-input"
+          type="password"
+          placeholder="New Password"
+          id="newPassword"
+          name="newPassword"
+        />
       </div>
       <div class="uk-margin">
-        <input class="uk-input" type="text" placeholder="Reapeat Password"id="repeatPassword" name="repeatPassword" />
+        <input
+          class="uk-input"
+          type="password"
+          placeholder="Repeat Password"
+          id="repeatPassword"
+          name="repeatPassword"
+        />
       </div>
-      <button class="uk-button uk-button-default" type="submit" href="">Save</button>
-    </div>
+      <button class="uk-button uk-button-default" type="submit" >
+        Save
+      </button>
+    </form>
   </div>
-</form>
+</div>
