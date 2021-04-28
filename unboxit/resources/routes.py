@@ -1,6 +1,6 @@
 from .logout import Logout
 from .movie import MovieApi, MoviesApi
-from .user import RegisterUserApi
+from .user import RegisterUserApi, ResetPassword
 from .user import LoginUserApi
 from .home import Home
 from .app_api import Dashboard, DashboardSearch
@@ -14,6 +14,7 @@ def initialize_routes(api):
     api.add_resource(MovieApi, '/api/movie/<id>')
     api.add_resource(RegisterUserApi, '/api/auth/register')
     api.add_resource(LoginUserApi, '/api/auth/login')
+    api.add_resource(ResetPassword, '/api/auth/reset')
     api.add_resource(Home, '/')
     api.add_resource(Logout, '/logout')
     api.add_resource(Dashboard, '/dashboard')
