@@ -106,14 +106,16 @@ class SearchTrendingMovies(Resource):
         response = SearchTrendingMovies.trending_movies()
         movies = response.json()
         trending_movies = []
-        for movie in movies['movie_results']:
-            details = SearchTrendingMovies.trending_movies_details(movie['imdb_id'])
-            images = SearchTrendingMovies.trending_movies_images(movie['imdb_id'])
+        for movie in movies['movie_results'][0:10]:
+            details = SearchTrendingMovies.trending_movies_details(
+                movie['imdb_id'])
+            images = SearchTrendingMovies.trending_movies_images(
+                movie['imdb_id'])
             trending_details = details.json()
-            trending_details['poster'] = images.json().get('poster')
-            trending_movies.append(trending_details)
+            trending_details['poster'] = images.json()
+            trending_movies.append(images.json())
         return trending_movies
-    
+
     def trending_movies_images(id):
         imdb = IMDBConfigs()
         url = imdb.get_url()
@@ -141,6 +143,7 @@ class SearchTrendingMovies(Resource):
         response = imdb.request_query(url, headers, querystring)
         return response
 
+
 class SearchTrendingShows(Resource):
     @sleep_and_retry
     @limits(calls=5, period=1)
@@ -149,13 +152,14 @@ class SearchTrendingShows(Resource):
         shows = response.json()
         trending_shows = []
         for show in shows['tv_results']:
-            details = SearchTrendingShows.trending_shows_details(show['imdb_id'])
+            details = SearchTrendingShows.trending_shows_details(
+                show['imdb_id'])
             images = SearchTrendingShows.trending_shows_images(show['imdb_id'])
             trending_details = details.json()
             trending_details['poster'] = images.json().get('poster')
             trending_shows.append(trending_details)
         return trending_shows
-    
+
     def trending_shows_images(id):
         imdb = IMDBConfigs()
         url = imdb.get_url()
@@ -175,6 +179,51 @@ class SearchTrendingShows(Resource):
         return response
 
     def trending_shows_details(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-details", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+
+class Recommend(Resource):
+    @sleep_and_retry
+    @limits(calls=5, period=1)
+    def get(self):
+        body = request.get_json()
+        
+        return body
+
+    def recommend_shows_images(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-images-by-imdb", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+    def recommend_shows_details(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-details", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+    def recommend_movies_images(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-images-by-imdb", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+    def recommend_movies_details(id):
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
