@@ -1,23 +1,10 @@
 import Fetch from "./fetch.js";
 
-// const ready = () => {
-//   if (document.body && document.querySelector(".results")) {
-//     console.log("yessss");
-//     searchDetails();
-//     return;
-//   }
-
-//   window.requestAnimationFrame(ready);
-// };
-
-// window.requestAnimationFrame(ready);
-
 const handleSearchDetails = (e) => {
   const id = e.target.getAttribute("imdb");
   const type = e.target.getAttribute("type");
   const image = e.target.getAttribute("data-src");
 
-  console.log(id);
   if (type === "movies") {
     findMovieDetails(id, image, type);
   } else {
@@ -73,30 +60,27 @@ const postData = async (id, image, type) => {
   creators.forEach((item) => {
     data.creators.push(item.innerText);
   });
-  console.log(data);
   const saveDataResponse = await Fetch.create("/api/movies", data);
   if (saveDataResponse.status === 400) {
     UIkit.notification({
-      message: 'It already exists in your watchlist.',
-      status: 'danger',
-      pos: 'top-center',
-      timeout: 5000
-  });
+      message: "It already exists in your watchlist.",
+      status: "danger",
+      pos: "top-center",
+      timeout: 5000,
+    });
   } else {
     UIkit.notification({
-      message: 'It has been added to your watchlist.',
-      status: 'success',
-      pos: 'top-center',
-      timeout: 5000
-  });
+      message: "It has been added to your watchlist.",
+      status: "success",
+      pos: "top-center",
+      timeout: 5000,
+    });
   }
-
 };
 
 const findMovieDetails = async (id, image, type) => {
   const viewMovieDetails = document.querySelector("#view-result-details");
   const movieDetails = await Fetch.get("/search/movie/details/", id);
-  console.log(movieDetails, viewMovieDetails);
   viewMovieDetails.classList.add("uk-margin-large");
   viewMovieDetails.classList.add("uk-margin-bottom-large");
   removeChildrenEl(viewMovieDetails);
@@ -106,13 +90,10 @@ const findMovieDetails = async (id, image, type) => {
     addButton.onclick = addlistener.bind(this, id, image, type);
   }
 };
-  
-  
 
 const findShowDetails = async (id, image, type) => {
   const viewShowDetails = document.querySelector("#view-result-details");
   const showDetails = await Fetch.get("/search/show/details/", id);
-  console.log(showDetails, viewShowDetails);
   viewShowDetails.classList.add("uk-margin-large");
   viewShowDetails.classList.add("uk-margin-bottom-large");
   removeChildrenEl(viewShowDetails);
