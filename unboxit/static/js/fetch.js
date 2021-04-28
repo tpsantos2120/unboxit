@@ -17,7 +17,7 @@ async function request(url, data, method = "GET") {
   console.log(url, options, data);
   const response = await fetch(url, options);
   if (response.status !== 200) {
-    return response;
+    return response.json();
   }
 
   const result = await response.json();
