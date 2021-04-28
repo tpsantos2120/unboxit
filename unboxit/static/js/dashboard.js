@@ -33,10 +33,6 @@ const hideModal = () => {
   }
 };
 
-userFeedback("loading dashboard..");
-startSpinner();
-showModal();
-
 const handleDelete = async (e) => {
   const id = e.target.getAttribute("imdb");
   const deleteResponse = await Fetch.remove("/api/movie/", id);
@@ -90,8 +86,16 @@ document.querySelectorAll(".review").forEach((item) => {
   item.onclick = handleReview;
 });
 
-const handleLoading = () => {
+const handleDocumentLoading = () => {
+  userFeedback("loading dashboard..");
+  startSpinner();
+  showModal();
+};
+
+document.onload = handleDocumentLoading;
+
+const handleWindowLoading = () => {
   hideModal();
 };
 
-window.onload = handleLoading;
+window.onload = handleWindowLoading;
