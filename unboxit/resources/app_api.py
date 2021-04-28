@@ -5,7 +5,8 @@ from flask_restful import Resource
 from flask_jwt_extended import verify_jwt_in_request
 from flask_jwt_extended import jwt_required
 from .jwt import jwt
-import requests, json
+import requests
+import json
 
 
 class Dashboard(Resource):
@@ -17,15 +18,20 @@ class Dashboard(Resource):
             last_name = cookie_exist[1]['sub']['last_name']
             token = request.cookies.get('access_token_cookie')
             headers = {"Authorization": "Bearer " + token}
-            data_response = requests.get(request.url_root + 'api/movies', headers=headers)
+            data_response = requests.get(
+                request.url_root + 'api/movies', headers=headers)
+            trending_movies_response = requests.get(
+                request.url_root + '/search/trending/movies')
+            treding_movies = trending_movies_response.json()
             json_data = data_response.json()
             watchlist = []
-            for data in json_data: 
+            for data in json_data:
                 watchlist.append(json.loads(data))
-            return make_response(render_template('views/dashboard.html', watchlist=watchlist, title="Dashboard",
+            return make_response(render_template('views/dashboard.html', trending_movies=treding_movies, watchlist=watchlist, title="Dashboard",
                                                  logged_in=True, first_name=first_name, last_name=last_name), 200, headers)
         else:
             return redirect(url_for('home'))
+
 
 class DashboardSearch(Resource):
     def get(self):
