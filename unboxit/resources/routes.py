@@ -4,7 +4,7 @@ from .user import RegisterUserApi
 from .user import LoginUserApi
 from .home import Home
 from .app_api import Dashboard, DashboardSearch
-from .imdb import SearchMovieDetails, SearchMovies, SearchTrendingMovies, SearchTrendingShows,\
+from .imdb import Recommend, SearchMovieDetails, SearchMovies, SearchTrendingMovies, SearchTrendingShows,\
 SearchTvShows, SearchShowDetails, SearchMovieDetails
 
 
@@ -24,6 +24,8 @@ def initialize_routes(api):
     api.add_resource(SearchShowDetails, '/search/show/details/<id>')
     api.add_resource(SearchTrendingMovies, '/search/trending/movies')
     api.add_resource(SearchTrendingShows, '/search/trending/shows')
+    api.add_resource(Recommend, '/recommend')
+
 
 
 
