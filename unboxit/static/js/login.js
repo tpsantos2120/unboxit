@@ -1,7 +1,7 @@
 import Fetch from "./fetch.js";
 
 $(document).ready(function () {
-  $("#login-form").validate( {
+  $("#login-form").validate({
     errorClass: "uk-form-danger",
     validClass: "uk-form-success",
     success: "uk-form-success",
@@ -35,12 +35,11 @@ $(document).ready(function () {
 });
 
 async function loginUser(email, password) {
-  const response = await Fetch.create("/api/auth/login", {
+  const loginResponse = await Fetch.create("/api/auth/login", {
     email: email.value,
     password: password.value,
   });
-  console.log(response);
-  if (response.status === 200) {
+  if (loginResponse.status === 200) {
     window.location.replace("/dashboard");
   } else {
     const validator = $("#login-form").validate();
