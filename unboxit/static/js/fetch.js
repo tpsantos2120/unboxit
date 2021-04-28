@@ -1,6 +1,6 @@
 async function request(url, data, method = "GET") {
   const options = {
-    method
+    method,
   };
 
   if (data) {
@@ -10,7 +10,7 @@ async function request(url, data, method = "GET") {
       options.body = JSON.stringify(data);
       options.headers = {
         "Content-Type": "application/json",
-      }
+      };
     }
   }
 
