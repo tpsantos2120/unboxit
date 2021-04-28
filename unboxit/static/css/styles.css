@@ -51,6 +51,8 @@ html, body {
   -o-transform: scale(1.01);
 }
 
+#title{color:#d3d3d3}
+
 .media-icons{
   font-size: 2rem;
   color: var(--black);
