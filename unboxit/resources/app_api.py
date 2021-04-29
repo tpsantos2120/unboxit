@@ -1,4 +1,3 @@
-from unboxit.resources.data_store import DataStore
 from bson import ObjectId
 from flask import request, render_template, make_response, url_for, redirect
 from flask_jwt_extended.view_decorators import jwt_required
