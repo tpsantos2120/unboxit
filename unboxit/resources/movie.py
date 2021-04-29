@@ -6,8 +6,8 @@ from requests.sessions import extract_cookies_to_jar
 from unboxit.models.models import Movie, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
-from bson import ObjectId, json_util
-from mongoengine.errors import DoesNotExist, NotUniqueError, ValidationError, FieldDoesNotExist
+from bson import json_util
+from mongoengine.errors import NotUniqueError, ValidationError, FieldDoesNotExist
 from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError \
 , SchemaValidationError
 import json
