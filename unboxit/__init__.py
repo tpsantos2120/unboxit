@@ -1,4 +1,5 @@
 import os
+from unboxit.resources.cache import initialize_cache
 from unboxit.resources.jwt import initialize_jwt
 from flask import Flask
 from flask import render_template
@@ -29,4 +30,5 @@ bcrypt = Bcrypt(app)
 initialize_jwt(app)
 initialize_db(app)
 initialize_routes(api)
+initialize_cache(app)
 
