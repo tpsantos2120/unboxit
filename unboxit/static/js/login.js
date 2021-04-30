@@ -1,4 +1,5 @@
 import Fetch from "./fetch.js";
+import Spinner from "./userFeedback.js";
 
 $(document).ready(function () {
   $("#login-form").validate({
@@ -40,7 +41,14 @@ async function loginUser(email, password) {
     password: password.value,
   });
   if (loginResponse.status === 200) {
+    Spinner.userFeedback(
+      "Please, wait whilst we load the truck.",
+      "#user-message"
+    );
+    Spinner.startSpinner("#spinner");
+    Spinner.showModal("#user-feedback");
     window.location.replace("/dashboard");
+    Spinner.hideModal("#user-feedback");
   } else {
     const validator = $("#login-form").validate();
     validator.showErrors({
