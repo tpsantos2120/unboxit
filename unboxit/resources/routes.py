@@ -1,5 +1,5 @@
 from .logout import Logout
-from .movie import MovieApi, MoviesApi
+from .watchlist import WatchlistApi, WatchlistsApi
 from .user import RegisterUserApi, ResetPassword
 from .user import LoginUserApi
 from .home import Home
@@ -10,8 +10,8 @@ SearchTvShows, SearchShowDetails, SearchMovieDetails
 
 
 def initialize_routes(api):
-    api.add_resource(MoviesApi, '/api/movies')
-    api.add_resource(MovieApi, '/api/movie/<id>')
+    api.add_resource(WatchlistsApi, '/api/watchlists')
+    api.add_resource(WatchlistApi, '/api/watchlist/<id>')
     api.add_resource(RegisterUserApi, '/api/auth/register')
     api.add_resource(LoginUserApi, '/api/auth/login')
     api.add_resource(ResetPassword, '/api/auth/reset')
