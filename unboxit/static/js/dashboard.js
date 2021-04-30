@@ -1,44 +1,37 @@
 import Fetch from "./fetch.js";
+import Spinner from "./userFeedback.js";
 
-const userFeedback = (message) => {
-  const userMessage = document.querySelector("#dashboard-message");
-  if (userMessage) {
-    userMessage.innerText = message;
-  }
-};
-const startSpinner = () => {
-  const spinner = document.querySelector("#dashboard-spinner");
-  if (spinner) {
-    spinner.setAttribute("uk-spinner", "");
-  }
-};
-const stopSpinner = () => {
-  const spinner = document.querySelector("#dashboard-spinner");
-  if (spinner) {
-    spinner.removeAttribute("uk-spinner", "");
-  }
+const handleDashboardLoading = () => {
+  Spinner.userFeedback(
+    "Please, wait whilst we load the truck.",
+    "#dashboard-message"
+  );
+  Spinner.startSpinner("#dashboard-spinner");
+  Spinner.showModal("#dashboard-feedback");
 };
 
-const showModal = () => {
-  const dashboard = document.querySelector("#dashboard-feedback");
-  if (dashboard) {
-    UIkit.modal(dashboard, { bgClose: false }).show();
-  }
+const dashboard = document.querySelector("#dashboard");
+const dashboardSerch = document.querySelector("#dashboard-search");
+
+if (dashboard) {
+  dashboard.addEventListener("click", handleDashboardLoading);
+  dashboardSerch.addEventListener("click", handleDashboardLoading);
+}
+
+const handleWindow = () => {
+  Spinner.hideModal("#dashboard-feedback");
 };
 
-const hideModal = () => {
-  const dashboard = document.querySelector("#dashboard-feedback");
-  if (dashboard) {
-    UIkit.modal("#dashboard-feedback").hide();
-  }
-};
+window.onload = handleWindow;
 
 const handleDelete = async (e) => {
+  handleDashboardLoading();
   const id = e.target.getAttribute("imdb");
   const deleteResponse = await Fetch.remove("/api/watchlist/", id);
   console.log(deleteResponse);
   if (deleteResponse.status === 200) {
     window.location.replace("/dashboard");
+    handleWindow();
   }
 };
 
@@ -72,11 +65,13 @@ const handleReview = async (e) => {
     },
     submitHandler: async function (form, event) {
       event.preventDefault();
+      handleDashboardLoading();
       const reviewResponse = await Fetch.update("/api/watchlist/" + id, {
         review: review.value,
       });
       if (reviewResponse.status === 200) {
         window.location.replace("/dashboard");
+        handleWindow();
       }
     },
   });
@@ -85,17 +80,3 @@ const handleReview = async (e) => {
 document.querySelectorAll(".review").forEach((item) => {
   item.onclick = handleReview;
 });
-
-const handleDocumentLoading = () => {
-  userFeedback("loading dashboard..");
-  startSpinner();
-  showModal();
-};
-
-document.onload = handleDocumentLoading;
-
-const handleWindowLoading = () => {
-  hideModal();
-};
-
-window.onload = handleWindowLoading;
