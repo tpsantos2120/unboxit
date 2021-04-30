@@ -19,7 +19,6 @@ class Dashboard(Resource):
         identity = get_jwt_identity()
         if cookie_exist:
             Dashboard.cache_data()
-            print("done")
             watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
                 "watchlist_cache", "recommendation_cache", "trending_movies_cache")
             return make_response(render_template('views/dashboard.html',
@@ -56,7 +55,7 @@ class Dashboard(Resource):
 
     def fetch_recommendations():
         recommend = cache.get("recommend")
-        if len(recommend) > 0:
+        if len(recommend) > 0 and not recommend == None:
             data = random.choice(recommend)
             recommendations_response = requests.post(
                 request.url_root + 'recommend', data=data)
@@ -73,19 +72,28 @@ class Dashboard(Resource):
             cache.set_many({'watchlist_cache': watchlist_cache,
                             'recommendation_cache': recommendation_cache,
                             'trending_movies_cache': trending_movies_cache})
-        elif len(watchlist_cache) > 0:
-            print(len(watchlist_cache))
+        elif len(watchlist_cache) > 0 and not watchlist_cache == None:
+            watchlist_cache = Dashboard.fetch_watchlist()
             recommendation_cache = Dashboard.fetch_recommendations()
+            cache.set("watchlist_cache", watchlist_cache)
             cache.set("recommendation_cache", recommendation_cache)
-        elif len(watchlist_cache) == 0:
+        elif len(watchlist_cache) == 0 and not watchlist_cache == None:
             cache.delete("recommendation_cache")
-       
-     
+
 
 class DashboardSearch(Resource):
     def get(self):
         cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'])
         if cookie_exist:
+            watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
+            "watchlist_cache", "recommendation_cache", "trending_movies_cache")
+            if watchlist_cache == None and recommendation_cache == None and trending_movies_cache == None:
+                watchlist_cache = Dashboard.fetch_watchlist()
+                recommendation_cache = Dashboard.fetch_recommendations()
+                trending_movies_cache = Dashboard.fetch_trending_movies()
+                cache.set_many({'watchlist_cache': watchlist_cache,
+                            'recommendation_cache': recommendation_cache,
+                            'trending_movies_cache': trending_movies_cache})
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template('views/dashboard_search.html', title="Dashboard Search", logged_in=True), 200, headers)
         else:
