@@ -1,7 +1,8 @@
 import Fetch from "./fetch.js";
+import Spinner from "./userFeedback.js";
 
 $(document).ready(function () {
-  $("#register-form").validate( {
+  $("#register-form").validate({
     errorClass: "uk-form-danger",
     validClass: "uk-form-success",
     success: "uk-form-success",
@@ -26,7 +27,6 @@ $(document).ready(function () {
       },
       password: {
         required: true,
-
         minlength: 8,
       },
     },
@@ -68,7 +68,14 @@ async function registerUser(firstName, lastName, userName, email, password) {
     email: email.value,
   });
   if (response.status === 200) {
+    Spinner.userFeedback(
+      "Please, wait whilst we load the truck.",
+      "#user-message"
+    );
+    Spinner.startSpinner("#spinner");
+    Spinner.showModal("#user-feedback");
     window.location.replace("/dashboard");
+    Spinner.hideModal("#user-feedback");
   } else {
     const validator = $("#register-form").validate();
     validator.showErrors({
