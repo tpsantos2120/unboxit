@@ -198,17 +198,17 @@ class Recommend(Resource):
         shows = []
         movies = []
         if media_type == "movies":
-            recommended_movies = Recommend.fetch_similar_movies(id).json()
+            recommended_movies = Recommend.fetch_similar_movies(id)
             for imdb_id in recommended_movies['movie_results'][0:10]:
                 recommended = Recommend.fetch_images_movies(
-                    imdb_id['imdb_id']).json()
+                    imdb_id['imdb_id'])
                 movies.append(recommended)
             return movies
         elif media_type == "shows":
-            recommended_shows = Recommend.fetch_similar_shows(id).json()
+            recommended_shows = Recommend.fetch_similar_shows(id)
             for imdb_id in recommended_shows['tv_results'][0:10]:
                 recommended = Recommend.fetch_images_shows(
-                    imdb_id['imdb_id']).json()
+                    imdb_id['imdb_id'])
                 shows.append(recommended)
             return shows
         
@@ -219,7 +219,7 @@ class Recommend(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-similar-movies", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
     def fetch_images_movies(id):
@@ -228,7 +228,7 @@ class Recommend(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-movies-images-by-imdb", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
     def fetch_similar_shows(id):
@@ -237,7 +237,7 @@ class Recommend(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-similar-shows", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
     def fetch_images_shows(id):
@@ -246,7 +246,7 @@ class Recommend(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-show-images-by-imdb", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
 
