@@ -39,12 +39,11 @@ class Dashboard(Resource):
         token = request.cookies.get('access_token_cookie')
         headers = {"Authorization": "Bearer " + token}
         watchlist_response = requests.get(
-            request.url_root + 'api/watchlists', headers=headers)
-        watchlist_data = watchlist_response.json()
+            request.url_root + 'api/watchlists', headers=headers).json()
+        watchlist_data = watchlist_response
         for data in watchlist_data:
-            json.loads(data)
             recommend.append({"id": json.loads(data).get(
-                'imdb_id'), "type": json.loads(data).get('media_type')})
+                "imdb_id"), "type": json.loads(data).get("media_type")})
             watchlist.append(json.loads(data))
         cache.set("recommend", recommend)
         return watchlist
@@ -58,9 +57,7 @@ class Dashboard(Resource):
     def fetch_recommendations():
         recommend = cache.get("recommend")
         if len(recommend) > 0:
-            print(recommend)
             data = random.choice(recommend)
-            print(data)
             recommendations_response = requests.post(
                 request.url_root + 'recommend', data=data)
             recommendations = recommendations_response.json()
@@ -73,9 +70,9 @@ class Dashboard(Resource):
             watchlist_cache = Dashboard.fetch_watchlist()
             recommendation_cache = Dashboard.fetch_recommendations()
             trending_movies_cache = Dashboard.fetch_trending_movies()
-            cache.set_many({"watchlist_cache": watchlist_cache,
-                            "recommendation_cache": recommendation_cache,
-                            "trending_movies_cache": trending_movies_cache})
+            cache.set_many({'watchlist_cache': watchlist_cache,
+                            'recommendation_cache': recommendation_cache,
+                            'trending_movies_cache': trending_movies_cache})
         elif len(watchlist_cache) > 0:
             print(len(watchlist_cache))
             recommendation_cache = Dashboard.fetch_recommendations()
@@ -83,7 +80,7 @@ class Dashboard(Resource):
         elif len(watchlist_cache) == 0:
             cache.delete("recommendation_cache")
        
-
+     
 
 class DashboardSearch(Resource):
     def get(self):
