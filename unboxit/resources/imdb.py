@@ -1,4 +1,3 @@
-from unboxit.resources.app_api import Dashboard
 from flask import Response, request, render_template, make_response, url_for, redirect, jsonify
 from flask_restful import Resource
 from ratelimit import limits, sleep_and_retry
@@ -196,14 +195,23 @@ class Recommend(Resource):
         body = request.form
         id = body.get('id')
         media_type = body.get('type')
-        response = []
+        shows = []
+        movies = []
         if media_type == "movies":
             recommended_movies = Recommend.fetch_similar_movies(id).json()
             for imdb_id in recommended_movies['movie_results'][0:10]:
-                recommended = Recommend.fetch_images(
+                recommended = Recommend.fetch_images_movies(
                     imdb_id['imdb_id']).json()
-                response.append(recommended)
-        return response
+                movies.append(recommended)
+            return movies
+        elif media_type == "shows":
+            recommended_shows = Recommend.fetch_similar_shows(id).json()
+            for imdb_id in recommended_shows['tv_results'][0:10]:
+                recommended = Recommend.fetch_images_shows(
+                    imdb_id['imdb_id']).json()
+                shows.append(recommended)
+            return shows
+        
 
     def fetch_similar_movies(id):
         imdb = IMDBConfigs()
@@ -214,12 +222,30 @@ class Recommend(Resource):
         response = imdb.request_query(url, headers, querystring)
         return response
 
-    def fetch_images(id):
+    def fetch_images_movies(id):
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
         querystring = {
             "type": "get-movies-images-by-imdb", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+    def fetch_similar_shows(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-similar-shows", "imdb": id}
+        response = imdb.request_query(url, headers, querystring)
+        return response
+
+    def fetch_images_shows(id):
+        imdb = IMDBConfigs()
+        url = imdb.get_url()
+        headers = imdb.get_headers()
+        querystring = {
+            "type": "get-show-images-by-imdb", "imdb": id}
         response = imdb.request_query(url, headers, querystring)
         return response
 
