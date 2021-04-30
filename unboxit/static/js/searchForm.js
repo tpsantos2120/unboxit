@@ -2,7 +2,7 @@ import Fetch from "./fetch.js";
 import Load from "./viewResultDetails.js";
 
 $(document).ready(function () {
-  $("#search-form").validate( {
+  $("#search-form").validate({
     errorClass: "uk-form-danger",
     validClass: "uk-form-success",
     success: "uk-form-success",
@@ -50,10 +50,10 @@ async function searchShow(query) {
     }, 1000);
   } else {
     const viewResults = document.querySelector("#view-results");
-    removeChildrenEl(viewResults)
-    viewResults.classList.add("uk-margin-large-top")
+    removeChildrenEl(viewResults);
+    viewResults.classList.add("uk-margin-large-top");
     viewResults.innerHTML = response;
-    Load.searchDetails()
+    Load.searchDetails();
     hideModal();
   }
 }
@@ -68,10 +68,10 @@ async function searchMovie(query) {
     }, 1000);
   } else {
     const viewResults = document.querySelector("#view-results");
-    removeChildrenEl(viewResults)
-    viewResults.classList.add("uk-margin-large-top")
+    removeChildrenEl(viewResults);
+    viewResults.classList.add("uk-margin-large-top");
     viewResults.innerHTML = response;
-    Load.searchDetails()
+    Load.searchDetails();
     hideModal();
   }
 }
@@ -96,8 +96,25 @@ const hideModal = () => {
   UIkit.modal("#user-feedback").hide();
 };
 
-const removeChildrenEl  = (node) => {
+const removeChildrenEl = (node) => {
   while (node.firstChild) {
     node.removeChild(node.lastChild);
   }
+};
+
+const handleDashboardSearch = () => {
+  userFeedback("Please, wait whilst we load the truck.");
+  startSpinner();
+  showModal();
+};
+
+const dashboardEl = document.querySelector("#dashboard");
+if (dashboardEl) {
+  dashboardEl.addEventListener("click", handleDashboardSearch);
 }
+
+const handleWindow = () => {
+  hideModal();
+};
+
+window.onload = handleWindow;
