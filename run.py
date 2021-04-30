@@ -7,7 +7,7 @@ if __name__ == '__main__':
         app.config["ENV"] = "production"
         app.config["FLASK_ENV"] = "production"
         app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')))
+            port=int(os.environ.get('PORT'), threaded=True))
     elif os.environ.get('ENV_STATE') == "development":
         app.config["ENV"] = "development"
         app.run(debug=os.environ.get("DEBUG"))
