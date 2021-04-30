@@ -1,3 +1,4 @@
+from unboxit.models.models import Watchlist
 from bson import ObjectId
 from flask import request, render_template, make_response, url_for, redirect
 from flask_jwt_extended.view_decorators import jwt_required
@@ -17,11 +18,14 @@ class Dashboard(Resource):
         cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'])
         identity = get_jwt_identity()
         if cookie_exist:
-            cached_data = Dashboard.cache_data(self)
+            Dashboard.cache_data()
+            print("done")
+            watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
+                "watchlist_cache", "recommendation_cache", "trending_movies_cache")
             return make_response(render_template('views/dashboard.html',
-                                                 trending_movies=cached_data['trending_movies'],
-                                                 watchlist=cached_data['watchlist'],
-                                                 recommendation=cached_data['recommendations'],
+                                                 trending_movies=trending_movies_cache,
+                                                 watchlist=watchlist_cache,
+                                                 recommendation=recommendation_cache,
                                                  title="Dashboard",
                                                  logged_in=True,
                                                  first_name=identity['first_name'],
@@ -29,18 +33,20 @@ class Dashboard(Resource):
         else:
             return redirect(url_for('home'))
 
-    def fetch_watchlist(self):
-        self.recommend = []
+    def fetch_watchlist():
+        recommend = []
         watchlist = []
         token = request.cookies.get('access_token_cookie')
         headers = {"Authorization": "Bearer " + token}
         watchlist_response = requests.get(
-            request.url_root + 'api/movies', headers=headers)
+            request.url_root + 'api/watchlists', headers=headers)
         watchlist_data = watchlist_response.json()
         for data in watchlist_data:
-            self.recommend.append({"id": json.loads(data).get(
+            json.loads(data)
+            recommend.append({"id": json.loads(data).get(
                 'imdb_id'), "type": json.loads(data).get('media_type')})
             watchlist.append(json.loads(data))
+        cache.set("recommend", recommend)
         return watchlist
 
     def fetch_trending_movies():
@@ -49,30 +55,34 @@ class Dashboard(Resource):
         trending_movies = trending_movies_response.json()
         return trending_movies
 
-    def fetch_recommendations(self):
-        if self.recommend:
-            data = random.choice(self.recommend)
-        recommendations_response = requests.post(
-            request.url_root + 'recommend', data=data)
-        recommendations = recommendations_response.json()
-        return recommendations
+    def fetch_recommendations():
+        recommend = cache.get("recommend")
+        if len(recommend) > 0:
+            print(recommend)
+            data = random.choice(recommend)
+            print(data)
+            recommendations_response = requests.post(
+                request.url_root + 'recommend', data=data)
+            recommendations = recommendations_response.json()
+            return recommendations
 
-    def cache_data(self):
-        if cache.get('data') == None:
-            print("does not exist")
-            watchlist_cache = Dashboard.fetch_watchlist(self)
-            recommendations_cache = Dashboard.fetch_recommendations(self)
+    def cache_data():
+        watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
+            "watchlist_cache", "recommendation_cache", "trending_movies_cache")
+        if watchlist_cache == None and recommendation_cache == None and trending_movies_cache == None:
+            watchlist_cache = Dashboard.fetch_watchlist()
+            recommendation_cache = Dashboard.fetch_recommendations()
             trending_movies_cache = Dashboard.fetch_trending_movies()
-            data = {
-                "watchlist": watchlist_cache,
-                "recommendations": recommendations_cache,
-                "trending_movies": trending_movies_cache
-            }
-            cache.set("data", data)
-            return cache.get("data")
-        else:
-            print("exists")
-            return cache.get("data")
+            cache.set_many({"watchlist_cache": watchlist_cache,
+                            "recommendation_cache": recommendation_cache,
+                            "trending_movies_cache": trending_movies_cache})
+        elif len(watchlist_cache) > 0:
+            print(len(watchlist_cache))
+            recommendation_cache = Dashboard.fetch_recommendations()
+            cache.set("recommendation_cache", recommendation_cache)
+        elif len(watchlist_cache) == 0:
+            cache.delete("recommendation_cache")
+       
 
 
 class DashboardSearch(Resource):
