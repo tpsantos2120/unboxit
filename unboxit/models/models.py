@@ -9,7 +9,7 @@ class Watchlist(db.Document):
     description = db.StringField()
     year = db.StringField()
     release_date = db.StringField()
-    imdb_id = db.StringField(unique=True)
+    imdb_id = db.StringField()
     imdb_rating = db.StringField()
     vote_count = db.StringField()
     popularity = db.StringField()
