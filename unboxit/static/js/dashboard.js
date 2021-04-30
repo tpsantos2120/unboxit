@@ -35,7 +35,7 @@ const hideModal = () => {
 
 const handleDelete = async (e) => {
   const id = e.target.getAttribute("imdb");
-  const deleteResponse = await Fetch.remove("/api/movie/", id);
+  const deleteResponse = await Fetch.remove("/api/watchlist/", id);
   console.log(deleteResponse);
   if (deleteResponse.status === 200) {
     window.location.replace("/dashboard");
@@ -49,7 +49,7 @@ document.querySelectorAll(".delete").forEach((item) => {
 const handleReview = async (e) => {
   const id = e.target.getAttribute("imdb");
   const review = document.querySelector("#review");
-  const existReview = await Fetch.get("/api/movie/" + id);
+  const existReview = await Fetch.get("/api/watchlist/" + id);
   if (existReview.review) {
     review.value = existReview.review;
   }
@@ -72,7 +72,7 @@ const handleReview = async (e) => {
     },
     submitHandler: async function (form, event) {
       event.preventDefault();
-      const reviewResponse = await Fetch.update("/api/movie/" + id, {
+      const reviewResponse = await Fetch.update("/api/watchlist/" + id, {
         review: review.value,
       });
       if (reviewResponse.status === 200) {

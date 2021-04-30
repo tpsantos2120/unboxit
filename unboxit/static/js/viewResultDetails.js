@@ -60,7 +60,7 @@ const postData = async (id, image, type) => {
   creators.forEach((item) => {
     data.creators.push(item.innerText);
   });
-  const saveDataResponse = await Fetch.create("/api/movies", data);
+  const saveDataResponse = await Fetch.create("/api/watchlists", data);
   if (saveDataResponse.status === 400) {
     UIkit.notification({
       message: "It already exists in your watchlist.",
