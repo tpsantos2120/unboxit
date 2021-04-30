@@ -17,9 +17,11 @@ class WatchlistsApi(Resource):
         watchlists = []
         if identity:
             user = User.objects.get(id=identity['user_id'])
-            for watchlist in user.watchlists:
-                watchlist = Watchlist.objects.get(id=watchlist.id).to_json()
-                watchlists.append(watchlist)
+            print(user.watchlists)
+            if user.watchlists:
+                for watchlist in user.watchlists:
+                    watchlist = Watchlist.objects.get(id=watchlist.id).to_json()
+                    watchlists.append(watchlist)
             return watchlists
 
     @jwt_required(locations=['headers', 'cookies'])
@@ -27,7 +29,7 @@ class WatchlistsApi(Resource):
         try:
             identity = get_jwt_identity()
             body = request.get_json()
-            print(body)
+            body["review"] = ""
             user = User.objects.get(id=identity['user_id'])
             watchlist = Watchlist(**body, added_by=user)
             watchlist.save()
@@ -43,8 +45,6 @@ class WatchlistsApi(Resource):
             raise SchemaValidationError
         except NotUniqueError:
             raise MovieAlreadyExistsError
-        except Exception as e:
-            raise InternalServerError
 
     def add_to_cache(watchlist):
         if not cache.get('watchlist_cache') == None:
@@ -53,9 +53,9 @@ class WatchlistsApi(Resource):
             watchlist_cache.append(add_to_cache)
             cache.set('watchlist_cache', watchlist_cache)
             recommend = cache.get('recommend')
-            recommend.append({"id": watchlist_cache['imdb_id'],
-                              "type": watchlist_cache['media_type']})
-            print(recommend)
+            data = {"id": add_to_cache["imdb_id"],
+                    "type": add_to_cache["media_type"]}
+            recommend.append(data.copy())
             cache.set('recommend', recommend)
 
 
