@@ -7,6 +7,7 @@ from unboxit.models.db import initialize_db
 from flask_restful import Api
 from flask_bcrypt import Bcrypt
 from unboxit.resources.errors import errors
+from flask_mail import Mail, Message
 if os.path.exists("env.py"):
     import env
 
@@ -14,7 +15,15 @@ app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ.get("MONGO_URI"),
 }
+
 app.secret_key = os.environ.get("SECRET_KEY")
+app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'apikey'
+app.config['MAIL_PASSWORD'] = "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"
+app.config['MAIL_DEFAULT_SENDER'] = "contact@tsantos.dev"
+mail = Mail(app)
 
 def page_not_found(e):
   return render_template('components/error_404.html'), 404
@@ -34,4 +43,13 @@ initialize_jwt(app)
 initialize_db(app)
 initialize_routes(api)
 initialize_cache(app)
+
+# def test_connection():
+#     with app.app_context():
+#         msg = Message('Twilio SendGrid Test Email', recipients=['thiagocroza@hotmail.com'])
+#         msg.body = 'This is a test email!'
+#         msg.html = '<p>This is a test email!</p>'
+#         mail.send(msg)
+#         #test code
+
 
