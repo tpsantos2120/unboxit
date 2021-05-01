@@ -21,8 +21,9 @@ app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'apikey'
-app.config['MAIL_PASSWORD'] = "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"
-app.config['MAIL_DEFAULT_SENDER'] = "contact@tsantos.dev"
+app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("MAIL_DEFAULT_SENDER")
+
 mail = Mail(app)
 
 def page_not_found(e):
