@@ -29,11 +29,19 @@ class SchemaValidationError(HTTPException):
     pass
 
 
-class EmailDoesnotExistsError(Exception):
+class EmailDoesNotExistsError(HTTPException):
     pass
 
 
-class SchemaValidationError(Exception):
+class SchemaValidationError(HTTPException):
+    pass
+
+
+class BadTokenError(HTTPException):
+    pass
+
+
+class ExpiredSignatureError(HTTPException):
     pass
 
 
@@ -62,12 +70,20 @@ errors = {
         "message": "Request is missing required fields",
         "status": 400
     },
-    "EmailDoesnotExistsError": {
+    "EmailDoesNotExistsError": {
         "message": "Couldn't find the user with given email address",
         "status": 400
     },
     "SchemaValidationError": {
         "message": "Request is missing required fields",
         "status": 400
+    },
+    "BadTokenError": {
+        "message": "Invalid token",
+        "status": 403
+    },
+    "ExpiredSignatureError": {
+        "message": "Expired token",
+        "status": 403
     }
 }
