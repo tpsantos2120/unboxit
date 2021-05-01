@@ -50,7 +50,7 @@ const forgottenPassword = async (password, token) => {
     password: password,
   };
   const authorization = "Bearer " + token;
-  const passwordResponse = await Fetch.update(
+  const passwordResponse = await Fetch.create(
     "/api/auth/reset",
     resetPassword,
     authorization
