@@ -1,5 +1,6 @@
 import datetime
-from flask import Response, request
+from unboxit.services.mail_service import send_email
+from flask import Response, request, render_template
 from flask.helpers import make_response
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended.utils import get_jwt_identity, set_access_cookies
@@ -7,7 +8,7 @@ from flask_jwt_extended.view_decorators import jwt_required
 from unboxit.models.models import User
 from flask_restful import Resource
 from mongoengine.errors import DoesNotExist, FieldDoesNotExist, NotUniqueError
-from unboxit.resources.errors import InternalServerError, UnauthorizedError, SchemaValidationError, EmailAlreadyExistsError
+from unboxit.resources.errors import EmailDoesnotExistsError, InternalServerError, UnauthorizedError, SchemaValidationError, EmailAlreadyExistsError
 
 
 class RegisterUserApi(Resource):
@@ -67,23 +68,51 @@ class LoginUserApi(Resource):
         except Exception as e:
             raise InternalServerError
 
+
 class ResetPassword(Resource):
     @jwt_required(locations=['headers', 'cookies'])
     def put(self):
         try:
             identity = get_jwt_identity()
+            print(identity)
             body = request.get_json()
             if identity:
                 user = User.objects.get(id=identity['user_id'])
                 user.modify(password=body.get('password'))
                 user.hash_password()
                 user.save()
-            res = make_response({
-                "response": "You have changed your password successfully.",
-                'status': 200
-            }, 200)
-            return res
+                res = make_response({
+                    "response": "You have changed your password successfully.",
+                    'status': 200
+                }, 200)
+                return res
         except SchemaValidationError:
             raise SchemaValidationError
         except Exception as e:
-            raise 
+            raise
+
+
+class ForgotPassword(Resource):
+    def post(self):
+        url = request.host_url + 'reset/password/'
+        body = request.get_json()
+        email = body.get('email')
+        print(email)
+        if not email:
+            raise SchemaValidationError
+
+        user = User.objects.get(email=email)
+        if not user:
+            raise EmailDoesnotExistsError
+
+        expires = datetime.timedelta(hours=24)
+        payload = {"user_id": str(user.id)}
+        reset_token = create_access_token(payload, expires_delta=expires)
+
+        return send_email('[Unboxit] Reset Your Password',
+                          sender='contact@tsantos.dev',
+                          recipients=[user.email],
+                          text_body=render_template('components/reset_password.txt',
+                                                    url=url + reset_token),
+                          html_body=render_template('components/reset_password.html',
+                                                    url=url + reset_token))
