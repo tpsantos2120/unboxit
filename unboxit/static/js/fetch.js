@@ -1,4 +1,4 @@
-async function request(url, data, method = "GET") {
+async function request(url, data, header = null, method = "GET") {
   const options = {
     method,
   };
@@ -8,9 +8,13 @@ async function request(url, data, method = "GET") {
       url += data.split(" ").join("+");
     } else {
       options.body = JSON.stringify(data);
-      options.headers = {
-        "Content-Type": "application/json",
-      };
+      options.headers =
+        header == null
+          ? { "Content-Type": "application/json" }
+          : {
+              "Content-Type": "application/json",
+              "Authorization": header,
+            };
     }
   }
 
@@ -29,16 +33,16 @@ const get = (url, data) => {
   return request(url, data);
 };
 
-const create = (url, data) => {
-  return request(url, data, "POST");
+const create = (url, data, header) => {
+  return request(url, data, header, "POST");
 };
 
-const update = (url, data) => {
-  return request(url, data, "PUT");
+const update = (url, data, header) => {
+  return request(url, data, header, "PUT");
 };
 
-const remove = (url, data) => {
-  return request(url, data, "DELETE");
+const remove = (url, data, header) => {
+  return request(url, data, header, "DELETE");
 };
 
 export default {
