@@ -1,22 +1,27 @@
 {% block content %} {% if results %}
-<div class="uk-background-secondary uk-light" uk-slider="sets: true" id="result-slider">
-  <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
-    <ul class="uk-slider-items uk-child-width-1-4@s uk-grid uk-margin">
+<div class="uk-card uk-card-secondary uk-card-body uk-margin-large-top">
+  <h1 class="uk-heading-divider">Results</h1>
+
+  <div
+    class="uk-position-relative uk-visible-toggle"
+    tabindex="-1"
+    uk-slider="sets: true"
+    id="result-slider"
+  >
+    <ul
+      class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-child-width-1-4@l uk-child-width-1-6@xl"
+    >
       {% for result in results %} {% if not result.poster == "" %}
-      <li>
-        <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge results">
-          <div class="uk-card-media-bottom">
-            <a
-              ><img
-                data-src="{{ result.poster }}"
-                type="{{type}}"
-                alt="{{result.title}}"
-                uk-img
-                imdb="{{result.IMDB}}"
-            /></a>
-          </div>
-        </div>
-      </li>
+      <div class="uk-inline-clip uk-transition-toggle results" tabindex="0">
+        <a
+          ><img
+            data-src="{{ result.poster }}"
+            type="{{type}}"
+            alt="{{result.title}}"
+            uk-img
+            imdb="{{result.IMDB}}"
+        /></a>
+      </div>
       {% endif %} {% endfor %}
     </ul>
     <a
@@ -32,7 +37,5 @@
       uk-slider-item="next"
     ></a>
   </div>
-
-  <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
 </div>
-{% endif %} {% endblock %} 
+{% endif %} {% endblock %}
