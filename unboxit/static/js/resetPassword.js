@@ -29,10 +29,15 @@ $(document).ready(function () {
       event.preventDefault();
       const newPassword = document.querySelector("#newPassword");
       const repeatPassword = document.querySelector("#repeatPassword");
-      if (newPassword.value === repeatPassword.value) {
-        console.log("yes");
+      if (newPassword.value == repeatPassword.value) {
         changePassword(newPassword.value);
+        console.log("matches")
       } else {
+        console.log("not matches")
+        const validator = $("#settings-form").validate();
+        validator.showErrors({
+          repeatPassword: "Password does not match.",
+        });
       }
     },
   });
@@ -42,7 +47,6 @@ const changePassword = async (password) => {
   const passwordResponse = await Fetch.update("/api/auth/reset", {
     password: password,
   });
-  console.log(passwordResponse);
   if (passwordResponse.status === 200) {
     UIkit.modal("#settings-modal").hide();
     UIkit.notification({
@@ -50,12 +54,6 @@ const changePassword = async (password) => {
       status: "success",
       pos: "top-center",
       timeout: 5000,
-    });
-  } else {
-    const validator = $("#settings-form").validate();
-    validator.showErrors({
-      loginEmail: "Password does not match.",
-      loginPassword: "Password does not match.",
     });
   }
 };

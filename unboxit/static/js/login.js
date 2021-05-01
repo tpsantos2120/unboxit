@@ -52,8 +52,7 @@ async function loginUser(email, password) {
   } else {
     const validator = $("#login-form").validate();
     validator.showErrors({
-      loginEmail: "Email is not valid.",
-      loginPassword: "Password is not valid.",
+      loginPassword: "Login details not valid.",
     });
   }
 }
