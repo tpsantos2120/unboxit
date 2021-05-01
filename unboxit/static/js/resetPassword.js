@@ -31,9 +31,9 @@ $(document).ready(function () {
       const repeatPassword = document.querySelector("#repeatPassword");
       if (newPassword.value == repeatPassword.value) {
         changePassword(newPassword.value);
-        console.log("matches")
+        console.log("matches");
       } else {
-        console.log("not matches")
+        console.log("not matches");
         const validator = $("#settings-form").validate();
         validator.showErrors({
           repeatPassword: "Password does not match.",
@@ -44,7 +44,7 @@ $(document).ready(function () {
 });
 
 const changePassword = async (password) => {
-  const passwordResponse = await Fetch.update("/api/auth/reset", {
+  const passwordResponse = await Fetch.create("/api/auth/reset", {
     password: password,
   });
   if (passwordResponse.status === 200) {
@@ -54,6 +54,66 @@ const changePassword = async (password) => {
       status: "success",
       pos: "top-center",
       timeout: 5000,
+    });
+  }
+};
+
+$(document).ready(function () {
+  $("#reset-modal-form").validate({
+    errorClass: "uk-form-danger",
+    validClass: "uk-form-success",
+    success: "uk-form-success",
+    focusInvalid: false,
+    focusCleanup: true,
+    rules: {
+      resetEmail: {
+        required: true,
+        email: true,
+      },
+    },
+    messages: {
+      resetEmail: {
+        required: "Please enter your email.",
+      },
+    },
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      const resetEmail = document.querySelector("#resetEmail");
+      if (resetEmail.value) {
+        sendResetEmail(resetEmail.value);
+        console.log("matches");
+      }
+    },
+  });
+});
+
+const sendResetEmail = async (email) => {
+  const resetResponse = await Fetch.create("/api/auth/forgot", {
+    email: email,
+  });
+  console.log(resetResponse);
+  if (resetResponse === null) {
+    UIkit.modal("#reset-modal").hide();
+    UIkit.notification({
+      message: "We have sent you a reset email.",
+      status: "success",
+      pos: "top-center",
+      timeout: 5000,
+    });
+  } else if (resetResponse.status === 400) {
+    const validator = $("#reset-modal-form").validate();
+    validator.showErrors({
+      resetEmail: "There is a schema error problem, please contact support centre.",
+    });
+  } else if (resetResponse.status === 403) {
+    const validator = $("#reset-modal-form").validate();
+    validator.showErrors({
+      resetEmail: "Token is invalid or expired, try re-sending the email.",
+    });
+  } else {
+    const validator = $("#reset-modal-form").validate();
+    validator.showErrors({
+      resetEmail: "Email does not exist.",
     });
   }
 };
