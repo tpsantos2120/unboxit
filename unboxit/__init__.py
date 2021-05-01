@@ -17,10 +17,13 @@ app.config['MONGODB_SETTINGS'] = {
 app.secret_key = os.environ.get("SECRET_KEY")
 
 def page_not_found(e):
-  return render_template('components/error.html'), 404
+  return render_template('components/error_404.html'), 404
+
+def internal_error(e):
+  return render_template('components/error_500.html'), 500
 
 app.register_error_handler(404, page_not_found)
-
+app.register_error_handler(500, internal_error)
 
 from unboxit.resources.routes import initialize_routes
 
