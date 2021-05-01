@@ -11,7 +11,7 @@ class Home(Resource):
             return redirect(url_for('dashboard'))
         else:    
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/home.html', title="Homapage"),200,headers)
+            return make_response(render_template('views/home.html', title="Homepage"),200,headers)
     @jwt.token_verification_failed_loader
     def invalid_token_callback(callback): 
         return redirect(url_for('home'))
