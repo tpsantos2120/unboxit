@@ -47,16 +47,17 @@ class WatchlistsApi(Resource):
             raise EntryAlreadyExistsError
 
     def add_to_cache(watchlist):
-        if not cache.get('watchlist_cache') == None:
-            watchlist_cache = cache.get('watchlist_cache')
-            add_to_cache = json.loads(watchlist.to_json())
-            watchlist_cache.append(add_to_cache)
-            cache.set('watchlist_cache', watchlist_cache)
-            recommend = cache.get('recommend')
-            data = {"id": add_to_cache["imdb_id"],
+        watchlist_cache = cache.get('watchlist_cache')
+        print(watchlist_cache)
+        add_to_cache = json.loads(watchlist.to_json())
+        watchlist_cache.append(add_to_cache)
+        print(watchlist_cache)
+        cache.set('watchlist_cache', watchlist_cache)
+        recommend = cache.get('recommend')
+        data = {"id": add_to_cache["imdb_id"],
                     "type": add_to_cache["media_type"]}
-            recommend.append(data.copy())
-            cache.set('recommend', recommend)
+        recommend.append(data.copy())
+        cache.set('recommend', recommend)
 
 
 class WatchlistApi(Resource):
