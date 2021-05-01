@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 from bson import json_util
 from mongoengine.errors import NotUniqueError, ValidationError, FieldDoesNotExist
-from unboxit.resources.errors import InternalServerError, MovieNotExistsError, MovieAlreadyExistsError, SchemaValidationError
+from unboxit.resources.errors import InternalServerError, EntryAlreadyExistsError, SchemaValidationError
 from .cache import cache
 import json
 
@@ -44,7 +44,7 @@ class WatchlistsApi(Resource):
         except (FieldDoesNotExist, ValidationError):
             raise SchemaValidationError
         except NotUniqueError:
-            raise MovieAlreadyExistsError
+            raise EntryAlreadyExistsError
 
     def add_to_cache(watchlist):
         if not cache.get('watchlist_cache') == None:
