@@ -7,8 +7,10 @@ from flask_jwt_extended.utils import get_jwt_identity, set_access_cookies
 from flask_jwt_extended.view_decorators import jwt_required
 from unboxit.models.models import User
 from flask_restful import Resource
+from jwt.exceptions import ExpiredSignatureError, DecodeError, InvalidTokenError
 from mongoengine.errors import DoesNotExist, FieldDoesNotExist, NotUniqueError
-from unboxit.resources.errors import EmailDoesnotExistsError, InternalServerError, UnauthorizedError, SchemaValidationError, EmailAlreadyExistsError
+from unboxit.resources.errors import EmailDoesNotExistsError, InternalServerError, \
+    UnauthorizedError, SchemaValidationError, EmailAlreadyExistsError, BadTokenError
 
 
 class RegisterUserApi(Resource):
@@ -71,10 +73,9 @@ class LoginUserApi(Resource):
 
 class ResetPassword(Resource):
     @jwt_required(locations=['headers', 'cookies'])
-    def put(self):
+    def post(self):
         try:
             identity = get_jwt_identity()
-            print(identity)
             body = request.get_json()
             if identity:
                 user = User.objects.get(id=identity['user_id'])
@@ -88,31 +89,41 @@ class ResetPassword(Resource):
                 return res
         except SchemaValidationError:
             raise SchemaValidationError
+        except ExpiredSignatureError:
+            raise ExpiredSignatureError
+        except (DecodeError, InvalidTokenError):
+            raise BadTokenError
         except Exception as e:
-            raise
+            raise InternalServerError
 
 
 class ForgotPassword(Resource):
     def post(self):
-        url = request.host_url + 'reset/password/'
-        body = request.get_json()
-        email = body.get('email')
-        print(email)
-        if not email:
+        try:
+            url = request.host_url + 'reset/password/'
+            body = request.get_json()
+            email = body.get('email')
+            if not email:
+                raise SchemaValidationError
+
+            user = User.objects.get(email=email)
+            if not user:
+                raise EmailDoesNotExistsError
+
+            expires = datetime.timedelta(hours=24)
+            payload = {"user_id": str(user.id)}
+            reset_token = create_access_token(payload, expires_delta=expires)
+
+            return send_email('[Unboxit] Reset Your Password',
+                              sender='contact@tsantos.dev',
+                              recipients=[user.email],
+                              text_body=render_template('components/reset_password.txt',
+                                                        url=url + reset_token),
+                              html_body=render_template('components/reset_password.html',
+                                                        url=url + reset_token, first_name=user.first_name))
+        except SchemaValidationError:
             raise SchemaValidationError
-
-        user = User.objects.get(email=email)
-        if not user:
-            raise EmailDoesnotExistsError
-
-        expires = datetime.timedelta(hours=24)
-        payload = {"user_id": str(user.id)}
-        reset_token = create_access_token(payload, expires_delta=expires)
-
-        return send_email('[Unboxit] Reset Your Password',
-                          sender='contact@tsantos.dev',
-                          recipients=[user.email],
-                          text_body=render_template('components/reset_password.txt',
-                                                    url=url + reset_token),
-                          html_body=render_template('components/reset_password.html',
-                                                    url=url + reset_token))
+        except DoesNotExist:
+            raise EmailDoesNotExistsError
+        except Exception as e:
+            raise InternalServerError
