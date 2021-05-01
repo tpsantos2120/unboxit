@@ -5,15 +5,15 @@ class InternalServerError(HTTPException):
     pass
 
 
-class MovieNotExistsError(HTTPException):
+class EntryNotExistsError(HTTPException):
     pass
 
 
-class MovieAlreadyExistsError(HTTPException):
+class EntryAlreadyExistsError(HTTPException):
     pass
 
 
-class MovieAlreadyExistsError(HTTPException):
+class EntryAlreadyExistsError(HTTPException):
     pass
 
 
@@ -42,12 +42,12 @@ errors = {
         "message": "Something went wrong internally",
         "status": 500
     },
-    'MovieNotExistsError': {
-        'message': "Movie with given id doesn't exist",
+    'EntryNotExistsError': {
+        'message': "Entry with given id doesn't exist",
         'status': 400
     },
-    "MovieAlreadyExistsError": {
-        "message": "Movie has already been added.",
+    "EntryAlreadyExistsError": {
+        "message": "Entry has already been added.",
         "status": 400
     },
     "UnauthorizedError": {
