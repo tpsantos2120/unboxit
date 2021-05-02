@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ.get("MONGO_URI"),
 }
-
+app.config["JWT_SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.secret_key = os.environ.get("SECRET_KEY")
 app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587
@@ -45,12 +45,6 @@ initialize_db(app)
 initialize_routes(api)
 initialize_cache(app)
 
-# def test_connection():
-#     with app.app_context():
-#         msg = Message('Twilio SendGrid Test Email', recipients=['thiagocroza@hotmail.com'])
-#         msg.body = 'This is a test email!'
-#         msg.html = '<p>This is a test email!</p>'
-#         mail.send(msg)
-#         #test code
+
 
 
