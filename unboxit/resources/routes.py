@@ -1,7 +1,7 @@
 from unboxit.resources.forgot_password import ForgotPasswordReset
 from .logout import Logout
 from .watchlist import WatchlistApi, WatchlistsApi
-from .user import ForgotPassword, RegisterUserApi, ResetPassword
+from .user import ForgotPassword, RegisterUserApi, ResetFogottenPassword, ResetPassword
 from .user import LoginUserApi
 from .home import Home
 from .app_api import Dashboard, DashboardSearch
@@ -16,6 +16,7 @@ def initialize_routes(api):
     api.add_resource(RegisterUserApi, '/api/auth/register')
     api.add_resource(LoginUserApi, '/api/auth/login')
     api.add_resource(ResetPassword, '/api/auth/reset')
+    api.add_resource(ResetFogottenPassword, '/api/auth/reset/password')
     api.add_resource(ForgotPassword, '/api/auth/forgot')
     api.add_resource(ForgotPasswordReset, '/reset/password/<token>')
     api.add_resource(Home, '/')
