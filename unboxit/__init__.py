@@ -15,8 +15,8 @@ app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ.get("MONGO_URI"),
 }
-app.config["JWT_SECRET_KEY"] = os.environ.get("SECRET_KEY")
-app.secret_key = os.environ.get("SECRET_KEY")
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
