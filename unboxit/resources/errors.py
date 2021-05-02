@@ -41,7 +41,7 @@ class BadTokenError(HTTPException):
     pass
 
 
-class ExpiredSignatureError(HTTPException):
+class ExpiredTokenError(HTTPException):
     pass
 
 
@@ -82,7 +82,7 @@ errors = {
         "message": "Invalid token",
         "status": 403
     },
-    "ExpiredSignatureError": {
+    "ExpiredTokenError": {
         "message": "Expired token",
         "status": 403
     }
