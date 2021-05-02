@@ -11,11 +11,11 @@ const handleDashboardLoading = () => {
 };
 
 const dashboard = document.querySelector("#dashboard");
-const dashboardSerch = document.querySelector("#dashboard-search");
+const dashboardSearch = document.querySelector("#dashboard-search");
 
-if (dashboard) {
+if (dashboard && dashboardSearch) {
   dashboard.addEventListener("click", handleDashboardLoading);
-  dashboardSerch.addEventListener("click", handleDashboardLoading);
+  dashboardSearch.addEventListener("click", handleDashboardLoading);
 }
 
 const handleWindow = () => {
