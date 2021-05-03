@@ -1,7 +1,6 @@
 from threading import Thread
 from unboxit.resources.utils.errors import InternalServerError
 from flask_mail import Message
-
 from unboxit import app
 from unboxit import mail
 
