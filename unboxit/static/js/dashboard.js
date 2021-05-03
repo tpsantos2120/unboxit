@@ -1,6 +1,8 @@
 import Fetch from "./fetch.js";
 import Spinner from "./userFeedback.js";
 
+
+
 const handleDashboardLoading = () => {
   Spinner.userFeedback(
     "Please, wait whilst we load the truck.",
@@ -9,6 +11,7 @@ const handleDashboardLoading = () => {
   Spinner.startSpinner("#dashboard-spinner");
   Spinner.showModal("#dashboard-feedback");
 };
+
 
 const dashboard = document.querySelector("#dashboard");
 const dashboardSearch = document.querySelector("#dashboard-search");
@@ -24,14 +27,22 @@ const handleWindow = () => {
 
 window.onload = handleWindow;
 
+
 const handleDelete = async (e) => {
+  e.target.setAttribute("disabled","");
   handleDashboardLoading();
   const id = e.target.getAttribute("imdb");
   const deleteResponse = await Fetch.remove("/api/watchlist/", id);
   console.log(deleteResponse);
   if (deleteResponse.status === 200) {
     window.location.replace("/dashboard");
-    handleWindow();
+  } else {
+    UIkit.notification({
+      message: "Ops! It could not delete it.",
+      status: "success",
+      pos: "top-center",
+      timeout: 5000,
+    });
   }
 };
 
@@ -41,8 +52,10 @@ document.querySelectorAll(".delete").forEach((item) => {
 
 const handleReview = async (e) => {
   const id = e.target.getAttribute("imdb");
-  const review = document.querySelector("#review");
+  e.target.setAttribute("disabled","");
+  const review = document.querySelector("#reviewTextArea");
   const existReview = await Fetch.get("/api/watchlist/" + id);
+  console.log(existReview)
   if (existReview.review) {
     review.value = existReview.review;
   }
@@ -54,12 +67,12 @@ const handleReview = async (e) => {
     focusInvalid: false,
     focusCleanup: true,
     rules: {
-      review: {
+      reviewTextArea: {
         required: true,
       },
     },
     messages: {
-      review: {
+      reviewTextArea: {
         required: "Please write a review.",
       },
     },
@@ -70,8 +83,17 @@ const handleReview = async (e) => {
         review: review.value,
       });
       if (reviewResponse.status === 200) {
+        e.target.removeAttribute("disabled", "");
         window.location.replace("/dashboard");
         handleWindow();
+      } else {
+        e.target.removeAttribute("disabled", "");
+        UIkit.notification({
+          message: "Ops! It could not update review.",
+          status: "success",
+          pos: "top-center",
+          timeout: 5000,
+        });
       }
     },
   });
