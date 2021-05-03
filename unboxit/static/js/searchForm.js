@@ -21,6 +21,8 @@ $(document).ready(function () {
     },
     submitHandler: function (form, event) {
       event.preventDefault();
+      event.target.classList.remove("uk-position-center-right")
+      event.target.classList.remove("uk-position-center-left")
       const type = document.querySelector("#tabs > li.uk-active > a");
       const query = document.querySelector("#search");
       if (type.innerText == "MOVIES") {
