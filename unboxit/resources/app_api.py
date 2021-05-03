@@ -8,7 +8,6 @@ from flask_jwt_extended import jwt_required
 from .jwt import jwt
 from .cache import cache
 import requests
-import json
 import random
 
 
@@ -29,8 +28,6 @@ class Dashboard(Resource):
                                                  logged_in=True,
                                                  first_name=identity['first_name'],
                                                  last_name=identity['last_name']))
-        else:
-            return redirect(url_for('home'))
 
     def fetch_watchlist():
         recommend = []
@@ -40,65 +37,86 @@ class Dashboard(Resource):
         watchlist_response = requests.get(
             request.url_root + 'api/watchlists', headers=headers).json()
         watchlist_data = watchlist_response
-        for data in watchlist_data:
-            recommend.append({"id": json.loads(data).get(
-                "imdb_id"), "type": json.loads(data).get("media_type")})
-            watchlist.append(json.loads(data))
-        cache.set("recommend", recommend)
-        return watchlist
+        if watchlist_data:
+            for data in watchlist_data:
+                recommend.append(
+                    {"id": data["imdb_id"], "type": data["media_type"]})
+                watchlist.append(data)
+            cache.set("recommend", recommend)
+            return watchlist
+        else:
+            cache.set("recommend", recommend)
+            return watchlist
 
     def fetch_trending_movies():
         trending_movies_response = requests.get(
-            request.url_root + 'search/trending/movies')
-        trending_movies = trending_movies_response.json()
+            request.url_root + 'search/trending/movies').json()
+        trending_movies = trending_movies_response
         return trending_movies
 
     def fetch_recommendations():
         recommend = cache.get("recommend")
-        if len(recommend) > 0 and not recommend == None:
+        if not recommend == None and len(recommend) > 0:
             data = random.choice(recommend)
+            print(recommend)
             recommendations_response = requests.post(
                 request.url_root + 'recommend', data=data)
-            recommendations = recommendations_response.json()
-            return recommendations
+            print(recommendations_response.status_code)
+            if recommendations_response.status_code == 200:
+                recommendations = recommendations_response.json()
+                print(recommend)
+                return recommendations
+            if recommendations_response.status_code == 400:
+                recommend.remove(data)
+                cache.set("recommend", recommend)
+                return Dashboard.fetch_recommendations()
+        else:
+            recommend = []
+            cache.set("recommend", recommend)
+            return recommend
 
     def cache_data():
         watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
             "watchlist_cache", "recommendation_cache", "trending_movies_cache")
-        if watchlist_cache == None and recommendation_cache == None and trending_movies_cache == None:
+
+        if watchlist_cache == None:
             watchlist_cache = Dashboard.fetch_watchlist()
+            cache.set('watchlist_cache', watchlist_cache)
+
+        if recommendation_cache == None:
             recommendation_cache = Dashboard.fetch_recommendations()
+            cache.set('recommendation_cache', recommendation_cache)
+
+        if trending_movies_cache == None:
             trending_movies_cache = Dashboard.fetch_trending_movies()
-            cache.set_many({'watchlist_cache': watchlist_cache,
-                            'recommendation_cache': recommendation_cache,
-                            'trending_movies_cache': trending_movies_cache})
-        elif len(watchlist_cache) > 0 and not watchlist_cache == None:
-            watchlist_cache = Dashboard.fetch_watchlist()
+            cache.set('trending_movies_cache', trending_movies_cache)
+
+        if len(watchlist_cache) > 0:
+            #watchlist_cache = Dashboard.fetch_watchlist()
             recommendation_cache = Dashboard.fetch_recommendations()
-            cache.set("watchlist_cache", watchlist_cache)
+            #cache.set("watchlist_cache", watchlist_cache)
             cache.set("recommendation_cache", recommendation_cache)
-        elif len(watchlist_cache) == 0 and not watchlist_cache == None:
+        elif len(watchlist_cache) == 0:
             cache.delete("recommendation_cache")
 
 
 class DashboardSearch(Resource):
+    @jwt_required(locations=['headers', 'cookies'])
     def get(self):
         cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'])
         if cookie_exist:
             watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
-            "watchlist_cache", "recommendation_cache", "trending_movies_cache")
-            if watchlist_cache == None and recommendation_cache == None and trending_movies_cache == None:
+                "watchlist_cache", "recommendation_cache", "trending_movies_cache")
+            if watchlist_cache == None:
                 watchlist_cache = Dashboard.fetch_watchlist()
+                cache.set('watchlist_cache', watchlist_cache)
+            if recommendation_cache == None:
                 recommendation_cache = Dashboard.fetch_recommendations()
+                cache.set('recommendation_cache', recommendation_cache)
+            if trending_movies_cache == None:
                 trending_movies_cache = Dashboard.fetch_trending_movies()
-                cache.set_many({'watchlist_cache': watchlist_cache,
-                            'recommendation_cache': recommendation_cache,
-                            'trending_movies_cache': trending_movies_cache})
+                cache.set('trending_movies_cache', trending_movies_cache)
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template('views/dashboard_search.html', title="Dashboard Search", logged_in=True), 200, headers)
         else:
             return redirect(url_for('home'))
-
-    @jwt.expired_token_loader
-    def my_expired_token_callback(jwt_header, jwt_payload):
-        return redirect(url_for('home'))
