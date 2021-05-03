@@ -104,6 +104,7 @@ class ResetFogottenPassword(Resource):
         try:
             body = request.get_json()
             bearer = request.headers.get('Authorization')
+            base_url = request.url_root
             token = bearer.split()[1]
             password = body.get('password')
 
@@ -121,8 +122,10 @@ class ResetFogottenPassword(Resource):
             return send_email('[Unboxit] Password reset successful',
                               sender='contact@tsantos.dev',
                               recipients=[user.email],
-                              text_body='Password reset was successful',
-                              html_body='<p>Password reset was successful</p>')
+                              text_body='Password Reset',
+                              html_body=render_template('components/reset_password_response.html',
+                                                        first_name=user.first_name,
+                                                        base_url=base_url))
         except SchemaValidationError:
             raise SchemaValidationError
         except ExpiredSignatureError:
@@ -142,7 +145,9 @@ class ForgotPassword(Resource):
         try:
             url = request.host_url + 'reset/password/'
             body = request.get_json()
+            base_url = request.url_root
             email = body.get('email')
+
             if not email:
                 raise SchemaValidationError
 
@@ -160,7 +165,9 @@ class ForgotPassword(Resource):
                               text_body=render_template('components/reset_password.txt',
                                                         url=url + reset_token),
                               html_body=render_template('components/reset_password.html',
-                                                        url=url + reset_token, first_name=user.first_name))
+                                                        url=url + reset_token, 
+                                                        first_name=user.first_name,
+                                                        base_url=base_url))
         except SchemaValidationError:
             raise SchemaValidationError
         except DoesNotExist:
