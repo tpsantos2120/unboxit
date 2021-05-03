@@ -1,28 +1,33 @@
 
-from flask import Response, request
+from flask import request, make_response, url_for, redirect
+from flask.helpers import make_response
+from flask.json import jsonify
 from unboxit.models.models import Watchlist, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
-from bson import json_util
-from mongoengine.errors import NotUniqueError, ValidationError, FieldDoesNotExist
-from unboxit.resources.errors import InternalServerError, EntryAlreadyExistsError, SchemaValidationError
+from mongoengine.errors import DoesNotExist, NotUniqueError, ValidationError, FieldDoesNotExist
+from unboxit.resources.errors import EntryAlreadyExistsError, SchemaValidationError, EntryNotExistsError
 from .cache import cache
+from .jwt import jwt
 import json
 
 
 class WatchlistsApi(Resource):
     @jwt_required(locations=['headers', 'cookies'])
     def get(self):
-        identity = get_jwt_identity()
-        watchlists = []
-        if identity:
-            user = User.objects.get(id=identity['user_id'])
-            print(user.watchlists)
-            if user.watchlists:
-                for watchlist in user.watchlists:
-                    watchlist = Watchlist.objects.get(id=watchlist.id).to_json()
-                    watchlists.append(watchlist)
-            return watchlists
+        try:
+            identity = get_jwt_identity()
+            watchlists = []
+            if identity:
+                user = User.objects.get(id=identity['user_id'])
+                if user.watchlists and not len(user.watchlists) == 0:
+                    for watchlist in user.watchlists:
+                        watch_list = Watchlist.objects.get(id=watchlist.id)
+                        watchlists.append(watch_list)
+                return jsonify(watchlists)
+        except DoesNotExist:
+            raise EntryNotExistsError
+
 
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
@@ -45,19 +50,30 @@ class WatchlistsApi(Resource):
             raise SchemaValidationError
         except NotUniqueError:
             raise EntryAlreadyExistsError
+    
 
     def add_to_cache(watchlist):
         watchlist_cache = cache.get('watchlist_cache')
-        print(watchlist_cache)
-        add_to_cache = json.loads(watchlist.to_json())
-        watchlist_cache.append(add_to_cache)
-        print(watchlist_cache)
-        cache.set('watchlist_cache', watchlist_cache)
         recommend = cache.get('recommend')
+        add_to_cache = json.loads(watchlist.to_json())
         data = {"id": add_to_cache["imdb_id"],
-                    "type": add_to_cache["media_type"]}
-        recommend.append(data.copy())
-        cache.set('recommend', recommend)
+                "type": add_to_cache["media_type"]}
+
+        if watchlist_cache == None:
+            watchlist_cache = []
+            cache.set('watchlist_cache', watchlist_cache)
+
+        if recommend == None:
+            recommend = []
+            cache.set('recommend', watchlist_cache)
+
+        if not add_to_cache in watchlist_cache:
+            watchlist_cache.append(add_to_cache)
+            cache.set('watchlist_cache', watchlist_cache)
+
+        if not data in recommend:
+            recommend.append(data.copy())
+            cache.set('recommend', recommend)
 
 
 class WatchlistApi(Resource):
@@ -71,24 +87,32 @@ class WatchlistApi(Resource):
             "message": "Movie was deleted successfully.",
             "status": 200
         }
-        return response
+        return jsonify(response)
 
     def delete_from_cache(id):
-        if not cache.get('watchlist_cache') == None:
-            watchlist_cache = cache.get('watchlist_cache')
+        watchlist_cache = cache.get('watchlist_cache')
+        recommend = cache.get('recommend')
+        print("before", recommend)
+        if id and not watchlist_cache == None and not recommend == None:
             for watchlist in watchlist_cache:
                 if watchlist['_id']['$oid'] == id:
+                    print(watchlist['_id']['$oid'], id)
                     watchlist_cache.remove(watchlist)
                     cache.set('watchlist_cache', watchlist_cache)
-                    recommend = cache.get('recommend')
-                    recommend.remove({"id": watchlist['imdb_id'],
-                                      "type": watchlist['media_type']})
-                    cache.set('recommend', recommend)
+                    data = {"id": watchlist['imdb_id'],
+                            "type": watchlist['media_type']}
+                    if data in recommend:
+                        recommend.remove(data)
+                        cache.set('recommend', recommend)
+        print("after", recommend)
+
+
 
     @jwt_required(locations=['headers', 'cookies'])
     def get(self, id):
         watchlist = Watchlist.objects.get(id=id).to_json()
-        return Response(watchlist, mimetype="application/json", status=200)
+        return make_response(watchlist, 200)
+
 
     @jwt_required(locations=['headers', 'cookies'])
     def put(self, id):
@@ -101,12 +125,14 @@ class WatchlistApi(Resource):
             "message": "Movie was edited successfully.",
             "status": 200
         }
-        return response
+        return jsonify(response)
+
 
     def update_to_cache(watchlist, id):
-        if not cache.get('watchlist_cache') == None:
-            watchlist_cache = cache.get('watchlist_cache')
+        watchlist_cache = cache.get('watchlist_cache')
+        if not watchlist_cache == None:
             updated_watchlist = json.loads(watchlist.to_json())
+            print(updated_watchlist)
             for i in range(len(watchlist_cache)):
                 if watchlist_cache[i]['_id']['$oid'] == id:
                     watchlist_cache[i] = updated_watchlist
