@@ -1,3 +1,4 @@
+import json
 from flask import Response, request, render_template, make_response, url_for, redirect, jsonify
 from flask_restful import Resource
 from ratelimit import limits, sleep_and_retry
@@ -71,7 +72,6 @@ class SearchTvShows(Resource):
                 response = imdb.request_query(url, headers, querystring)
                 tv_shows_images = response.json()
                 response_result.append(tv_shows_images)
-                print(response_result)
             headers = {'Content-Type': 'text/html'}
             return make_response(jsonify(render_template('views/view_results.html', type="shows", results=response_result, view=True)), 200, headers)
         else:
@@ -104,17 +104,13 @@ class SearchTrendingMovies(Resource):
     @limits(calls=5, period=1)
     def get(self):
         response = SearchTrendingMovies.trending_movies()
-        movies = response.json()
+        movies = response
         trending_movies = []
         for movie in movies['movie_results'][0:10]:
-            # details = SearchTrendingMovies.trending_movies_details(
-            #     movie['imdb_id'])
             images = SearchTrendingMovies.trending_movies_images(
                 movie['imdb_id'])
-            #trending_details = details.json()
-            #trending_details['poster'] = images.json()
-            trending_movies.append(images.json())
-        return trending_movies
+            trending_movies.append(images)
+        return jsonify(trending_movies)
 
     def trending_movies_images(id):
         imdb = IMDBConfigs()
@@ -122,7 +118,7 @@ class SearchTrendingMovies(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-movies-images-by-imdb", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
     def trending_movies():
@@ -131,7 +127,7 @@ class SearchTrendingMovies(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-trending-movies", "page": 1}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
     def trending_movies_details(id):
@@ -140,7 +136,7 @@ class SearchTrendingMovies(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-movie-details", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
 
@@ -149,16 +145,12 @@ class SearchTrendingShows(Resource):
     @limits(calls=5, period=1)
     def get(self):
         response = SearchTrendingShows.trending_shows()
-        shows = response.json()
+        shows = response
         trending_shows = []
         for show in shows['tv_results']:
-            details = SearchTrendingShows.trending_shows_details(
-                show['imdb_id'])
             images = SearchTrendingShows.trending_shows_images(show['imdb_id'])
-            trending_details = details.json()
-            trending_details['poster'] = images.json().get('poster')
-            trending_shows.append(trending_details)
-        return trending_shows
+            trending_shows.append(images)
+        return jsonify(trending_shows)
 
     def trending_shows_images(id):
         imdb = IMDBConfigs()
@@ -166,7 +158,7 @@ class SearchTrendingShows(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-show-images-by-imdb", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
     def trending_shows():
@@ -175,7 +167,7 @@ class SearchTrendingShows(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-trending-shows", "page": 1}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
     def trending_shows_details(id):
@@ -184,34 +176,37 @@ class SearchTrendingShows(Resource):
         headers = imdb.get_headers()
         querystring = {
             "type": "get-show-details", "imdb": id}
-        response = imdb.request_query(url, headers, querystring)
+        response = imdb.request_query(url, headers, querystring).json()
         return response
 
 
 class Recommend(Resource):
-    @sleep_and_retry
-    @limits(calls=5, period=1)
     def post(self):
         body = request.form
         id = body.get('id')
-        media_type = body.get('type')
+        media_type = body.get('type')        
         shows = []
         movies = []
         if media_type == "movies":
             recommended_movies = Recommend.fetch_similar_movies(id)
-            for imdb_id in recommended_movies['movie_results'][0:10]:
-                recommended = Recommend.fetch_images_movies(
-                    imdb_id['imdb_id'])
-                movies.append(recommended)
-            return movies
+            if not recommended_movies.get('results') == 0:
+                for imdb_id in recommended_movies['movie_results'][0:10]:
+                    recommended = Recommend.fetch_images_movies(imdb_id['imdb_id'])
+                    movies.append(recommended)
+                return make_response(jsonify(movies), 200)
+            else:
+                response = {"message":"movie not found"}
+                return make_response(jsonify(response), 400)
         elif media_type == "shows":
             recommended_shows = Recommend.fetch_similar_shows(id)
-            for imdb_id in recommended_shows['tv_results'][0:10]:
-                recommended = Recommend.fetch_images_shows(
-                    imdb_id['imdb_id'])
-                shows.append(recommended)
-            return shows
-        
+            if not recommended_shows.get('results') == 0:
+                for imdb_id in recommended_shows['tv_results'][0:10]:
+                    recommended = Recommend.fetch_images_shows(imdb_id['imdb_id'])
+                    shows.append(recommended)
+                return make_response(jsonify(shows), 200)
+            else:
+                response = {"message":"show not found"}
+                return make_response(jsonify(response), 400)
 
     def fetch_similar_movies(id):
         imdb = IMDBConfigs()
