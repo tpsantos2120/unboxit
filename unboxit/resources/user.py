@@ -1,7 +1,7 @@
 import datetime
 from unboxit.services.mail_service import send_email
 from .jwt import jwt
-from flask import Response, request, render_template
+from flask import request, render_template, redirect, url_for
 from flask.helpers import make_response
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended.utils import decode_token, get_jwt_identity, set_access_cookies
@@ -99,6 +99,7 @@ class ResetPassword(Resource):
 
 
 class ResetFogottenPassword(Resource):
+    @jwt_required(locations=['headers'])
     def post(self):
         try:
             body = request.get_json()
@@ -130,6 +131,10 @@ class ResetFogottenPassword(Resource):
             raise BadTokenError
         except Exception as e:
             raise InternalServerError
+
+    # @jwt.unauthorized_loader
+    # def invalid_token_callback(callback):
+    #     return redirect(url_for('home'))
 
 
 class ForgotPassword(Resource):
