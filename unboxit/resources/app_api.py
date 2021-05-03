@@ -92,9 +92,9 @@ class Dashboard(Resource):
             cache.set('trending_movies_cache', trending_movies_cache)
 
         if len(watchlist_cache) > 0:
-            #watchlist_cache = Dashboard.fetch_watchlist()
-            recommendation_cache = Dashboard.fetch_recommendations()
-            #cache.set("watchlist_cache", watchlist_cache)
+            if not len(recommendation_cache) > 0:
+                recommendation_cache = Dashboard.fetch_recommendations()
+                print(recommendation_cache)
             cache.set("recommendation_cache", recommendation_cache)
         elif len(watchlist_cache) == 0:
             cache.delete("recommendation_cache")
