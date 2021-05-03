@@ -1,9 +1,9 @@
-from flask import Response, request, render_template, make_response, url_for, session, redirect
+from flask import make_response, url_for, redirect
 from flask_jwt_extended.utils import unset_access_cookies
 from flask_jwt_extended.view_decorators import verify_jwt_in_request
 from flask_restful import Resource
-from .cache import cache
-import requests
+from unboxit.resources.utils.cache import cache
+
 
 class Logout(Resource):
     def get(self):

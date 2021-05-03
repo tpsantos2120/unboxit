@@ -1,5 +1,4 @@
-import json
-from flask import Response, request, render_template, make_response, url_for, redirect, jsonify
+from flask import request, render_template, make_response, jsonify
 from flask_restful import Resource
 from ratelimit import limits, sleep_and_retry
 import requests

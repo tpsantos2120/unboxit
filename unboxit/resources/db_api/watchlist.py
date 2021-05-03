@@ -1,14 +1,11 @@
 
-from flask import request, make_response, url_for, redirect
-from flask.helpers import make_response
-from flask.json import jsonify
+from flask import request, make_response, jsonify
 from unboxit.models.models import Watchlist, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 from mongoengine.errors import DoesNotExist, NotUniqueError, ValidationError, FieldDoesNotExist
-from unboxit.resources.errors import EntryAlreadyExistsError, SchemaValidationError, EntryNotExistsError
-from .cache import cache
-from .jwt import jwt
+from unboxit.resources.utils.errors import EntryAlreadyExistsError, SchemaValidationError, EntryNotExistsError
+from unboxit.resources.utils.cache import cache
 import json
 
 

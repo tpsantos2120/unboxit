@@ -1,12 +1,12 @@
 import os
-from unboxit.resources.cache import initialize_cache
-from unboxit.resources.jwt import initialize_jwt
+from unboxit.resources.utils.cache import initialize_cache
+from unboxit.resources.utils.jwt import initialize_jwt
 from flask import Flask
 from flask import render_template
 from unboxit.models.db import initialize_db
 from flask_restful import Api
 from flask_bcrypt import Bcrypt
-from unboxit.resources.errors import errors
+from unboxit.resources.utils.errors import errors
 from flask_mail import Mail, Message
 if os.path.exists("env.py"):
     import env
@@ -35,7 +35,7 @@ def internal_error(e):
 app.register_error_handler(404, page_not_found)
 app.register_error_handler(500, internal_error)
 
-from unboxit.resources.routes import initialize_routes
+from unboxit.resources.routes.routes import initialize_routes
 
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)

@@ -5,8 +5,8 @@ from flask_jwt_extended.view_decorators import jwt_required
 from flask_restful import Resource
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 from flask_jwt_extended import jwt_required
-from .jwt import jwt
-from .cache import cache
+from unboxit.resources.utils.jwt import jwt
+from unboxit.resources.utils.cache import cache
 import requests
 import random
 

@@ -1,8 +1,6 @@
 
-from flask import Response, request, render_template, make_response, url_for, redirect
-from flask_jwt_extended.view_decorators import verify_jwt_in_request
+from flask import render_template, make_response
 from flask_restful import Resource
-from .jwt import jwt
 
 
 class Home(Resource):

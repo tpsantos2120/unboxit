@@ -1,16 +1,12 @@
 import datetime
 from unboxit.services.mail_service import send_email
-from .jwt import jwt
-from flask import request, render_template, redirect, url_for
-from flask.helpers import make_response
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended.utils import decode_token, get_jwt_identity, set_access_cookies
-from flask_jwt_extended.view_decorators import jwt_required
+from flask import request, render_template, make_response
+from flask_jwt_extended import create_access_token,decode_token, get_jwt_identity, set_access_cookies, jwt_required
 from unboxit.models.models import User
 from flask_restful import Resource
 from jwt.exceptions import ExpiredSignatureError, DecodeError, InvalidTokenError
 from mongoengine.errors import DoesNotExist, FieldDoesNotExist, NotUniqueError
-from unboxit.resources.errors import EmailDoesNotExistsError, ExpiredTokenError, InternalServerError, \
+from unboxit.resources.utils.errors import EmailDoesNotExistsError, ExpiredTokenError, InternalServerError, \
     UnauthorizedError, SchemaValidationError, EmailAlreadyExistsError, BadTokenError
 
 
