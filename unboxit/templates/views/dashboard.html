@@ -67,7 +67,7 @@
                   Delete
                 </button>
                 <button
-                  class="uk-button uk-button-default review delete"
+                  class="uk-button uk-button-default review"
                   imdb="{{data._id['$oid']}}"
                   type="submit"
                   uk-toggle="target: #review-modal"
@@ -95,11 +95,11 @@
                   class="uk-textarea"
                   type="textarea"
                   rows="5"
-                  placeholder="Write rewiew"
-                  name="review"
+                  placeholder="Write review"
+                  name="reviewTextArea"
                   required
                   autocomplete="off"
-                  id="review"
+                  id="reviewTextArea"
                 ></textarea>
               </div>
               <button class="uk-button uk-button-default" type="submit">
