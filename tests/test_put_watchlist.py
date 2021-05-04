@@ -72,4 +72,29 @@ class TestPutOneWatchlist(BaseCase):
                          response.json['message'])
         self.assertEqual(200, response.status_code)
 
-  
+def test_get_put_watchlist_no_id(self):
+        first_name = "Darth"
+        last_name = "Vader"
+        username = "darkside"
+        email = "darth@darkside.com"
+        password = "force1234"
+
+        payload_register = json.dumps({
+            "first_name": first_name,
+            "last_name": last_name,
+            "username": username,
+            "email": email,
+            "password": password
+        })
+
+        response = self.app.post('/api/auth/register',
+                                 headers={"Content-Type": "application/json"},
+                                 data=payload_register)
+
+        response = self.app.put('/api/watchlist/',
+                                headers={"Content-Type": "application/json"})
+
+        #self.assertEqual("Entry was edited successfully.",response.json['message'])
+        self.assertEqual(404, response.status_code)
+
+    
