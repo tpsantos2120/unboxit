@@ -151,16 +151,18 @@ class WatchlistApi(Resource):
 
     @jwt_required(locations=['headers', 'cookies'])
     def put(self, id):
-        body = request.get_json()
-        print(body)
-        Watchlist.objects.get(id=id).update(**body)
-        watchlist = Watchlist.objects.get(id=id)
-        WatchlistApi.update_to_cache(watchlist, id)
-        response = {
-            "message": "Entry was edited successfully.",
-            "status": 200
-        }
-        return jsonify(response)
+        try:
+            body = request.get_json()
+            Watchlist.objects.get(id=id).update(**body)
+            watchlist = Watchlist.objects.get(id=id)
+            WatchlistApi.update_to_cache(watchlist, id)
+            response = {
+                "message": "Entry was edited successfully.",
+                "status": 200
+            }
+            return make_response(jsonify(response), 200)
+        except (DoesNotExist, ValidationError):
+            raise EntryNotExistsError
 
     @jwt.unauthorized_loader
     def not_authorized(callback):
