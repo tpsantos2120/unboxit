@@ -1,11 +1,14 @@
 
 from flask import request, make_response, jsonify
+from flask.helpers import url_for
+from werkzeug.utils import redirect
 from unboxit.models.models import Watchlist, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
 from mongoengine.errors import DoesNotExist, NotUniqueError, ValidationError, FieldDoesNotExist
 from unboxit.resources.utils.errors import EntryAlreadyExistsError, SchemaValidationError, EntryNotExistsError
 from unboxit.resources.utils.cache import cache
+from unboxit.resources.utils.jwt import jwt
 import json
 
 
@@ -25,6 +28,13 @@ class WatchlistsApi(Resource):
         except DoesNotExist:
             raise EntryNotExistsError
 
+    @jwt.unauthorized_loader
+    def not_authorized(callback):
+        response = {
+            "message": "Not authorized.",
+            "status": 401
+        }
+        return make_response(response), 401 
 
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
@@ -48,7 +58,6 @@ class WatchlistsApi(Resource):
             raise SchemaValidationError
         except NotUniqueError:
             raise EntryAlreadyExistsError
-    
 
     def add_to_cache(watchlist):
         watchlist_cache = cache.get('watchlist_cache')
@@ -104,13 +113,10 @@ class WatchlistApi(Resource):
                         cache.set('recommend', recommend)
         print("after", recommend)
 
-
-
     @jwt_required(locations=['headers', 'cookies'])
     def get(self, id):
         watchlist = Watchlist.objects.get(id=id).to_json()
         return make_response(watchlist, 200)
-
 
     @jwt_required(locations=['headers', 'cookies'])
     def put(self, id):
@@ -124,7 +130,6 @@ class WatchlistApi(Resource):
             "status": 200
         }
         return jsonify(response)
-
 
     def update_to_cache(watchlist, id):
         watchlist_cache = cache.get('watchlist_cache')
