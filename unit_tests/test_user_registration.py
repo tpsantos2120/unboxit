@@ -22,7 +22,6 @@ class TestUserRegistration(BaseCase):
         response = self.app.post(
             '/api/auth/register', headers={"Content-Type": "application/json"}, data=payload_register)
 
-        print(response)
 
         self.assertEqual(str, type(response.json['token']))
         self.assertEqual(200, response.status_code)
@@ -46,7 +45,6 @@ class TestUserRegistration(BaseCase):
         response = self.app.post(
             '/api/auth/register', headers={"Content-Type": "application/json"}, data=payload_register)
 
-        print(response)
 
         self.assertEqual('Request is missing required fields',
                          response.json['message'])
@@ -67,7 +65,6 @@ class TestUserRegistration(BaseCase):
         response = self.app.post(
             '/api/auth/register', headers={"Content-Type": "application/json"}, data=payload_register)
 
-        print(response)
 
         self.assertEqual('Something went wrong internally',
                          response.json['message'])
@@ -96,3 +93,14 @@ class TestUserRegistration(BaseCase):
         self.assertEqual(
             'User with given email address already exists', response.json['message'])
         self.assertEqual(400, response.status_code)
+
+    def test_register_user_without_payload(self):
+
+        response = self.app.post(
+            '/api/auth/register', headers={"Content-Type": "application/json"})
+
+        print(response)
+
+        self.assertEqual('Something went wrong internally',
+                         response.json['message'])
+        self.assertEqual(500, response.status_code)
