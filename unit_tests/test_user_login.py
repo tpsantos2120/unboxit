@@ -119,7 +119,7 @@ class TestUserLogin(BaseCase):
 
         payload_login = json.dumps({})
 
-        response = self.app.post('/api/auth/signup',
+        response = self.app.post('/api/auth/register',
                                  headers={"Content-Type": "application/json"},
                                  data=payload_register)
 
