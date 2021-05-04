@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 
 class Config(object):
+    load_dotenv()
+    ENV = os.environ.get('ENV')
     IMDB_API_HOST = os.environ.get('IMDB_API_HOST')
     IMDB_BASE_URL = os.environ.get('IMDB_BASE_URL')
     IMDB_SECRET_KEY = os.environ.get('IMDB_SECRET_KEY')
@@ -20,15 +22,14 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    load_dotenv()
     DEBUG = False
     TESTING = False
+    FLASK_ENV = "production"
     IP = os.environ.get('IP')
     PORT = os.environ.get('PORT')
 
 
 class DevelopmentConfig(Config):
-    load_dotenv()
     DEBUG = True
     MONGODB_SETTINGS = {
         'host': os.environ.get('MONGODB_DEVELOPMENT')
