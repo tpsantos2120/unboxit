@@ -24,9 +24,9 @@ class TestGetWatchlist(BaseCase):
         response = self.app.post('/api/auth/register',
                                  headers={"Content-Type": "application/json"},
                                  data=payload_register)
-        
+
         token = response.json['token']
-        
+
         payload_entry = json.dumps({
             "poster": "https://movie.poster.com",
             "media_type": "movies",
@@ -60,14 +60,39 @@ class TestGetWatchlist(BaseCase):
 
         response = self.app.post('/api/watchlists',
                                  headers={"Content-Type": "application/json",
-                                 "Authorization": "Bearer "+ response.json['token']},
+                                          "Authorization": "Bearer " + response.json['token']},
                                  data=payload_entry)
 
-
-
         response = self.app.get('/api/watchlists',
-                                 headers={"Content-Type": "application/json",
-                                 "Authorization": "Bearer "+ token})
+                                headers={"Content-Type": "application/json",
+                                         "Authorization": "Bearer " + token})
 
         self.assertEqual(list, type(response.get_json()))
+        self.assertEqual(200, response.status_code)
+
+    def test_get_watchlists_empty_list(self):
+        first_name = "Darth"
+        last_name = "Vader"
+        username = "darkside"
+        email = "darth@darkside.com"
+        password = "force1234"
+
+        payload_register = json.dumps({
+            "first_name": first_name,
+            "last_name": last_name,
+            "username": username,
+            "email": email,
+            "password": password
+        })
+
+        response = self.app.post('/api/auth/register',
+                                 headers={"Content-Type": "application/json"},
+                                 data=payload_register)
+
+        token = response.json['token']
+        response = self.app.get('/api/watchlists',
+                                headers={"Content-Type": "application/json",
+                                         "Authorization": "Bearer " + token})
+        
+        self.assertEqual(list, type(response.get_json()))        
         self.assertEqual(200, response.status_code)
