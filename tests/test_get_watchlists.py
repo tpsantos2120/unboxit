@@ -1,8 +1,5 @@
 import json
 
-from flask_jwt_extended.utils import unset_access_cookies
-
-
 from tests.base_test import BaseCase
 
 
@@ -103,6 +100,6 @@ class TestGetWatchlist(BaseCase):
 
         response = self.app.get('/logout')
         response = self.app.get('/api/watchlists')
-        
+
         self.assertEqual("Not authorized.", response.json['message'])
         self.assertEqual(401, response.status_code)
