@@ -31,6 +31,7 @@ class WatchlistsApi(Resource):
         try:
             identity = get_jwt_identity()
             body = request.get_json()
+            (body)
             body["review"] = ""
             user = User.objects.get(id=identity['user_id'])
             watchlist = Watchlist(**body, added_by=user)
@@ -38,10 +39,10 @@ class WatchlistsApi(Resource):
             user.update(add_to_set__watchlists=watchlist)
             user.save()
             WatchlistsApi.add_to_cache(watchlist)
-            response = {"ServerResponse": {
+            response = {
                 "message": "Movie was added successfully.",
                 "status": 200
-            }}
+            }
             return response
         except (FieldDoesNotExist, ValidationError):
             raise SchemaValidationError
