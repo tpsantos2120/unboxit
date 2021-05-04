@@ -67,3 +67,12 @@ class TestGetOneWatchlist(BaseCase):
 
         self.assertEqual(dict, type(json.loads(response.get_json())))
         self.assertEqual(200, response.status_code)
+
+    def test_get_one_watchlist_not_authorized(self):
+    
+
+        response = self.app.get('/api/watchlist/sdfsdf',
+                                headers={"Content-Type": "application/json"})
+
+        self.assertEqual("Not authorized.", response.json['message'])
+        self.assertEqual(401, response.status_code)
