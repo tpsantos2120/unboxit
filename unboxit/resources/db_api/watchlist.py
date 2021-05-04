@@ -86,15 +86,18 @@ class WatchlistsApi(Resource):
 class WatchlistApi(Resource):
     @jwt_required(locations=['headers', 'cookies'])
     def delete(self, id):
-        identity = get_jwt_identity()
-        watchlist = Watchlist.objects.get(id=id, added_by=identity['user_id'])
-        watchlist.delete()
-        WatchlistApi.delete_from_cache(id)
-        response = {
+        try:
+            identity = get_jwt_identity()
+            watchlist = Watchlist.objects.get(id=id, added_by=identity['user_id'])
+            watchlist.delete()
+            WatchlistApi.delete_from_cache(id)
+            response = {
             "message": "Movie was deleted successfully.",
             "status": 200
-        }
-        return jsonify(response)
+            }
+            return jsonify(response)
+        except DoesNotExist:
+            raise EntryNotExistsError
 
     def delete_from_cache(id):
         watchlist_cache = cache.get('watchlist_cache')
