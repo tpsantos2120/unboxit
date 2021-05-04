@@ -76,3 +76,30 @@ class TestGetOneWatchlist(BaseCase):
 
         self.assertEqual("Not authorized.", response.json['message'])
         self.assertEqual(401, response.status_code)
+
+
+    def test_get_one_watchlist_not_authorized(self):
+        first_name = "Darth"
+        last_name = "Vader"
+        username = "darkside"
+        email = "darth@darkside.com"
+        password = "force1234"
+
+        payload_register = json.dumps({
+            "first_name": first_name,
+            "last_name": last_name,
+            "username": username,
+            "email": email,
+            "password": password
+        })
+
+        response = self.app.post('/api/auth/register',
+                                 headers={"Content-Type": "application/json"},
+                                 data=payload_register)
+
+
+        response = self.app.get('/api/watchlist/sdfsdf',
+                                headers={"Content-Type": "application/json"})
+
+        self.assertEqual("Entry with given id doesn't exist", response.json['message'])
+        self.assertEqual(400, response.status_code)
