@@ -21,7 +21,7 @@ elif os.environ.get("ENV") == "development":
     app.config.from_object(DevelopmentConfig())
 else:
     app.config.from_object(TestingConfig())
-print(app.config)
+
 mail = Mail(app)
 
 app.register_error_handler(404, ErrorHandler.page_not_found)
