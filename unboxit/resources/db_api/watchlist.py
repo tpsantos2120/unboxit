@@ -34,7 +34,7 @@ class WatchlistsApi(Resource):
             "message": "Not authorized.",
             "status": 401
         }
-        return make_response(response), 401 
+        return make_response(response), 401
 
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
@@ -58,6 +58,14 @@ class WatchlistsApi(Resource):
             raise SchemaValidationError
         except NotUniqueError:
             raise EntryAlreadyExistsError
+
+    @jwt.unauthorized_loader
+    def not_authorized(callback):
+        response = {
+            "message": "Not authorized.",
+            "status": 401
+        }
+        return make_response(response), 401
 
     def add_to_cache(watchlist):
         watchlist_cache = cache.get('watchlist_cache')
@@ -88,16 +96,25 @@ class WatchlistApi(Resource):
     def delete(self, id):
         try:
             identity = get_jwt_identity()
-            watchlist = Watchlist.objects.get(id=id, added_by=identity['user_id'])
+            watchlist = Watchlist.objects.get(
+                id=id, added_by=identity['user_id'])
             watchlist.delete()
             WatchlistApi.delete_from_cache(id)
             response = {
-            "message": "Movie was deleted successfully.",
-            "status": 200
+                "message": "Movie was deleted successfully.",
+                "status": 200
             }
             return jsonify(response)
-        except DoesNotExist:
+        except (DoesNotExist, ValidationError):
             raise EntryNotExistsError
+
+    @jwt.unauthorized_loader
+    def not_authorized(callback):
+        response = {
+            "message": "Not authorized.",
+            "status": 401
+        }
+        return make_response(response), 401
 
     def delete_from_cache(id):
         watchlist_cache = cache.get('watchlist_cache')
@@ -121,6 +138,14 @@ class WatchlistApi(Resource):
         watchlist = Watchlist.objects.get(id=id).to_json()
         return make_response(watchlist, 200)
 
+    @jwt.unauthorized_loader
+    def not_authorized(callback):
+        response = {
+            "message": "Not authorized.",
+            "status": 401
+        }
+        return make_response(response), 401
+
     @jwt_required(locations=['headers', 'cookies'])
     def put(self, id):
         body = request.get_json()
@@ -129,10 +154,18 @@ class WatchlistApi(Resource):
         watchlist = Watchlist.objects.get(id=id)
         WatchlistApi.update_to_cache(watchlist, id)
         response = {
-            "message": "Movie was edited successfully.",
+            "message": "Entry was edited successfully.",
             "status": 200
         }
         return jsonify(response)
+
+    @jwt.unauthorized_loader
+    def not_authorized(callback):
+        response = {
+            "message": "Not authorized.",
+            "status": 401
+        }
+        return make_response(response), 401
 
     def update_to_cache(watchlist, id):
         watchlist_cache = cache.get('watchlist_cache')
