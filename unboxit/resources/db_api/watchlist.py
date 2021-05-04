@@ -135,8 +135,11 @@ class WatchlistApi(Resource):
 
     @jwt_required(locations=['headers', 'cookies'])
     def get(self, id):
-        watchlist = Watchlist.objects.get(id=id).to_json()
-        return make_response(watchlist, 200)
+        try:
+            watchlist = Watchlist.objects.get(id=id).to_json()
+            return make_response(jsonify(watchlist), 200)
+        except (DoesNotExist, ValidationError):
+            raise EntryNotExistsError
 
     @jwt.unauthorized_loader
     def not_authorized(callback):
