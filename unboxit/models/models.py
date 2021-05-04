@@ -24,7 +24,7 @@ class Watchlist(db.Document):
 class User(db.Document):
     first_name = db.StringField(required=True)
     last_name = db.StringField(required=True)
-    email = db.EmailField(unique=True)
+    email = db.EmailField(unique=True, required=True)
     username = db.StringField(required=True)
     password = db.StringField(required=True)
     watchlists = db.ListField(db.ReferenceField(
