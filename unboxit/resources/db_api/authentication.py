@@ -1,13 +1,17 @@
 import datetime
 from unboxit.services.mail_service import send_email
 from flask import request, render_template, make_response
-from flask_jwt_extended import create_access_token,decode_token, get_jwt_identity, set_access_cookies, jwt_required
+from flask_jwt_extended import create_access_token, decode_token,\
+    get_jwt_identity, set_access_cookies, jwt_required
 from unboxit.models.models import User
 from flask_restful import Resource
-from jwt.exceptions import ExpiredSignatureError, DecodeError, InvalidTokenError
-from mongoengine.errors import DoesNotExist, FieldDoesNotExist, NotUniqueError
-from unboxit.resources.utils.errors import EmailDoesNotExistsError, ExpiredTokenError, InternalServerError, \
-    UnauthorizedError, SchemaValidationError, EmailAlreadyExistsError, BadTokenError
+from jwt.exceptions import ExpiredSignatureError, DecodeError, \
+    InvalidTokenError
+from mongoengine.errors import DoesNotExist, FieldDoesNotExist, \
+    NotUniqueError
+from unboxit.resources.utils.errors import EmailDoesNotExistsError, \
+    ExpiredTokenError, InternalServerError, UnauthorizedError, \
+    SchemaValidationError, EmailAlreadyExistsError, BadTokenError
 
 
 class RegisterUserApi(Resource):
@@ -119,9 +123,11 @@ class ResetFogottenPassword(Resource):
                               sender='contact@tsantos.dev',
                               recipients=[user.email],
                               text_body='Password Reset',
-                              html_body=render_template('components/reset_password_response.html',
-                                                        first_name=user.first_name,
-                                                        base_url=base_url))
+                              html_body=render_template(
+                                  'components/reset_password_response.html',
+                                  first_name=user.first_name,
+                                  base_url=base_url))
+
         except SchemaValidationError:
             raise SchemaValidationError
         except ExpiredSignatureError:
@@ -158,12 +164,14 @@ class ForgotPassword(Resource):
             return send_email('[Unboxit] Reset Your Password',
                               sender='contact@tsantos.dev',
                               recipients=[user.email],
-                              text_body=render_template('components/reset_password.txt',
-                                                        url=url + reset_token),
-                              html_body=render_template('components/reset_password.html',
-                                                        url=url + reset_token, 
-                                                        first_name=user.first_name,
-                                                        base_url=base_url))
+                              text_body=render_template(
+                                  'components/reset_password.txt',
+                                  url=url + reset_token),
+                              html_body=render_template(
+                                  'components/reset_password.html',
+                                  url=url + reset_token,
+                                  first_name=user.first_name,
+                                  base_url=base_url))
         except SchemaValidationError:
             raise SchemaValidationError
         except DoesNotExist:
