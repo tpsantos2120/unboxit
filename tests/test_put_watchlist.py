@@ -72,7 +72,18 @@ class TestPutOneWatchlist(BaseCase):
                          response.json['message'])
         self.assertEqual(200, response.status_code)
 
-def test_get_put_watchlist_no_id(self):
+    def test_put_watchlist_not_authorized(self):
+       
+        self.app.delete_cookie("unboxit",'access_token_cookie')
+        update_review = json.dumps({"review": "Vader is watching you!"})
+        response = self.app.put('/api/watchlist/id',
+                                headers={"Content-Type": "application/json"},
+                                data=update_review)
+
+        self.assertEqual("Not authorized.",response.json['message'])
+        self.assertEqual(401, response.status_code)
+
+    def test_put_watchlist_not_valid_id(self):
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -90,11 +101,11 @@ def test_get_put_watchlist_no_id(self):
         response = self.app.post('/api/auth/register',
                                  headers={"Content-Type": "application/json"},
                                  data=payload_register)
+        update_review = json.dumps({"review": "Vader is watching you!"})
+        response = self.app.put('/api/watchlist/id',
+                                headers={"Content-Type": "application/json"},
+                                data=update_review)
 
-        response = self.app.put('/api/watchlist/',
-                                headers={"Content-Type": "application/json"})
-
-        #self.assertEqual("Entry was edited successfully.",response.json['message'])
-        self.assertEqual(404, response.status_code)
-
-    
+        self.assertEqual("Entry with given id doesn't exist",
+                         response.json['message'])
+        self.assertEqual(400, response.status_code)
