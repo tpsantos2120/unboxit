@@ -1,6 +1,6 @@
 import os
 from unboxit.resources.app_api.error_handler import ErrorHandler
-from .config import ProductionConfig, DevelopmentConfig, Config
+from .config import ProductionConfig, DevelopmentConfig, TestingConfig
 from unboxit.resources.utils.cache import initialize_cache
 from unboxit.resources.utils.jwt import initialize_jwt
 from flask import Flask
@@ -17,8 +17,11 @@ load_dotenv()
 
 if os.environ.get("ENV") == "production":
     app.config.from_object(ProductionConfig())
-else:
+elif os.environ.get("ENV") == "development":
     app.config.from_object(DevelopmentConfig())
+else:
+    app.config.from_object(TestingConfig())
+
 print(app.config)
 
 mail = Mail(app)
