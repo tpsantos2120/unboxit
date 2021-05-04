@@ -22,8 +22,6 @@ elif os.environ.get("ENV") == "development":
 else:
     app.config.from_object(TestingConfig())
 
-print(app.config)
-
 mail = Mail(app)
 
 app.register_error_handler(404, ErrorHandler.page_not_found)
@@ -32,8 +30,7 @@ app.register_error_handler(500, ErrorHandler.internal_error)
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
 
-with app.app_context():
-    from unboxit.resources.routes.routes import initialize_routes
+from unboxit.resources.routes.routes import initialize_routes
 
 initialize_jwt(app)
 initialize_db(app)
