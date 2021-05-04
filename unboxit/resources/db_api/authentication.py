@@ -62,6 +62,7 @@ class LoginUserApi(Resource):
                 identity=user_details, expires_delta=expires)
             res = make_response({
                 "response": "You have logged in successfully.",
+                'token': access_token,
                 'status': 200
             }, 200)
             set_access_cookies(res, access_token)
