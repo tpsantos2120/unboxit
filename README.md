@@ -240,7 +240,7 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 **Dashboard Test** - The test carried out is to let the user access their dashboard as it can be seen below once user is logs in or register he or she will be directed to the dashboard where they will have access to their watchlist, recommendations and trending. The user story has been achieved by providing the user with easy process to access their dashboard. 
 
-![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif)
+![Login](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif)
 <hr>
 
 **User Story** *- As a user, I will not have to sign up if they wish to search for a movie.*
@@ -249,7 +249,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 **Search Test** - The test below was carried to demonstrate that users can search for movies and shows but they wont be able to have a watchlist, get recommendations and what is trending. This has achieved the requirement of the user story above.
 
-![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/search_not_logged_in_cfnJXpxjh.gif)
+![Search](https://ik.imagekit.io/xsenqx8yi/user_stories_test/search_not_logged_in_cfnJXpxjh.gif)
+
 <hr>
 
 **User Story** *- As a user, I will be able to add a movie or a tv series to my watchlist.*
@@ -258,8 +259,7 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 **Add Movies and Shows Test** - The User Story above has been implemented by allowing them users to add shows and movies to their watchlist as it can be seen in the image below. A user would select if they wish to search for a movie or show and then they would hit the search button, the results appears just below each image can then be clicked show details for that specific movie can be displayed.
 
-![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_show_gmA8mpnFEUj.gif)
-
+<img src="https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_show_gmA8mpnFEUj.gif"/>
 <hr>
 
 **User Story** *- As a user, I will be able to remove a movie or a tv series from my watchlist.*
@@ -305,8 +305,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 **Trending Movies Test** - The app has the feature to fetch latest trending entertainment movies or shows whenever user login or register. Trending cannot be changed by the user and its purely based on IMDB API. This User Story has been achieved by displaying movies that are trending and user can always search for them in the search menu.  
 
 **Trending**
-![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif)
 
+<img src="https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif"/>
 <hr>
 
 **User Story** *- As a user, I will be able to get recommended movies or tv series based on my watchlist.*
