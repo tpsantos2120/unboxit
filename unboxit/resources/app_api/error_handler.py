@@ -7,3 +7,6 @@ class ErrorHandler():
 
     def internal_error(e):
         return render_template('components/error_500.html'), 500
+    
+    def not_authorized(e):
+        return render_template('components/error_401.html'), 401
