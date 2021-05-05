@@ -1,15 +1,18 @@
 from unboxit.resources.app_routes.forgot_password import ForgotPasswordReset
 from unboxit.resources.app_routes.logout import Logout
 from unboxit.resources.api_routes.watchlist import WatchlistApi, WatchlistsApi
-from unboxit.resources.api_routes.authentication import ForgotPassword, RegisterUserApi, ResetFogottenPassword, ResetPassword, LoginUserApi
+from unboxit.resources.api_routes.authentication import ForgotPassword, RegisterUserApi, \
+    ResetFogottenPassword, ResetPassword, LoginUserApi
 from unboxit.resources.app_routes.home import Home
 from unboxit.resources.app_routes.dashboard import Dashboard, DashboardSearch
-from unboxit.resources.app_routes.imdb import Recommend, SearchMovieDetails, SearchMovies, SearchTrendingMovies, SearchTrendingShows,\
-SearchTvShows, SearchShowDetails, SearchMovieDetails
-
+from unboxit.resources.app_routes.imdb import Recommend, SearchMovieDetails, SearchMovies, \
+SearchTrendingMovies, SearchTvShows, SearchShowDetails, SearchMovieDetails
 
 
 def initialize_routes(api):
+    """
+        Register all resources and provide relative paths to them. 
+    """
     api.add_resource(WatchlistsApi, '/api/watchlists')
     api.add_resource(WatchlistApi, '/api/watchlist/<id>')
     api.add_resource(RegisterUserApi, '/api/auth/register')
@@ -27,9 +30,4 @@ def initialize_routes(api):
     api.add_resource(SearchTvShows, '/search/shows/<title>')
     api.add_resource(SearchShowDetails, '/search/show/details/<id>')
     api.add_resource(SearchTrendingMovies, '/search/trending/movies')
-    api.add_resource(SearchTrendingShows, '/search/trending/shows')
     api.add_resource(Recommend, '/recommend')
-
-
-
-

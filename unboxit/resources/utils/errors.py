@@ -2,46 +2,90 @@ from werkzeug.exceptions import HTTPException
 
 
 class InternalServerError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class EntryNotExistsError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class EntryAlreadyExistsError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class EntryAlreadyExistsError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class UnauthorizedError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class EmailAlreadyExistsError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class SchemaValidationError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class EmailDoesNotExistsError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class SchemaValidationError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class BadTokenError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 
 class ExpiredTokenError(HTTPException):
+    """
+        Customize errors by letting them pass and not throwing
+        the default errors.
+    """
     pass
 
 

@@ -5,8 +5,11 @@ from werkzeug.utils import redirect
 jwt = JWTManager()
 
 def initialize_jwt(app):
+    """
+        Register the JWT instance with the Flask app.
+    """
     jwt.init_app(app)
     
-    @jwt.unauthorized_loader
-    def not_authorized(callback):
-        return make_response(redirect(url_for('home')))
+    # @jwt.unauthorized_loader
+    # def not_authorized(callback):
+    #     return make_response(redirect(url_for('home')))
