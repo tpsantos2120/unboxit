@@ -4,15 +4,15 @@
 
 ## Project Goal
 
-This is **UNBOXIT** a website where it allows you to search for Movies and TV Series to add to a watchlist where you can use as a tracker, and once you have watched you can tick off your list. It also comes with Recommendations and Trending in the cinematography world, you will be able to watch trailers and also know more trivial information about your favourite Movies and TV Series. In addition, I will use IMDB endpoint from Rapid API to consume their huge database of Movies and TV Series. 
+This is **UNBOXIT** a website where it allows you to search for Movies and TV Series, to add to a watchlist where you can use as a tracker, and once you have watched you can tick off your list. It also comes with Recommendations and Trending in the cinematography world, you will be able to watch trailers and also know more trivial information about your favourite Movies and TV Series. In addition, I will use IMDB endpoint from Rapid API to consume their huge database of Movies and TV Series. 
 
 ## Strategy
 
 - **User Goals**
 
-	- I will be able to easily navigate .
-	- All images and texts will have no distractions.
-	- It will allow me to search for a movies and tv series.
+	- I will be able to easily navigate. 
+	- All images and texts will have no distraction. 
+	- It will allow me to search for movies and tv series.
 	- I will be able to see more details about a movie by navigating to that specific movie.
 	- There will be a dashboard with a watchlist and recommendations in my profile.
 	- The website will have a watchlist for their users.
@@ -196,11 +196,11 @@ I have designed the database structure during the planning stage to help me stru
 
 ### **Planning**
 
-The implementation will start by the backend working through the frontend. I will be setting up Python and Flask folders and environment. Next, I will setup MongoDB using the database structure planned in the Structure & Skeleton section. Once I am happy with these setups I will configure my environment variables and connect to the database. Afterwards, all API routes would then be written whilst performing some tests along the way to check if it works. When I have all API routes, I will create the HTML files templates files based on the Wireframes. Next I will use IMDB from Rapid API to consume all the APIs needed when users are searching for movies and tv series.   
+The implementation will start by the backend working through the frontend. I will be setting up Python and Flask folders and environment. Next, I will setup MongoDB using the database structure planned in the Structure & Skeleton section. Once I am happy with these setups, I will configure my environment variables and connect to the database. Afterwards, all API routes would then be written whilst performing some tests along the way to check if it works. When I have all API routes, I will create the HTML files templates files based on the Wireframes. Next I will use IMDB from Rapid API to consume all the APIs needed when users are searching for movies and tv series.   
 
 ### **Development**
 
-The development was implemented by working from the backend towards the frontend, unless I required a view to visualise results, but in general it was developed in that manner. All API was tested as they were being developed by using **POSTMAN**. During implementation I tried to follow a MVC pattern as much as possible, so I have split my files in several folders, though all of it could and will be refactored I believe I did a good job in getting things more maintainable and readable than I would without splitting the logic from view and so on.
+The development was implemented by working from the backend towards the frontend, unless I required a view to visualise results, but in general it was developed in that manner. All API was tested as they were being developed by using **POSTMAN**. During implementation, I tried to follow a MVC pattern as much as possible, so I have split my files in several folders, though all of it could and will be refactored, I believe I did a good job in getting things more maintainable and readable than I would without splitting the logic from view and so on.
 
 ### **Project Structure**
 
@@ -433,7 +433,7 @@ In order to run the tests the ENV in the environment file must be set to testing
 
 **User Story** *- As a user, I will be able to change my password.*
 
-**Reset Password Implementation** - There are two ways for the user to change their password. First way is within the dashboard in the settings navbar option where a form pops up and user can change their password. Second way to reset or change a password is when the user is logged out as this is handy if user has forgotten password. These two were implemented to give users the way to get into their dashboard or maybe if there is a security concern they can change their password themselves. 
+**Reset Password Implementation** - There are two ways for the user to change their password. First way is within the dashboard in the settings navbar option, where a form pops up and the user can change their password. Second way to reset or change a password is when the user is logged out as this is handy if user has forgotten password. These two were implemented to give users the way to get into their dashboard or maybe if there is a security concern they can change their password themselves. 
 
 **Reset Password Test** - The user Story has been achieved by giving the user a simple form to add and edit their movies and shows reviews. As it can be seen below, if a review has already been added and the user navigates to review again the form will hold what they have reviewed. The tests carried below shows how both ways are done, therefore this User Story has been achieved.
 
@@ -489,7 +489,7 @@ The form validations are implemented in all forms, I have used jQuery Form Valid
 
 ### Responsiveness Test
 
-The responsiveness of all UI components are good since it resizes in all screen sizes. To achieve this I have used the UIkit Framework where similar to Bootstrap I have used components to reduce CSS usage and repetitiveness. I have verified this on Chrome, Safari, Firefox and Edge they all behaved appropriate to screen sizes. On addition to this I have used Google Dev tools in the inspection mode to valuate how the app would look like when displayed in smaller sizes. Below I have tested the dashboard, forms and homepage.
+The responsiveness of all UI components are good since it resizes in all screen sizes. To achieve this I have used the UIkit Framework where similar to Bootstrap I have used components to reduce CSS usage and repetitiveness. I have verified this on Chrome, Safari, Firefox and Edge, they all behaved appropriate to screen sizes. On addition to this I have used Google Dev tools in the inspection mode to valuate how the app would look like when displayed in smaller sizes. Below I have tested the dashboard, forms and homepage.
 
 **Dashboard**
 ![dashboard_responsiveness](https://ik.imagekit.io/xsenqx8yi/Responsiveness_Tests/dashboard_responsiviness_test_k3u4zzt6c.gif)
