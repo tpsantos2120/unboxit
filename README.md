@@ -218,6 +218,73 @@ The project was structured in 5 folders, each folder contains files and or subfo
 - **Templates**
 	- **[templates](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/templates)** - All HTML files were split into 3 folders Views, Layout and Components. I have chosen to split them in folders to make it easier to understand as it currently contains 23 files this way it makes a bit easier to cope with bugs, if any.
 
+### **API Routes**
+
+The API routes initially proposed were changed in the development stage, this is because it did not work well with what the app wanted to achieve through IMDB API. I will be adding the new APIs below, so there is a reference to how they are actually implemented. I have taken the decision to change some of the routes because I found issues as I was handling IMDB API that at times when I had to query 3 to 4 APIs to get the resources I required so I tried to simplify as much as possible. Also, I was using hyphen in some of the url segments pointed by my mentor therefore I decided to make them more standardized.
+
+>     - GET		/api/watchlists
+>     - POST		/api/watchlists
+>     - PUT		/api/watchlist/<id>
+>     - DELETE	/api/watchlist/<id>
+>     - GET		/api/watchlist/<id>
+>     - POST		/api/auth/login
+>     - POST		/api/auth/register
+>     - POST		/api/auth/reset
+>     - POST		/api/auth/reset/password
+>     - POST		/api/auth/forgot
+>     - GET  		/reset/password/<token>
+>     - GET   	/
+>     - GET  		/logout
+>     - GET  		/dashboard
+>     - GET  		/dashboard/search
+>     - GET  		/dashboard/recommend
+>     - POST  	/search/movies/<title>
+>     - POST  	/search/movie/details/<id>
+>     - POST  	/search/shows/<title>
+>     - POST  	/search/show/details/<id>
+>     - GET  		/search/trending/movies
+>     - GET  		/search/trending/shows
+>     - GET  		/search/trending/movies
+>     - GET  		/search/trending/movies
+
+### **Database Structure**
+
+The database structure was changed the reason was that it was becoming resource intensive with querying different APIs from IMDB. So to economise resources I decided to have one watchlist holding both movies and shows, most fields are the same for both, so I discarded the fields that were different and kept the fields that were the same, so now it is all in one place, plus I have added two extra fields, one to hold images so I don't have to query IMDB for it and   the other is to distinguish if it is a movie or show, that field is called media_type.
+
+ **User**
+| Key |  Value |
+|:--:|:--:|
+| _id |  ObjectId|
+| first_name | String|
+| last_name | String|
+| username | String|
+| email | String|
+| password | String|
+| watchlists | Array|
+
+
+ **Watchlist**
+| Key |  Value |
+|:--:|:--:|
+| _id |  ObjectId|
+| poster | String|
+| media_type | String|
+| title | String|
+| description | String|
+| year | String|
+| release_date | String|
+| imdb_id | String|
+| imdb_rating | String|
+| vote_count | String|
+| popularity | String|
+| youtube_trailer_key | String|
+| runtime | Number|
+| stars | Array|
+| directors | Array|
+| creators | Array|
+| added_by | Array|
+
+
 ### **Flask App Configuration**
 
 The environment structure and app configuration has had several refactors as I saw through documentation that a better way could be implemented until I reached the refactoring that I was happy with it.
@@ -286,7 +353,8 @@ In order to run the tests the ENV in the environment file must be set to testing
  
 **User Registering**
 
-![User Registration](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_register_user_DZoZ8UFcu.gif)
+[test_register_user](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_register_user_DZoZ8UFcu.gif)
+
 <hr>
 
 **User Story** *- As a user, I will be able to access a dashboard where I can view my watchlist and recommendations.*
