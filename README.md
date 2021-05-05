@@ -220,6 +220,29 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 ### **Implementation Issues and Bugs**
 
+**Restful APIs**
+
+The main issues with the APIs I have had was because they did not align properly with the ones IMDB provided. Also, all API keys provided by IMDB would not be possible to store in the backend. By using the same flask app to serve Web Pages as well as API resources meant that at times I created two APIs to not fetch them from client side, one to query IMDB and return results to another API where it would respond with whatever IMDB response was received. 
+
+This was the wrong approach I should have had implemented and structured the APIs in a manner that it would keep things separate. This happened towards the middle of the project where I have refactored the URLs and APIs, The good thing is that I learned great deal of things not to do whilst doing this project.
+
+**Dynamic Content**
+
+This was a great issue because the nature of my app was to be very dynamic with very little whole page reloads. I learned Flask is horrible for this sort of apps and a mixture with a frontend framework would have done better even though outside of the scope of this project and course. 
+
+The main issue was getting content to and from JavaScript, this cannot be done unless you have JS injected with Jinja templates which is wrong approach and it was something my mentor raised with me. However, looking through Flask documentation they actually have a part where they give examples where you inject Block Script with Block Content making things confusing to maintain later on. 
+
+So here I go thinking how can I avoid writing tons of JS to handle so much dynamic content? Well, I cant so as I got into troubles I hard reset to a previous point where for some reason all the wrong JS I had written disappeared, so the good side was that I re-wrote completely everything JS related without having to inject them which is great but it ended up being at the cost of writing a lot of it.
+
+I have looked into using Web Sockets, but at the end I didn't want to venture in that way because I wouldn't have the time to complete it. All in all for my personal projects I would never use templates anymore, instead Flask provides a great deal of other great things such as Flask Restful which is great.
+
+
+**PyMongo vs MongoEngine**
+
+I wanted from day one to implement schemas in my MongoDB documents, so instead of using PyMongo, I have used MongoEngine Document Object Mapper, instead of the low level drive PyMongo.
+
+The issues I have had with MongoEngine was when handling errors until I saw in the Flask Restful documentation that I could use abstract classes and customise errors and use TRY and Raise to handle errors that could happen with Mongo.
+
 
 # Testing
 
@@ -231,6 +254,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 **User Registration Test** - The test carried out allows the user to perform a registration, considering that there is no existing email. Following the registration user is redirected to the dashboard which initially will be empty. I have chosen to capture more details such as email because I tend to make it official app at one point, which also the reset password feature requires an email. This user story has been achieved as you can see below a mock operation of a user registering.
  
+**User Registering**
+
 ![User Registration](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_register_user_DZoZ8UFcu.gif)
 <hr>
 
@@ -239,6 +264,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 **Dashboard Implementation** - I have decided to implement the dashboard using cards from the UIKIT framework. The reason behind is that they are able to hold quite a lot of images inside the slider before it starts to get slow. Though, I have not introduced pagination this is something that will be added later on as a feature.
 
 **Dashboard Test** - The test carried out is to let the user access their dashboard as it can be seen below once user is logs in or register he or she will be directed to the dashboard where they will have access to their watchlist, recommendations and trending. The user story has been achieved by providing the user with easy process to access their dashboard. 
+
+**Trending and Recommendations**
 
 ![Login](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif)
 <hr>
@@ -249,6 +276,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 **Search Test** - The test below was carried to demonstrate that users can search for movies and shows but they wont be able to have a watchlist, get recommendations and what is trending. This has achieved the requirement of the user story above.
 
+**Search If Not Logged In**
+
 ![Search](https://ik.imagekit.io/xsenqx8yi/user_stories_test/search_not_logged_in_cfnJXpxjh.gif)
 <hr>
 
@@ -257,6 +286,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 **Add Movies and Shows Implementation** - The way this has been implemented is by re-utilising the search feature in the home page, but by passing a variable to the rendered page I can then verify if user is logged in then we would display a button that allows for adding movies or shows. 
 
 **Add Movies and Shows Test** - The User Story above has been implemented by allowing them users to add shows and movies to their watchlist as it can be seen in the image below. A user would select if they wish to search for a movie or show and then they would hit the search button, the results appears just below each image can then be clicked show details for that specific movie can be displayed.
+
+**Add Show To Watchlist**
 
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_show_gmA8mpnFEUj.gif)
 
@@ -269,6 +300,7 @@ The project was structured in 5 folders, each folder contains files and or subfo
 **Delete Movies and Shows Test** - The User Story above has been achieved by allowing user to delete a movie or show from their watchlist, as well as adding and editing a review. The reviews are directly linked to the delete button because that is the only possible way to remove them, as the reasons explained above. The User Story has been achieved as you can see below.
 
 **Deleting**
+
 ![Deleting](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_delete_5uQEDXLea0o.gif)
 
 <hr>
@@ -280,9 +312,11 @@ The project was structured in 5 folders, each folder contains files and or subfo
 **Review Movies and Shows Test** - The user Story has been achieved by giving the user a simple form to add and edit their movies and shows reviews. As it can be seen below, if a review has already been added and the user navigates to review again the form will hold what they have reviewed.
 
 **Adding Review**
+
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_review_V-jJ6OPvu.gif)
 
 **Editing Review**
+
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_edit_review_9uIkRgBl4.gif)
 
 <hr>
@@ -343,7 +377,7 @@ The form validations are implemented in all forms, I have used jQuery Form Valid
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/form_validation/search_form_validation_iNs8ltQ5R.gif)
 <hr>
 
-### Responsiveness
+### Responsiveness Test
 
 The responsiveness of all UI components are good since it resizes in all screen sizes. To achieve this I have used the UIkit Framework where similar to Bootstrap I have used components to reduce CSS usage and repetitiveness. I have verified this on Chrome, Safari, Firefox and Edge they all behaved appropriate to screen sizes. On addition to this I have used Google Dev tools in the inspection mode to valuate how the app would look like when displayed in smaller sizes. Below I have tested the dashboard, forms and homepage.
 
@@ -355,5 +389,22 @@ The responsiveness of all UI components are good since it resizes in all screen 
 
 **Home Page**
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/Responsiveness_Tests/home_responsiviness_test_s2GP0S_TT.gif)
+
+### Authentication Test
+
+The authentication was implemented using JWT which are created for the user when they login in or register. All tokens generated during these operations lasts for 7 days, after that user has to login again. Tokens are stores in cookies and accessed via the app to check if user is logged in or not.
+
+**Login Details Not Valid**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/authentication/login_details_not_valid_Jmg8LyHcZ.gif)
+
+**Redirected Not Authenticated**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/authentication/redirected_not_authenticated_hkyogkuUOhs.gif)
+
+**Email Already Exists**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/authentication/register_details_email_already_exist_EcSTl433w.gif)
+
+**Cannot Access Home Logged In**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/authentication/cannot_access_home_when_logged_in_CkPk1DzA1ZLK.gif)
+
 
 # Deployment
