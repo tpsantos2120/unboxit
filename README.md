@@ -250,7 +250,6 @@ The project was structured in 5 folders, each folder contains files and or subfo
 **Search Test** - The test below was carried to demonstrate that users can search for movies and shows but they wont be able to have a watchlist, get recommendations and what is trending. This has achieved the requirement of the user story above.
 
 ![Search](https://ik.imagekit.io/xsenqx8yi/user_stories_test/search_not_logged_in_cfnJXpxjh.gif)
-
 <hr>
 
 **User Story** *- As a user, I will be able to add a movie or a tv series to my watchlist.*
@@ -259,7 +258,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 **Add Movies and Shows Test** - The User Story above has been implemented by allowing them users to add shows and movies to their watchlist as it can be seen in the image below. A user would select if they wish to search for a movie or show and then they would hit the search button, the results appears just below each image can then be clicked show details for that specific movie can be displayed.
 
-<img src="https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_show_gmA8mpnFEUj.gif"/>
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_show_gmA8mpnFEUj.gif)
+
 <hr>
 
 **User Story** *- As a user, I will be able to remove a movie or a tv series from my watchlist.*
@@ -305,8 +305,8 @@ The project was structured in 5 folders, each folder contains files and or subfo
 **Trending Movies Test** - The app has the feature to fetch latest trending entertainment movies or shows whenever user login or register. Trending cannot be changed by the user and its purely based on IMDB API. This User Story has been achieved by displaying movies that are trending and user can always search for them in the search menu.  
 
 **Trending**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif)
 
-<img src="https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif"/>
 <hr>
 
 **User Story** *- As a user, I will be able to get recommended movies or tv series based on my watchlist.*
@@ -337,5 +337,23 @@ The form validations are implemented in all forms, I have used jQuery Form Valid
 **Reset Password Form** - The reset form validation is based on the user to enter two passwords that match, if it does not it will throw validation error. It will validate for email requirement as the other forms.
 
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/form_validation/reset_form_validation_6qU1UigbBYE.gif)
+
+**Search Form** - The search form only validation is to make sure user has entered something before a search is performed to avoid querying the database unnecessarily.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/form_validation/search_form_validation_iNs8ltQ5R.gif)
+<hr>
+
+### Responsiveness
+
+The responsiveness of all UI components are good since it resizes in all screen sizes. To achieve this I have used the UIkit Framework where similar to Bootstrap I have used components to reduce CSS usage and repetitiveness. I have verified this on Chrome, Safari, Firefox and Edge they all behaved appropriate to screen sizes. On addition to this I have used Google Dev tools in the inspection mode to valuate how the app would look like when displayed in smaller sizes. Below I have tested the dashboard, forms and homepage.
+
+**Dashboard**
+![dashboard_responsiveness](https://ik.imagekit.io/xsenqx8yi/Responsiveness_Tests/dashboard_responsiviness_test_k3u4zzt6c.gif)
+
+**Forms**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/Responsiveness_Tests/forms_responsiviness_test_Asn498lgIGZ.gif)
+
+**Home Page**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/Responsiveness_Tests/home_responsiviness_test_s2GP0S_TT.gif)
 
 # Deployment
