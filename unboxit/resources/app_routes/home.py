@@ -8,8 +8,15 @@ from werkzeug.utils import redirect
 
 
 class Home(Resource):
+    """
+        Render home page route.
+    """
     @jwt_required(locations=['headers', 'cookies'], optional=True)
     def get(self):
+        """
+            Render home page if identidy cannot be verified or
+            reirect to dashboard.
+        """
         identity = get_jwt_identity()
         if not identity:
             headers = {'Content-Type': 'text/html'}

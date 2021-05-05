@@ -12,6 +12,9 @@ class SearchMovies(Resource):
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, title):
+        """
+            Query movies by title and find poster images.
+        """
         response_result = []
         imdb = IMDBConfigs()
         url = imdb.get_url()
@@ -33,9 +36,15 @@ class SearchMovies(Resource):
 
 
 class SearchMovieDetails(Resource):
+    """
+        Query movie details from IMBD API
+    """
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, id):
+        """
+            Generate query results render template and return it back.
+        """
         cookie_exist = request.cookies.get("access_token_cookie")
         logged_in = False
         if cookie_exist:
@@ -50,13 +59,21 @@ class SearchMovieDetails(Resource):
         movie_details.pop('status')
         movie_details.pop('status_message')
         headers = {'Content-Type': 'text/html'}
-        return make_response(jsonify(render_template('components/view_result_details.html', logged_in=logged_in, result=movie_details)), 200, headers)
+        return make_response(jsonify(render_template('components/view_result_details.html',
+                                                     logged_in=logged_in,
+                                                     result=movie_details)), 200, headers)
 
 
 class SearchTvShows(Resource):
+    """
+        Query tv shows from IMBD API
+    """
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, title):
+        """
+            Generate view upon successfull query for tv shows.
+        """
         response_result = []
         imdb = IMDBConfigs()
         url = imdb.get_url()
@@ -78,6 +95,9 @@ class SearchTvShows(Resource):
 
 
 class SearchShowDetails(Resource):
+    """
+        Query tv show details from IMBD API
+    """
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self, id):
@@ -99,9 +119,17 @@ class SearchShowDetails(Resource):
 
 
 class SearchTrendingMovies(Resource):
+    """
+        Query trending movies from IMBD API
+    """
     @sleep_and_retry
     @limits(calls=5, period=1)
     def get(self):
+        """
+            Perform multiple queries to IMDB to fetch all required data.
+            1. Query trending movies returns all IDs.
+            2. Iterate IDs and fetch all poster images.
+        """
         response = SearchTrendingMovies.trending_movies()
         movies = response
         trending_movies = []
@@ -129,85 +157,49 @@ class SearchTrendingMovies(Resource):
         response = imdb.request_query(url, headers, querystring).json()
         return response
 
-    def trending_movies_details(id):
-        imdb = IMDBConfigs()
-        url = imdb.get_url()
-        headers = imdb.get_headers()
-        querystring = {
-            "type": "get-movie-details", "imdb": id}
-        response = imdb.request_query(url, headers, querystring).json()
-        return response
-
-
-class SearchTrendingShows(Resource):
-    @sleep_and_retry
-    @limits(calls=5, period=1)
-    def get(self):
-        response = SearchTrendingShows.trending_shows()
-        shows = response
-        trending_shows = []
-        for show in shows['tv_results']:
-            images = SearchTrendingShows.trending_shows_images(show['imdb_id'])
-            trending_shows.append(images)
-        return jsonify(trending_shows)
-
-    def trending_shows_images(id):
-        imdb = IMDBConfigs()
-        url = imdb.get_url()
-        headers = imdb.get_headers()
-        querystring = {
-            "type": "get-show-images-by-imdb", "imdb": id}
-        response = imdb.request_query(url, headers, querystring).json()
-        return response
-
-    def trending_shows():
-        imdb = IMDBConfigs()
-        url = imdb.get_url()
-        headers = imdb.get_headers()
-        querystring = {
-            "type": "get-trending-shows", "page": 1}
-        response = imdb.request_query(url, headers, querystring).json()
-        return response
-
-    def trending_shows_details(id):
-        imdb = IMDBConfigs()
-        url = imdb.get_url()
-        headers = imdb.get_headers()
-        querystring = {
-            "type": "get-show-details", "imdb": id}
-        response = imdb.request_query(url, headers, querystring).json()
-        return response
-
 
 class Recommend(Resource):
+    """
+        Query recommendations from IMBD API
+    """
+
     def post(self):
+        """
+            1. Get ID provided and query for similar movies or shows.
+            2. Get all IDs from that result iterate and fetch poster images.
+        """
         body = request.form
         id = body.get('id')
-        media_type = body.get('type')        
+        media_type = body.get('type')
         shows = []
         movies = []
         if media_type == "movies":
             recommended_movies = Recommend.fetch_similar_movies(id)
             if not recommended_movies.get('results') == 0:
                 for imdb_id in recommended_movies['movie_results'][0:10]:
-                    recommended = Recommend.fetch_images_movies(imdb_id['imdb_id'])
+                    recommended = Recommend.fetch_images_movies(
+                        imdb_id['imdb_id'])
                     movies.append(recommended)
                 return make_response(jsonify(movies), 200)
             else:
-                response = {"message":"movie not found"}
+                response = {"message": "movie not found"}
                 return make_response(jsonify(response), 400)
         elif media_type == "shows":
             recommended_shows = Recommend.fetch_similar_shows(id)
             if not recommended_shows.get('results') == 0:
                 for imdb_id in recommended_shows['tv_results'][0:10]:
-                    recommended = Recommend.fetch_images_shows(imdb_id['imdb_id'])
+                    recommended = Recommend.fetch_images_shows(
+                        imdb_id['imdb_id'])
                     shows.append(recommended)
                 return make_response(jsonify(shows), 200)
             else:
-                response = {"message":"show not found"}
+                response = {"message": "show not found"}
                 return make_response(jsonify(response), 400)
 
     def fetch_similar_movies(id):
+        """
+            Query similar movies from IMBD API
+        """
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
@@ -217,6 +209,9 @@ class Recommend(Resource):
         return response
 
     def fetch_images_movies(id):
+        """
+            Query movies images from IMBD API
+        """
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
@@ -226,6 +221,9 @@ class Recommend(Resource):
         return response
 
     def fetch_similar_shows(id):
+        """
+            Query similar shows from IMBD API
+        """
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
@@ -235,6 +233,9 @@ class Recommend(Resource):
         return response
 
     def fetch_images_shows(id):
+        """
+            Query images of shows from IMBD API
+        """
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
@@ -245,7 +246,15 @@ class Recommend(Resource):
 
 
 class IMDBConfigs():
+    """
+        Configure headers, url and request tyo minimise 
+        repetitive code.
+    """
+
     def get_headers(self):
+        """
+            Build headers
+        """
         self.headers = {
             'x-rapidapi-key': os.environ.get('IMDB_SECRET_KEY'),
             'x-rapidapi-host': os.environ.get('IMDB_API_HOST')
@@ -253,10 +262,16 @@ class IMDBConfigs():
         return self.headers
 
     def get_url(self):
+        """
+            Build URL
+        """
         self.url = os.environ.get('IMDB_BASE_URL')
         return self.url
 
     def request_query(self, url, headers, query_string):
+        """
+            Build query request
+        """
         if url and headers and query_string:
             response = requests.request(
                 "GET", url, headers=headers, params=query_string)
