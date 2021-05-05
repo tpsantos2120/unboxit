@@ -13,7 +13,7 @@ class Watchlist(db.Document):
     imdb_rating = db.StringField(required=True)
     vote_count = db.StringField(required=True)
     popularity = db.StringField(required=True)
-    youtube_trailer_key = db.StringField(required=True)
+    youtube_trailer_key = db.StringField()
     review = db.StringField(required=True)
     runtime = db.IntField(required=True)
     stars = db.ListField(db.StringField(), required=True)
