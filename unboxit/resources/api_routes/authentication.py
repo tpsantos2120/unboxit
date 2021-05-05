@@ -15,7 +15,16 @@ from unboxit.resources.utils.errors import EmailDoesNotExistsError, \
 
 
 class RegisterUserApi(Resource):
+    """
+        Make this a Resource by extending Flask Restfull Resource class,
+        then this resource be executed when the methods it has match a HTTP request method. 
+    """
+
     def post(self):
+        """
+            Insert user details to Mongo via POST and handle possible excepts 
+            that might entail.
+        """
         try:
             body = request.get_json()
             user = User(**body)
@@ -45,7 +54,17 @@ class RegisterUserApi(Resource):
 
 
 class LoginUserApi(Resource):
+    """
+        Make this a Resource by extending Flask Restfull Resource class,
+        then this resource be executed when the methods it has match a HTTP request method. 
+    """
+
     def post(self):
+        """
+            Make post requests to Mongo to login a user and generate JWT token.
+            Handle exceptions Mongo might throw depending on how request is 
+            sent.
+        """
         try:
             body = request.get_json()
             user = User.objects.get(email=body.get('email'))
@@ -74,8 +93,16 @@ class LoginUserApi(Resource):
 
 
 class ResetPassword(Resource):
+    """
+        Make this a Resource by extending Flask Restfull Resource class,
+        then this resource be executed when the methods it has match a HTTP request method. 
+    """
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
+        """
+            Reset password request when user is logged in via the seetings navbar menu.
+            Handle exceptions if there is any and protect route.
+        """
         try:
             identity = get_jwt_identity()
             body = request.get_json()
@@ -100,8 +127,16 @@ class ResetPassword(Resource):
 
 
 class ResetFogottenPassword(Resource):
+    """
+        Make this a Resource by extending Flask Restfull Resource class,
+        then this resource be executed when the methods it has match a HTTP request method. 
+    """
     @jwt_required(locations=['headers'])
     def post(self):
+        """
+            Handle password change when user not logged in,
+            check for token and if all good update.
+        """
         try:
             body = request.get_json()
             bearer = request.headers.get('Authorization')
@@ -138,13 +173,17 @@ class ResetFogottenPassword(Resource):
         except Exception as e:
             raise InternalServerError
 
-    # @jwt.unauthorized_loader
-    # def invalid_token_callback(callback):
-    #     return redirect(url_for('home'))
-
 
 class ForgotPassword(Resource):
+    """
+        Make this a Resource by extending Flask Restfull Resource class,
+        then this resource be executed when the methods it has match a HTTP request method. 
+    """
+
     def post(self):
+        """
+            Upon user request send user email with password reset link.
+        """
         try:
             url = request.host_url + 'reset/password/'
             body = request.get_json()
