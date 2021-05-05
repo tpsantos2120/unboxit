@@ -65,7 +65,7 @@ class TestGetOneWatchlist(BaseCase):
         response = self.app.get('/api/watchlist/'+ id,
                                 headers={"Content-Type": "application/json"})
 
-        self.assertEqual(dict, type(json.loads(response.get_json())))
+        self.assertEqual(dict, type(json.loads(response.get_data())))
         self.assertEqual(200, response.status_code)
 
     def test_get_one_watchlist_not_authorized(self):
@@ -75,7 +75,7 @@ class TestGetOneWatchlist(BaseCase):
                                 headers={"Content-Type": "application/json"})
 
         self.assertEqual("Not authorized.", response.json['message'])
-        self.assertEqual(401, response.status_code)
+        self.assertEqual(302, response.status_code)
 
 
     def test_get_one_watchlist_not_authorized(self):
