@@ -28,6 +28,7 @@ class Dashboard(Resource):
                                                  logged_in=True,
                                                  first_name=identity['first_name'],
                                                  last_name=identity['last_name']))
+   
 
     def fetch_watchlist():
         recommend = []
