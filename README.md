@@ -1,4 +1,3 @@
-
 # User Experience Design - UX
 
 ## Project Goal
@@ -218,7 +217,24 @@ The project was structured in 5 folders, each folder contains files and or subfo
 - **Templates**
 	- **[templates](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/templates)** - All HTML files were split into 3 folders Views, Layout and Components. I have chosen to split them in folders to make it easier to understand as it currently contains 23 files this way it makes a bit easier to cope with bugs, if any.
 
-### **Implementation Issues and Bugs**
+### **Flask App Configuration**
+
+The environment structure and app configuration has had several refactors as I saw through documentation that a better way could be implemented until I reached the refactoring that I was happy with it.
+
+I have setup the app by having three files **run.py**, **config.py** and **__init__.py**. The way I implemented these was by using the .env file which you have to install the dotenv extension. Then you are able to use .env files where you would store key value pairs with the = sign and once the loadenv is executed it finds the file and executes it as environment variables.
+
+In the config file I have three environments setup production, development and testing each has more or less the same configuration apart from the Mongo URI, each has its own database in this way we don't mix databases.
+
+### **Emailing**
+
+The emailing feature for users to reset password is fully functional, the email templates are basic but it all works fine. I took the decision to implement it to give users the option to reset the password since the information gathered during registration includes email it only makes sense to implement it.
+
+In order to implement email service I had to configure Flask Mail which is the extension that allows emails to be sent from or to a flask app. Once that was setup I have configured my dev email server with SendGrid so my email could be used through SendGrid to send emails to users to reset their passwords. The way I have implemented it is depicted in the gif below.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/images/xoxo_X5pKjT-LqS-.gif)
+
+
+### **Implementation Issues, Bugs and Learnings**
 
 **Restful APIs**
 
@@ -243,8 +259,19 @@ I wanted from day one to implement schemas in my MongoDB documents, so instead o
 
 The issues I have had with MongoEngine was when handling errors until I saw in the Flask Restful documentation that I could use abstract classes and customise errors and use TRY and Raise to handle errors that could happen with Mongo.
 
+The great thing about MongoEngine is that its classed based and as I have prior understanding of it from JS for me it was straight forward, It is something I would definitely use in the future. 
 
 # Testing
+
+### Unit Tests
+
+The tests were done with Unittests which comes with python. The setting up is easy as we don't have to install it as its already included. All tests are isolated meaning that once they are executed in the database they collections are teared down as well as most tests has a user registering and then performing an operation or logging out so there are different combinations.
+
+I have written 20 tests in total for all the DB APIs for the app, except the APIs for the app itself, such as homepage. I have integrated tests for invalid id, no id, unauthorized, with payload and without it. I have considered as much scenarios as I could think of, though there is always more tests that can be done. All 20 tests has passed and no fails, based on the given use cases.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/images/Capture_Jr9_KK7AB.PNG)
+
+In order to run the tests the ENV in the environment file must be set to testing so the correct database is used for it. More details in the deployment section.
 
 ### User Stories Tests
 
