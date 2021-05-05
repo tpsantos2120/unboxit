@@ -1,3 +1,4 @@
+
 # User Experience Design - UX
 
 ## Project Goal
@@ -231,7 +232,9 @@ The emailing feature for users to reset password is fully functional, the email 
 
 In order to implement email service I had to configure Flask Mail which is the extension that allows emails to be sent from or to a flask app. Once that was setup I have configured my dev email server with SendGrid so my email could be used through SendGrid to send emails to users to reset their passwords. The way I have implemented it is depicted in the gif below.
 
-![enter image description here](https://ik.imagekit.io/xsenqx8yi/images/xoxo_X5pKjT-LqS-.gif)
+<p align="center">
+  <img src="https://ik.imagekit.io/xsenqx8yi/images/xoxo_X5pKjT-LqS-.gif">
+</p>
 
 
 ### **Implementation Issues, Bugs and Learnings**
