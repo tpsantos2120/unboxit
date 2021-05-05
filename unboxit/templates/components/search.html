@@ -1,5 +1,5 @@
 {% block content %}
-<section class="wrapper background-section" >
+<div class="wrapper background-section" >
     <form id="search-form" class="uk-position-center-right uk-position-center-left">
       <div class="uk-card uk-card-secondary uk-card-small uk-card-body uk-dark">
         <div>
@@ -26,8 +26,6 @@
           <button
             class="uk-button uk-button-default uk-width-1-1"
             type="submit"
-            href=""
-            required
           >
             Search
           </button>
@@ -36,8 +34,8 @@
     </form>
     <div id="view-results" ></div>
     <div id="view-result-details" ></div>
-</section>
-<section>
+  </div>
+<div>
   <div id="user-feedback" class="uk-flex-top" data-uk-modal>
     <div
       class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding"
@@ -51,5 +49,5 @@
       ></div>
     </div>
   </div>
-</section>
+</div>
 {% endblock %}
