@@ -182,21 +182,21 @@ I have designed the database structure during the planning stage to help me stru
 
 # Implementation
 
-**Planning**
+### **Planning**
 
 The implementation will start by the backend working through the frontend. I will be setting up Python and Flask folders and environment. Next, I will setup MongoDB using the database structure planned in the Structure & Skeleton section. Once I am happy with these setups I will configure my environment variables and connect to the database. Afterwards, all API routes would then be written whilst performing some tests along the way to check if it works. When I have all API routes, I will create the HTML files templates files based on the Wireframes. Next I will use IMDB from Rapid API to consume all the APIs needed when users are searching for movies and tv series.   
 
-**Development**
+### **Development**
 
 The development was implemented by working from the backend towards the frontend, unless I required a view to visualise results, but in general it was developed in that manner. All API was tested as they were being developed by using **POSTMAN**. During implementation I tried to follow a MVC pattern as much as possible, so I have split my files in several folders, though all of it could and will be refactored I believe I did a good job in getting things more maintainable and readable than I would without splitting the logic from view and so on.
 
-**Project Structure**
+### **Project Structure**
 
 The project was structured in 5 folders, each folder contains files and or subfolder to structure the project in a easy and maintainable manner. Below you will find the project structure and what each one of them do:
 
 - **Models**
-	- **[db](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/models/db.py)** -  This file will initialise **MongoEngine** so it can be used within the Models folder and it will give the functionality to use Documents and enforce schemas on MongoDB.
-	- **[models](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/models/models.py)** - Once DB is instantiated, it is then imported and by using classes we pass that instance where we are able to create documents or better said schemas.
+	- **[db](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/models/db.py)** -  This file will initialise **MongoEngine** so it can be used within the Models folder and it will give the functionality to use Documents and enforce schemas on **MongoDB**.
+	- **[models](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/models/models.py)** - Once **DB** is instantiated, it is then imported and by using classes we pass that instance where we are able to create documents or better said schemas.
 
 - **Resources**
 - 
@@ -204,13 +204,13 @@ The project was structured in 5 folders, each folder contains files and or subfo
 	
 	- **[db_api](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/db_api)** - On the other hand this folder which also reference **API** is directly related to resources that are accessed from or to **MongoDB Atlas**. For example, logging and registering a user or adding movies or tv shows.
 
-	- **[routes](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/routes)** - This folder is directly related to the **APIs** mentioned above, as this has a **routes file** where all routes are registered using Flask Restful.
+	- **[routes](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/routes)** - This folder is directly related to the **APIs** mentioned above, as this has a **routes file** where all routes are registered using **Flask Restful**.
 
 	- **[utils](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/utils)** - The **utils** folder initialises and registers the **Cache**, **JWT** and **Errors**. The **Cache** is used to cache queries to the database queries to minimize queries to **IMDB** and **MongoDB**. The **JWT** is used to protect routes, generate tokens and it the important for the way authentication happens in the app. Finally, there the **Errors** file that is used to implement custom error handling by specifying which errors to customise with which error messages to return, these are then used with **TRY**, **EXCEPTION** and **RAISE** throughout the app. 
 
 - **Services**
 
-	- **[mail_service](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/services/mail_service.py)** - The implementation for emailing was to offer users the feature to reset their passwords. In order to do this, I have used **Flask Mail** and **SendGrid**. The way this works is that **Flask Framework** uses **Flask Mail** extention to send emails through **SendGrid**. In addition, SendGrid is configured to use my personal email that I created for the purpose of this project, unboxit@tsantos.dev.
+	- **[mail_service](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/services/mail_service.py)** - The implementation for emailing was to offer users the feature to reset their passwords. In order to do this, I have used **Flask Mail** and **SendGrid**. The way this works is that **Flask Framework** uses **Flask Mail** extension to send emails through **SendGrid**. In addition, **SendGrid** is configured to use my personal email that I created for the purpose of this project, unboxit@tsantos.dev.
 
 - **Static**
 	- **[static](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/static)** - This folder is where the assets are located. I have used quite a bit of JavaScript to handle dynamic content, so I have split them in several files, each file will be doing something specific.
@@ -218,6 +218,22 @@ The project was structured in 5 folders, each folder contains files and or subfo
 - **Templates**
 	- **[templates](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/templates)** - All HTML files were split into 3 folders Views, Layout and Components. I have chosen to split them in folders to make it easier to understand as it currently contains 23 files this way it makes a bit easier to cope with bugs, if any.
 
+### **Implementation Issues and Bugs**
+
+
 # Testing
+
+### User Stories Test
+*- As a user, I will have to sign up if they wish to be able to save movies or tv series to my watchlist.*
+![User Registration](https://drive.google.com/file/d/1mQ8EY6U7IAEMHVXWeiU9_gxSU212MTd0/view?usp=sharing)
+*- As a user, I will be able to access a dashboard where I can view my watchlist and recommendations.
+- As a user, I will not have to sign up if they wish to search for a movie.
+- As a user, I will be able to add a movie or a tv series to my watchlist.
+- As a user, I will be able to remove a movie or a tv series from my watchlist.
+- As a user, I will be able to mark movies and tv series I have watched off of my watchlist.
+- As a user, I will be able to change my password.
+- As a user, I will be able to see trending movies and tv series.
+- As a user, I will be able to get recommended movies or tv series based on my watchlist.*
+
 
 # Deployment
