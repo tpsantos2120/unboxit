@@ -52,7 +52,6 @@ document.querySelectorAll(".delete").forEach((item) => {
 
 const handleReview = async (e) => {
   const id = e.target.getAttribute("imdb");
-  e.target.setAttribute("disabled","");
   const review = document.querySelector("#reviewTextArea");
   const existReview = await Fetch.get("/api/watchlist/" + id);
   console.log(existReview)
@@ -83,11 +82,9 @@ const handleReview = async (e) => {
         review: review.value,
       });
       if (reviewResponse.status === 200) {
-        e.target.removeAttribute("disabled", "");
         window.location.replace("/dashboard");
         handleWindow();
       } else {
-        e.target.removeAttribute("disabled", "");
         UIkit.notification({
           message: "Ops! It could not update review.",
           status: "success",
