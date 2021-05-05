@@ -1,4 +1,3 @@
-
 # User Experience Design - UX
 
 ## Project Goal
@@ -25,7 +24,7 @@ This is **UNBOXIT** a website where it allows you to search for Movies and TV Se
 	- As a user, I will not have to sign up if they wish to search for a movie.
 	- As a user, I will be able to add a movie or a tv series to my watchlist.
 	- As a user, I will be able to remove a movie or a tv series from my watchlist.
-	- As a user, I will be able to mark movies and tv series I have watched off of my watchlist.
+	- As a user, I will be able to review movies and tv series I have watched off of my watchlist.
 	- As a user, I will be able to change my password.
 	- As a user, I will be able to see trending movies and tv series.
 	- As a user, I will be able to get recommended movies or tv series based on my watchlist.
@@ -223,17 +222,98 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 # Testing
 
-### User Stories Test
-*- As a user, I will have to sign up if they wish to be able to save movies or tv series to my watchlist.*
-![User Registration](https://drive.google.com/file/d/1mQ8EY6U7IAEMHVXWeiU9_gxSU212MTd0/view?usp=sharing)
-*- As a user, I will be able to access a dashboard where I can view my watchlist and recommendations.
-- As a user, I will not have to sign up if they wish to search for a movie.
-- As a user, I will be able to add a movie or a tv series to my watchlist.
-- As a user, I will be able to remove a movie or a tv series from my watchlist.
-- As a user, I will be able to mark movies and tv series I have watched off of my watchlist.
-- As a user, I will be able to change my password.
-- As a user, I will be able to see trending movies and tv series.
-- As a user, I will be able to get recommended movies or tv series based on my watchlist.*
+### User Stories Tests
+
+**User Story** *- As a user, I will have to sign up if they wish to be able to save movies or tv series to my watchlist.*
+
+**Dashboard Implementation** - The registration form has several form details, the reason for it to be implemented this way is so that in the future there will be more customisation and features such as logging in with google authentication and allowing user to change their details.
+
+**User Registration Test** - The test carried out allows the user to perform a registration, considering that there is no existing email. Following the registration user is redirected to the dashboard which initially will be empty. I have chosen to capture more details such as email because I tend to make it official app at one point, which also the reset password feature requires an email. This user story has been achieved as you can see below a mock operation of a user registering.
+ 
+![User Registration](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_register_user_DZoZ8UFcu.gif)
+<hr>
+
+**User Story** *- As a user, I will be able to access a dashboard where I can view my watchlist and recommendations.*
+
+**Dashboard Implementation** - I have decided to implement the dashboard using cards from the UIKIT framework. The reason behind is that they are able to hold quite a lot of images inside the slider before it starts to get slow. Though, I have not introduced pagination this is something that will be added later on as a feature.
+
+**Dashboard Test** - The test carried out is to let the user access their dashboard as it can be seen below once user is logs in or register he or she will be directed to the dashboard where they will have access to their watchlist, recommendations and trending. The user story has been achieved by providing the user with easy process to access their dashboard. 
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif)
+<hr>
+
+**User Story** *- As a user, I will not have to sign up if they wish to search for a movie.*
+
+**Search Implementation** - The implementation of the search feature was done in such a way that a user who is interested in just searching for movies or shows will not have to login, the main reason is that people may have different needs which does not involve getting registered, however by registering we offer trending movies and recommendations which are based on what they have on their watchlist. In order to achieve such dynamic recommendation feature the app collects all IDs for all watchlist movies or shows and based on that the app uses IMDB huge database to fetch all recommended shows or movies for the user. 
+
+**Search Test** - The test below was carried to demonstrate that users can search for movies and shows but they wont be able to have a watchlist, get recommendations and what is trending. This has achieved the requirement of the user story above.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/search_not_logged_in_cfnJXpxjh.gif)
+<hr>
+
+**User Story** *- As a user, I will be able to add a movie or a tv series to my watchlist.*
+
+**Add Movies and Shows Implementation** - The way this has been implemented is by re-utilising the search feature in the home page, but by passing a variable to the rendered page I can then verify if user is logged in then we would display a button that allows for adding movies or shows. 
+
+**Add Movies and Shows Test** - The User Story above has been implemented by allowing them users to add shows and movies to their watchlist as it can be seen in the image below. A user would select if they wish to search for a movie or show and then they would hit the search button, the results appears just below each image can then be clicked show details for that specific movie can be displayed.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_show_gmA8mpnFEUj.gif)
+
+<hr>
+
+**User Story** *- As a user, I will be able to remove a movie or a tv series from my watchlist.*
+
+**Delete Movies and Shows Implementation** - The user can remove whatever is in their watchlist by clicking over one of them to display information about the movie or tv show and at the end there will be a delete and review button. The reason a review can only be edited and not deleted is because there is a intention to accumulate as much reviews as possible so one day this app can become the app that users come to review what they watch or read reviews by other users.
+
+**Delete Movies and Shows Test** - The User Story above has been achieved by allowing user to delete a movie or show from their watchlist, as well as adding and editing a review. The reviews are directly linked to the delete button because that is the only possible way to remove them, as the reasons explained above. The User Story has been achieved as you can see below.
+
+**Deleting**
+![Deleting](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_delete_5uQEDXLea0o.gif)
+
+<hr>
+
+**User Story** *- As a user, I will be able to review movies and tv series I have watched off of my watchlist.*
+
+**Review Movies and Shows Implementation** - The review was implemented to allow users to add and edit within the same form, for it to be an easy to use feature. Each movie or show in the watchlist will have a review button once clicked a modal form pops up for user to add and edit a review.
+
+**Review Movies and Shows Test** - The user Story has been achieved by giving the user a simple form to add and edit their movies and shows reviews. As it can be seen below, if a review has already been added and the user navigates to review again the form will hold what they have reviewed.
+
+**Adding Review**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_add_review_V-jJ6OPvu.gif)
+
+**Editing Review**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_edit_review_9uIkRgBl4.gif)
+
+<hr>
+
+**User Story** *- As a user, I will be able to change my password.*
+
+**Reset Password Implementation** - There are two ways for the user to change their password. First way is within the dashboard in the settings navbar option where a form pops up and user can change their password. Second way to reset or change a password is when the user is logged out as this is handy if user has forgotten password. These two were implemented to give users the way to get into their dashboard or maybe if there is a security concern they can change their password themselves. 
+
+**Reset Password Test** - The user Story has been achieved by giving the user a simple form to add and edit their movies and shows reviews. As it can be seen below, if a review has already been added and the user navigates to review again the form will hold what they have reviewed. The tests carried below shows how both ways are done, therefore this User Story has been achieved.
+
+**Reset Password When Logged In**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_change_password_j2v8ql7E6.gif)
+
+<hr>
+
+**User Story** *- As a user, I will be able to see trending movies and tv series.*
+
+**Trending Movies Implementation** - The implementation of trending was done by using IMDB database, where it provides with the API resource. The tricky issues during implementation was that they split their API in such way that you inly get IDs for movies and shows that are trending then after you have to query another query for details and another query for images. All this becomes very expensive for the user who would have to wait for long for all the queries to finish, hence why, I have only added images for trending and for recommendations.
+
+**Trending Movies Test** - The app has the feature to fetch latest trending entertainment movies or shows whenever user login or register. Trending cannot be changed by the user and its purely based on IMDB API. This User Story has been achieved by displaying movies that are trending and user can always search for them in the search menu.  
+
+**Trending**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/test_trending_and_recommendations_6Dr7Sd-SjI_.gif)
+
+<hr>
+
+**User Story** *- As a user, I will be able to get recommended movies or tv series based on my watchlist.*
+
+**Recommendations Implementation** - The recommendations are achieved by getting IDs a user's watchlist then using IMDB API to query movies or shows that could be similar every time a user adds a movie or show this are collected into a list which one ID is chosen at random and queried to get recommendations. In order to avoid querying IMDB API on every refresh the recommendations are cached one per time that a user registers or logins. This means that you wont always get the same recommendations. If there is no entries in the watchlist the app will display a message for the user to add movies or shows to get recommendations.
+
+**Recommendations Test** - The User Story has been achieved as mentioned above, users can get recommendations based on their watchlist once every time they login. This can be seen on the test below.
+
 
 
 # Deployment
