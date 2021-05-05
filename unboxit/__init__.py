@@ -1,5 +1,5 @@
 import os
-from unboxit.resources.app_api.error_handler import ErrorHandler
+from unboxit.resources.app_routes.error_handler import ErrorHandler
 from .config import ProductionConfig, DevelopmentConfig, TestingConfig
 from unboxit.resources.utils.cache import initialize_cache
 from unboxit.resources.utils.jwt import initialize_jwt
