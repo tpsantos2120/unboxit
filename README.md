@@ -1,3 +1,4 @@
+
 # User Experience Design - UX
 
 ## Project Goal
@@ -314,6 +315,27 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 **Recommendations Test** - The User Story has been achieved as mentioned above, users can get recommendations based on their watchlist once every time they login. This can be seen on the test below.
 
+**Recommendations**
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/user_stories_test/add_movie__xqgom_HAT.gif)
 
+### Form Validations
+
+The form validations are implemented in all forms, I have used jQuery Form Validator plugin as it gives me the functionality I needed to achieve the validations as well as other features in the app.
+
+**Registration Form** - To implement validation in this form I have chosen to give as much freedom as possible to the user so the main constrains are passwords and usernames that must be minimum of 8 characters long, first name and last name maximum 30 characters long. Finally, the email has to have the correct format.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/form_validation/signup_validation_c-e4EadTF.gif)
+
+**Login Form** - The login form has validation for email and a minimum charter length of 8. The password field has to have a minimum of 8 characters long.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/form_validation/login_validation_UQtKw2BjF.gif)
+
+**Change Password Form** - The change password form is located in the settings from the navbar menu where form pops up so user can change password. It follows same validation as the other ones.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/form_validation/settings_form_JXp7stM2r4F.gif)
+
+**Reset Password Form** - The reset form validation is based on the user to enter two passwords that match, if it does not it will throw validation error. It will validate for email requirement as the other forms.
+
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/form_validation/reset_form_validation_6qU1UigbBYE.gif)
 
 # Deployment
