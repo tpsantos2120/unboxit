@@ -26,6 +26,8 @@ mail = Mail(app)
 
 app.register_error_handler(404, ErrorHandler.page_not_found)
 app.register_error_handler(500, ErrorHandler.internal_error)
+app.register_error_handler(401, ErrorHandler.not_authorized)
+
 
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
