@@ -1,3 +1,4 @@
+![enter image description here](https://ik.imagekit.io/xsenqx8yi/images/responsive_image_QEYtHwm-be-.PNG)
 
 # User Experience Design - UX
 
@@ -129,18 +130,15 @@ I have designed the database structure during the planning stage to help me stru
 
 ## Surface
 
--  **Design Choices**
+### **Design Choices**
 
-	- **Colours** - you can view my colour palette. The palette was created based on the Netflix website. I believe it brings the right colours for movie and tv series enthusiasts.
+**Colours** - you can view my colour palette. The palette was created based on the Netflix website. I believe it brings the right colours for movie and tv series enthusiasts.
 	![Pallette](https://ik.imagekit.io/2a1in3cldn/Pallette_t2p3Xbrnuu2wL.png)
 	
-	- **Typography** - I will use Space Grotesk for headings and sub-headings and for the paragraphs it will be Jura. All these from [Google Fonts](https://fonts.google.com/).
-	
-	- **Images** - I will use images that are provided with the API Endpoints. Each movie or tv series will have their own poster image. 
-	
-	- **Logo** - I used [Canva](https://www.canva.com) to design logo and favicon. You can view this under **Resources** in this document.  The fonts used for the logo are Mont Thin and Alta which both are also from canva.
-	
-	- **Icons** - I will be using icons from Font Awesome. more in the **Resources** section in this document.
+**Typography** - I will use Space Grotesk for headings and sub-headings and for the paragraphs it will be Jura. All these from [Google Fonts](https://fonts.google.com/).
+**Images** - I will use images that are provided with the API Endpoints. Each movie or tv series will have their own poster image. 
+**Logo** - I used [Canva](https://www.canva.com) to design logo and favicon. You can view this under **Resources** in this document.  The fonts used for the logo are Mont Thin and Alta which both are also from canva.
+	**Icons** - I will be using icons from Font Awesome. more in the **Resources** section in this document.
 
 # Technologies Used
 
@@ -170,15 +168,29 @@ I have designed the database structure during the planning stage to help me stru
 
 # Resources
 
-- **Font Awesome & Iconify**
-- **Canva** 
-- **StackEdit**
-- **Bootstrap**
-- **Javascript**
-- **HTML**
-- **CSS**
-- **ImageKit** 
-- **Auto CSS Prefixer**
+- **[Font Awesome](https://fontawesome.com/)**
+- **[Canva](https://www.canva.com/)** 
+- **[StackEdit](https://www.canva.com/)**
+- **[Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)**
+- **[Uikit](https://getuikit.com/docs/introduction)**
+- **[Flask](https://flask.palletsprojects.com/en/1.1.x/api/)**
+- **[DevDocs](https://devdocs.io/)**
+- **[ImageKit](https://imagekit.io/)** 
+- **[Flask Restful](https://flask-restful.readthedocs.io/en/latest/api.html)** 
+- **[MongoEngine](https://imagekit.io/)** 
+- **[Flask MongoEngine](https://flask.palletsprojects.com/en/1.1.x/patterns/mongoengine/)** 
+- **[Gunicorn](https://flask.palletsprojects.com/en/1.1.x/deploying/wsgi-standalone/)** 
+- **[Flask-Caching](https://imagekit.io/)** 
+- **[Flask-Bcrypt](https://flask-bcrypt.readthedocs.io/en/latest/)** 
+- **[Python-dotenv](https://pypi.org/project/python-dotenv/)** 
+- **[Requests](https://realpython.com/python-requests/)** 
+- **[Ratelimit](https://pypi.org/project/ratelimit/)** 
+- **[Jinja2](https://flask.palletsprojects.com/en/1.1.x/templating/)** 
+- **[Testing](https://realpython.com/python-testing/)** 
+- **[Flask-Mail](https://pythonhosted.org/Flask-Mail/)** 
+- **[Flask Configuration Files](https://pythonise.com/series/learning-flask/flask-configuration-files)** 
+- **[SendGrid](https://sendgrid.com/blog/sending-emails-from-python-flask-applications-with-twilio-sendgrid/)** 
+
 
 # Implementation
 
