@@ -41,8 +41,8 @@ class WatchlistsApi(Resource):
         try:
             identity = get_jwt_identity()
             body = request.get_json()
-            (body)
             body["review"] = ""
+            print(body)
             user = User.objects.get(id=identity['user_id'])
             watchlist = Watchlist(**body, added_by=user)
             watchlist.save()
@@ -137,7 +137,7 @@ class WatchlistApi(Resource):
     def get(self, id):
         try:
             watchlist = Watchlist.objects.get(id=id).to_json()
-            return make_response(jsonify(watchlist), 200)
+            return make_response(watchlist, 200)
         except (DoesNotExist, ValidationError):
             raise EntryNotExistsError
 
