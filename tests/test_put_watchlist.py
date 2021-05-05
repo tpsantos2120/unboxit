@@ -79,9 +79,8 @@ class TestPutOneWatchlist(BaseCase):
         response = self.app.put('/api/watchlist/id',
                                 headers={"Content-Type": "application/json"},
                                 data=update_review)
-
-        self.assertEqual("Not authorized.",response.json['message'])
-        self.assertEqual(401, response.status_code)
+        
+        self.assertEqual(302, response.status_code)
 
     def test_put_watchlist_not_valid_id(self):
         first_name = "Darth"
