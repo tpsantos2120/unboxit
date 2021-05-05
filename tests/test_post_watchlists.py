@@ -5,8 +5,14 @@ from tests.base_test import BaseCase
 
 
 class TestPostWatchlist(BaseCase):
+    """
+        Test cases to create watchlists.
+    """
 
-    def test_post_watchlists_successful_after_registered(self):
+    def test_post_watchlists_successful(self):
+        """
+            Create user and insert watchlist record.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -58,10 +64,9 @@ class TestPostWatchlist(BaseCase):
 
         response = self.app.post('/api/watchlists',
                                  headers={"Content-Type": "application/json",
-                                 "Authorization": "Bearer "+ response.json['token']},
+                                          "Authorization": "Bearer " + response.json['token']},
                                  data=payload_entry)
 
-        self.assertEqual("Movie was added successfully.", response.json['message'])
+        self.assertEqual("Movie was added successfully.",
+                         response.json['message'])
         self.assertEqual(200, response.status_code)
-
-    

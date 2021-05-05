@@ -4,8 +4,14 @@ from tests.base_test import BaseCase
 
 
 class TestUserLogin(BaseCase):
+    """
+        Tests cases for logging in users.
+    """
 
     def test_successful_login(self):
+        """
+            Attempt registration and then login.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -37,6 +43,9 @@ class TestUserLogin(BaseCase):
         self.assertEqual(200, response.status_code)
 
     def test_login_with_invalid_email(self):
+        """
+            Attempt login with invalid email.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -70,6 +79,9 @@ class TestUserLogin(BaseCase):
         self.assertEqual(401, response.status_code)
 
     def test_login_with_invalid_password(self):
+        """
+            Attempt login with invalid password.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -103,6 +115,9 @@ class TestUserLogin(BaseCase):
         self.assertEqual(401, response.status_code)
 
     def test_login_with_without_payload(self):
+        """
+            Attempt login without posting login details.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"

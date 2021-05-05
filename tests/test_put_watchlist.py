@@ -4,8 +4,14 @@ from tests.base_test import BaseCase
 
 
 class TestPutOneWatchlist(BaseCase):
+    """
+        Test cases for editing watchlist records.
+    """
 
     def test_put_watchlist_successful(self):
+        """
+            Create user, insert record, then edit review.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -73,16 +79,22 @@ class TestPutOneWatchlist(BaseCase):
         self.assertEqual(200, response.status_code)
 
     def test_put_watchlist_not_authorized(self):
-       
-        self.app.delete_cookie("unboxit",'access_token_cookie')
+        """
+            Test case for users not with authorized access.
+        """
+
+        self.app.delete_cookie("unboxit", 'access_token_cookie')
         update_review = json.dumps({"review": "Vader is watching you!"})
         response = self.app.put('/api/watchlist/id',
                                 headers={"Content-Type": "application/json"},
                                 data=update_review)
-        
+
         self.assertEqual(302, response.status_code)
 
     def test_put_watchlist_not_valid_id(self):
+        """
+            Test case for PUT request without valid ID. 
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"

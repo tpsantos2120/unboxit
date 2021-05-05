@@ -4,8 +4,14 @@ from tests.base_test import BaseCase
 
 
 class TestGetWatchlist(BaseCase):
+    """
+        Test cases for GET many records
+    """
 
     def test_get_watchlists_successful(self):
+        """
+            Create user and insert record, then fetch it.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -70,6 +76,10 @@ class TestGetWatchlist(BaseCase):
         self.assertEqual(200, response.status_code)
 
     def test_get_watchlists_empty_list(self):
+        """
+            Create user and register, provide no watchlist insertion
+            get results back.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -97,6 +107,9 @@ class TestGetWatchlist(BaseCase):
         self.assertEqual(200, response.status_code)
 
     def test_get_watchlists_not_authorized(self):
+        """
+            Perform logout and try access restricted routes. 
+        """
 
         response = self.app.get('/logout')
         response = self.app.get('/api/watchlists')

@@ -2,9 +2,17 @@ import json
 
 from tests.base_test import BaseCase
 
+
 class TestDeleteWatchlist(BaseCase):
+    """
+        Test cases for DELETE request 
+    """
 
     def test_delete_watchlist_successful(self):
+        """ 
+            Register user, insert a movie to watchlist, then get watchlist id,
+            and delete entry. 
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -63,14 +71,17 @@ class TestDeleteWatchlist(BaseCase):
 
         id = response.json[0]['_id']['$oid']
 
-        response = self.app.delete('/api/watchlist/'+ id,
-                                headers={"Content-Type": "application/json"})
+        response = self.app.delete('/api/watchlist/' + id,
+                                   headers={"Content-Type": "application/json"})
 
-
-        self.assertEqual("Movie was deleted successfully.", response.json['message'])
+        self.assertEqual("Movie was deleted successfully.",
+                         response.json['message'])
         self.assertEqual(200, response.status_code)
 
     def test_delete_watchlist_no_id(self):
+        """
+            Create user and insert movie, but provide no valid ID 
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -127,10 +138,9 @@ class TestDeleteWatchlist(BaseCase):
         response = self.app.get('/api/watchlists',
                                 headers={"Content-Type": "application/json"})
 
+        response = self.app.delete('/api/watchlist/' + "notvalid",
+                                   headers={"Content-Type": "application/json"})
 
-        response = self.app.delete('/api/watchlist/'+ "notvalid",
-                                headers={"Content-Type": "application/json"})
-
-
-        self.assertEqual("Entry with given id doesn't exist", response.json['message'])
+        self.assertEqual("Entry with given id doesn't exist",
+                         response.json['message'])
         self.assertEqual(400, response.status_code)

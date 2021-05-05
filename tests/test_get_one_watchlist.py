@@ -2,9 +2,17 @@ import json
 
 from tests.base_test import BaseCase
 
+
 class TestGetOneWatchlist(BaseCase):
+    """
+        Test Cases for GET one record from watchlist.
+    """
 
     def test_get_one_watchlist_successful(self):
+        """
+            Register user and insert watchlist record, then 
+            try to retirve that one record.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -62,14 +70,16 @@ class TestGetOneWatchlist(BaseCase):
                                 headers={"Content-Type": "application/json"})
 
         id = response.json[0]['_id']['$oid']
-        response = self.app.get('/api/watchlist/'+ id,
+        response = self.app.get('/api/watchlist/' + id,
                                 headers={"Content-Type": "application/json"})
 
         self.assertEqual(dict, type(json.loads(response.get_data())))
         self.assertEqual(200, response.status_code)
 
-    def test_get_one_watchlist_not_authorized(self):
-    
+    def test_get_one_watchlist_not_valid_id(self):
+        """
+            Attempt to get a record with ID that does not exist.
+        """
 
         response = self.app.get('/api/watchlist/sdfsdf',
                                 headers={"Content-Type": "application/json"})
@@ -77,8 +87,10 @@ class TestGetOneWatchlist(BaseCase):
         self.assertEqual("Not authorized.", response.json['message'])
         self.assertEqual(302, response.status_code)
 
-
     def test_get_one_watchlist_not_authorized(self):
+        """
+            Attempt to access route without authorization.
+        """
         first_name = "Darth"
         last_name = "Vader"
         username = "darkside"
@@ -97,9 +109,9 @@ class TestGetOneWatchlist(BaseCase):
                                  headers={"Content-Type": "application/json"},
                                  data=payload_register)
 
-
         response = self.app.get('/api/watchlist/sdfsdf',
                                 headers={"Content-Type": "application/json"})
 
-        self.assertEqual("Entry with given id doesn't exist", response.json['message'])
+        self.assertEqual("Entry with given id doesn't exist",
+                         response.json['message'])
         self.assertEqual(400, response.status_code)
