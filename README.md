@@ -1,5 +1,44 @@
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/images/responsive_image_QEYtHwm-be-.PNG)
 
+- [User Experience Design - UX](#user-experience-design---ux)
+	- [Project Goal](#project-goal)
+	- [Strategy](#strategy)
+	- [Scope](#scope)
+	- [Structure & Skeleton](#structure--skeleton)
+	- [Surface](#surface)
+		- [**Design Choices**](#design-choices)
+- [Technologies Used](#technologies-used)
+- [Resources](#resources)
+- [Implementation](#implementation)
+	- [**Planning**](#planning)
+	- [**Development**](#development)
+	- [**Project Structure**](#project-structure)
+	- [**API Routes**](#api-routes)
+	- [**Database Structure**](#database-structure)
+	- [**Flask App Configuration**](#flask-app-configuration)
+	- [**Emailing**](#emailing)
+	- [**Implementation Issues, Bugs and Learnings**](#implementation-issues-bugs-and-learnings)
+- [Testing](#testing)
+	- [Unit Tests](#unit-tests)
+	- [User Stories Tests](#user-stories-tests)
+	- [Form Validations](#form-validations)
+	- [Responsiveness  Test](#responsiveness--test)
+	- [Authentication Test](#authentication-test)
+	- [Password Reset Test](#password-reset-test)
+- [Deployment](#deployment)
+	- [MongoDB](#mongodb)
+		- [STEP 1 - Create cluster project](#step-1---create-cluster-project)
+		- [STEP 2 - Create Database User and Setup Network Access.](#step-2---create-database-user-and-setup-network-access)
+		- [STEP 3 - Get database credentials.](#step-3---get-database-credentials)
+	- [SendGrid](#sendgrid)
+	- [IMDB API](#imdb-api)
+	- [Local Deployment](#local-deployment)
+		- [Download Project & Github CLI](#download-project--github-cli)
+		- [Environment Variables](#environment-variables)
+		- [Installing Dependencies and Running The App](#installing-dependencies-and-running-the-app)
+	- [Heroku Deployment](#heroku-deployment)
+- [Credits](#credits)
+- [Acknowledgements](#acknowledgements)
 
 # User Experience Design - UX
 
@@ -600,6 +639,13 @@ To deploy the app publicly you will have to create an account with Heroku and cr
 7. Connect your Github account to Heroku by going to Deploy tab and select Github as a **Deployment Method**.
 8. Under the deploy tab, click on **Deploy Branch**.
 
+# Credits
+
+- [Background SVG Image](https://www.svgbackgrounds.com/)
+- [SendGrid Email Setup](https://sendgrid.com/blog/sending-emails-from-python-flask-applications-with-twilio-sendgrid/) 
+-   [Stackoverflow](https://stackoverflow.com/)  community for making their useful content available online.
+-   I would like to thank my mentor [Simen](https://github.com/Eventyret)  for his tips about how to develop better software that is maintainable and readable.
+- All documentation of all Flask extensions that I have used throughout the project. I have attached them in the **Resources Section** of this readme.
 
 # Acknowledgements
 
