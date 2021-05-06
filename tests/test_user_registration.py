@@ -115,8 +115,6 @@ class TestUserRegistration(BaseCase):
         response = self.app.post(
             '/api/auth/register', headers={"Content-Type": "application/json"})
 
-        print(response)
-
         self.assertEqual('Something went wrong internally',
                          response.json['message'])
         self.assertEqual(500, response.status_code)

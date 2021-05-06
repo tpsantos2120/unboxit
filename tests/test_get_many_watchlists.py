@@ -114,4 +114,4 @@ class TestGetWatchlist(BaseCase):
         response = self.app.get('/logout')
         response = self.app.get('/api/watchlists')
 
-        self.assertEqual(302, response.status_code)
+        self.assertEqual(401, response.status_code)
