@@ -1,5 +1,11 @@
 import Fetch from "./fetch.js";
 
+/**
+ * Display and query correct results depending on
+ * user searched.
+ *
+ * @param {Object} e
+ */
 const handleSearchDetails = (e) => {
   const id = e.target.getAttribute("imdb");
   const type = e.target.getAttribute("type");
@@ -12,6 +18,10 @@ const handleSearchDetails = (e) => {
   }
 };
 
+/**
+ * Register event listeners for each result from
+ * API request for movie or show.
+ */
 const searchDetails = () => {
   const slider = document.querySelectorAll(".results");
   slider.forEach((element) => {
@@ -19,10 +29,27 @@ const searchDetails = () => {
   });
 };
 
+/**
+ *Add listeners and pass some information with it.
+ *
+ * @param {String} id
+ * @param {String} image
+ * @param {String} type
+ * @param {Object} e
+ */
 const addlistener = (id, image, type, e) => {
   postData(id, image, type);
 };
 
+/**
+ * Get information passed by addListener and
+ * do Post request for add movie or show to
+ * user watchlist.
+ *
+ * @param {String} id
+ * @param {String} image
+ * @param {String} type
+ */
 const postData = async (id, image, type) => {
   const title = document.querySelector("#title");
   const description = document.querySelector("#description");
@@ -60,6 +87,10 @@ const postData = async (id, image, type) => {
   creators.forEach((item) => {
     data.creators.push(item.innerText);
   });
+
+  /**
+   * Pass data to server to be saved.
+   */
   const saveDataResponse = await Fetch.create("/api/watchlists", data);
   if (saveDataResponse.status === 400) {
     UIkit.notification({
@@ -78,6 +109,13 @@ const postData = async (id, image, type) => {
   }
 };
 
+/**
+ * Query movies details.
+ *
+ * @param {String} id
+ * @param {String} image
+ * @param {String} type
+ */
 const findMovieDetails = async (id, image, type) => {
   const viewMovieDetails = document.querySelector("#view-result-details");
   const movieDetails = await Fetch.get("/search/movie/details/", id);
@@ -91,6 +129,13 @@ const findMovieDetails = async (id, image, type) => {
   }
 };
 
+/**
+ * Query shows details.
+ *
+ * @param {String} id
+ * @param {String} image
+ * @param {String} type
+ */
 const findShowDetails = async (id, image, type) => {
   const viewShowDetails = document.querySelector("#view-result-details");
   const showDetails = await Fetch.get("/search/show/details/", id);
@@ -104,6 +149,11 @@ const findShowDetails = async (id, image, type) => {
   }
 };
 
+/**
+ * Remove search result upon requesting for another result.
+ *
+ * @param {Object} node
+ */
 const removeChildrenEl = (node) => {
   while (node.firstChild) {
     node.removeChild(node.lastChild);

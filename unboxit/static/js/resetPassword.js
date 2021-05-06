@@ -33,14 +33,13 @@ $(document).ready(function () {
       const repeatPassword = document.querySelector("#repeatPassword");
       if (newPassword.value == repeatPassword.value) {
         changePassword(newPassword.value);
-        console.log("matches");
       } else {
-        console.log("not matches");
         const validator = $("#settings-form").validate();
         validator.showErrors({
           repeatPassword: "Password does not match.",
         });
       }
+      form.reset();
     },
   });
 });
@@ -86,17 +85,21 @@ $(document).ready(function () {
       const resetEmail = document.querySelector("#resetEmail");
       if (resetEmail.value) {
         sendResetEmail(resetEmail.value);
-        console.log("matches");
       }
+      form.reset();
     },
   });
 });
-
+/**
+ * Password resetwhen logged out, if email exists and is reachable 
+ * Flask will send an email to that user's email.
+ * 
+ * @param {String} email 
+ */
 const sendResetEmail = async (email) => {
   const resetResponse = await Fetch.create("/api/auth/forgot", {
     email: email,
   });
-  console.log(resetResponse);
   if (resetResponse === null) {
     UIkit.modal("#reset-modal").hide();
     UIkit.notification({
@@ -158,10 +161,18 @@ $(document).ready(function () {
           forgotRepeatPassword: "Passwords do not match.",
         });
       }
+      form.reset();
     },
   });
 });
 
+/**
+ * Perform password reset when logged out, if token
+ * and password is provided.
+ * 
+ * @param {String} password 
+ * @param {String} token 
+ */
 const forgottenPassword = async (password, token) => {
   const resetPassword = {
     password: password,
@@ -172,7 +183,7 @@ const forgottenPassword = async (password, token) => {
     resetPassword,
     authorization
   );
-  
+
   if (passwordResponse === null) {
     UIkit.notification({
       message: "Your password has been changed successfully.",

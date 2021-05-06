@@ -2,7 +2,10 @@ import Fetch from "./fetch.js";
 import Spinner from "./userFeedback.js";
 
 
-
+/**
+ * load user feedback modal to let user know
+ * we are searching.
+ */
 const handleDashboardLoading = () => {
   Spinner.userFeedback(
     "Please, wait whilst we load the truck.",
@@ -21,6 +24,9 @@ if (dashboard && dashboardSearch) {
   dashboardSearch.addEventListener("click", handleDashboardLoading);
 }
 
+/**
+ * Listens for window when is fully loaded then hide feedback modal.
+ */
 const handleWindow = () => {
   Spinner.hideModal("#dashboard-feedback");
 };
@@ -33,7 +39,6 @@ const handleDelete = async (e) => {
   handleDashboardLoading();
   const id = e.target.getAttribute("imdb");
   const deleteResponse = await Fetch.remove("/api/watchlist/", id);
-  console.log(deleteResponse);
   if (deleteResponse.status === 200) {
     window.location.replace("/dashboard");
   } else {
@@ -50,11 +55,16 @@ document.querySelectorAll(".delete").forEach((item) => {
   item.onclick = handleDelete;
 });
 
+/**
+ * Query DB for existing review if there is any append to form
+ * Validate review form, once validation is ok perform submit.
+ * 
+ * @param {Event} e 
+ */
 const handleReview = async (e) => {
   const id = e.target.getAttribute("imdb");
   const review = document.querySelector("#reviewTextArea");
   const existReview = await Fetch.get("/api/watchlist/" + id);
-  console.log(existReview)
   if (existReview.review) {
     review.value = existReview.review;
   }
@@ -92,6 +102,7 @@ const handleReview = async (e) => {
           timeout: 5000,
         });
       }
+      form.reset();
     },
   });
 };

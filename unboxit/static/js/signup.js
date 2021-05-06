@@ -1,6 +1,10 @@
 import Fetch from "./fetch.js";
 import Spinner from "./userFeedback.js";
 
+/**
+ * Validate register form once valid
+ * perform the POST request to register user.
+ */
 $(document).ready(function () {
   $("#register-form").validate({
     errorClass: "uk-form-danger",
@@ -55,10 +59,20 @@ $(document).ready(function () {
       const email = document.querySelector("#email");
       const password = document.querySelector("#password");
       registerUser(firstName, lastName, userName, email, password);
+      form.reset();
     },
   });
 });
 
+/**
+ * Post user details to Flask for processing.
+ *
+ * @param {String} firstName
+ * @param {String} lastName
+ * @param {String} userName
+ * @param {String} email
+ * @param {String} password
+ */
 async function registerUser(firstName, lastName, userName, email, password) {
   const response = await Fetch.create("/api/auth/register", {
     first_name: firstName.value,
