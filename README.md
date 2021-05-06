@@ -6,25 +6,25 @@
 	- [Scope](#scope)
 	- [Structure & Skeleton](#structure--skeleton)
 	- [Surface](#surface)
-		- [**Design Choices**](#design-choices)
+		- [Design Choices](#design-choices)
 - [Technologies Used](#technologies-used)
 - [Resources](#resources)
 - [Implementation](#implementation)
-	- [**Planning**](#planning)
-	- [**Development**](#development)
-	- [**Project Structure**](#project-structure)
-	- [**API Routes**](#api-routes)
-	- [**Database Structure**](#database-structure)
-	- [**Flask App Configuration**](#flask-app-configuration)
-	- [**Emailing**](#emailing)
-	- [**Implementation Issues, Bugs and Learnings**](#implementation-issues-bugs-and-learnings)
+	- [Planning](#planning)
+	- [Development](#development)
+	- [Project Structure](#project-structure)
+	- [API Routes](#api-routes)
+	- [Database Structure](#database-structure)
+	- [Flask App Configuration](#flask-app-configuration)
+	- [Emailing](#emailing)
+	- [Implementation Issues, Bugs and Learnings](#implementation-issues-bugs-and-learnings)
 - [Testing](#testing)
 	- [Unit Tests](#unit-tests)
 	- [User Stories Tests](#user-stories-tests)
 	- [Form Validations](#form-validations)
-	- [Responsiveness  Test](#responsiveness--test)
-	- [Authentication Test](#authentication-test)
-	- [Password Reset Test](#password-reset-test)
+	- [Responsiveness](#responsiveness)
+	- [Authentication](#authentication)
+	- [Password Reset](#password-reset)
 - [Deployment](#deployment)
 	- [MongoDB](#mongodb)
 		- [STEP 1 - Create cluster project](#step-1---create-cluster-project)
@@ -181,7 +181,7 @@ I have designed the database structure during the planning stage to help me stru
 
 ## Surface
 
-### **Design Choices**
+### Design Choices
 
 **Colours** - you can view my colour palette. The palette was created based on the Netflix website. I believe it brings the right colours for movie and tv series enthusiasts.
 <p align="center">
@@ -258,7 +258,7 @@ I have designed the database structure during the planning stage to help me stru
 
 # Implementation
 
-## **Planning**
+## Planning
 
 The implementation will start by the backend working through the frontend. I will be setting up Python and Flask folders and environment. Next, I will setup MongoDB using the database structure planned in the Structure & Skeleton section. Once I am happy with these setups I will configure my environment variables and connect to the database. Afterwards, all API routes would then be written whilst performing some tests along the way to check if it works. When I have all API routes, I will create the HTML files templates files based on the Wireframes. Next I will use IMDB from Rapid API to consume all the APIs needed when users are searching for movies and tv series.
 
@@ -266,7 +266,7 @@ The implementation will start by the backend working through the frontend. I wil
 
 [Back To Top](#user-experience-design---ux)
 
-## **Development**
+## Development
 
 The development was implemented by working from the backend towards the frontend, unless I required a view to visualise results, but in general it was developed in that manner. All API was tested as they were being developed by using **POSTMAN**. During implementation I tried to follow a MVC pattern as much as possible, so I have split my files in several folders, though all of it could and will be refactored I believe I did a good job in getting things more maintainable and readable than I would without splitting the logic from view and so on.
 
@@ -274,7 +274,7 @@ The development was implemented by working from the backend towards the frontend
 
 [Back To Top](#user-experience-design---ux)
 
-## **Project Structure**
+## Project Structure
 
 The project was structured in 5 folders, each folder contains files and or subfolder to structure the project in a easy and maintainable manner. Below you will find the project structure and what each one of them do:
 
@@ -306,7 +306,7 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 [Back To Top](#user-experience-design---ux)
 
-## **API Routes**
+## API Routes
 
 The API routes initially proposed were changed in the development stage, this is because it did not work well with what the app wanted to achieve through IMDB API. I will be adding the new APIs below, so there is a reference to how they are actually implemented. I have taken the decision to change some of the routes because I found issues as I was handling IMDB API that at times when I had to query 3 to 4 APIs to get the resources I required so I tried to simplify as much as possible. Also, I was using hyphen in some of the url segments pointed by my mentor therefore I decided to make them more standardized.
 
@@ -325,7 +325,7 @@ The API routes initially proposed were changed in the development stage, this is
 
 [Back To Top](#user-experience-design---ux)
 
-## **Database Structure**
+## Database Structure
 
 The database structure was changed the reason was that it was becoming resource intensive with querying different APIs from IMDB. So to economise resources I decided to have one watchlist holding both movies and shows, most fields are the same for both, so I discarded the fields that were different and kept the fields that were the same, so now it is all in one place, plus I have added two extra fields, one to hold images so I don't have to query IMDB for it and   the other is to distinguish if it is a movie or show, that field is called media_type.
 
@@ -363,7 +363,7 @@ The database structure was changed the reason was that it was becoming resource 
 | added_by | Array|
 
 
-## **Flask App Configuration**
+## Flask App Configuration
 
 The environment structure and app configuration has had several refactors as I saw through documentation that a better way could be implemented until I reached the refactoring that I was happy with it.
 
@@ -375,7 +375,7 @@ In the config file I have three environments setup production, development and t
 
 [Back To Top](#user-experience-design---ux)
 
-## **Emailing**
+## Emailing
 
 The emailing feature for users to reset password is fully functional, the email templates are basic but it all works fine. I took the decision to implement it to give users the option to reset the password since the information gathered during registration includes email it only makes sense to implement it.
 
@@ -389,7 +389,7 @@ In order to implement email service I had to configure Flask Mail which is the e
 
 [Back To Top](#user-experience-design---ux)
 
-## **Implementation Issues, Bugs and Learnings**
+## Implementation Issues, Bugs and Learnings
 
 **Restful APIs**
 
@@ -432,7 +432,7 @@ The tests were done with Unittests which comes with python. The setting up is ea
 
 I have written 20 tests in total for all the DB APIs for the app, except the APIs for the app itself, such as homepage. I have integrated tests for invalid id, no id, unauthorized, with payload and without it. I have considered as much scenarios as I could think of, though there is always more tests that can be done. All 20 tests has passed and no fails, based on the given use cases.
 
-![enter image description here](https://ik.imagekit.io/xsenqx8yi/images/Capture_Jr9_KK7AB.PNG)
+![test image](https://ik.imagekit.io/xsenqx8yi/images/Capture_Jr9_KK7AB.PNG)
 
 In order to run the tests the ENV in the environment file must be set to testing so the correct database is used for it. More details in the deployment section.
 
@@ -573,7 +573,7 @@ The form validations are implemented in all forms, I have used jQuery Form Valid
 
 [Back To Top](#user-experience-design---ux)
 
-## Responsiveness  Test
+## Responsiveness
 
 The responsiveness of all UI components are good since it resizes in all screen sizes. To achieve this I have used the UIkit Framework where similar to Bootstrap I have used components to reduce CSS usage and repetitiveness. I have verified this on Chrome, Safari, Firefox and Edge they all behaved appropriate to screen sizes. On addition to this I have used Google Dev tools in the inspection mode to valuate how the app would look like when displayed in smaller sizes. Below I have tested the dashboard, forms and homepage.
 
@@ -586,7 +586,7 @@ The responsiveness of all UI components are good since it resizes in all screen 
 
 [Back To Top](#user-experience-design---ux)
 
-## Authentication Test
+## Authentication
 
 The authentication was implemented using JWT which are created for the user when they login in or register. All tokens generated during these operations lasts for 7 days, after that user has to login again. Tokens are stores in cookies and accessed via the app to check if user is logged in or not.
 
@@ -599,7 +599,7 @@ The authentication was implemented using JWT which are created for the user when
 
 [Back To Top](#user-experience-design---ux)
 
-## Password Reset Test
+## Password Reset
 
 The password reset feature was tested multiple times with Gmail, Outlook and Yahoo to check if users receive the reset email and if it works, below you will find a gif showing that it works and that a user can reset their password this test was done with Gmail.
 
