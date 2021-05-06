@@ -25,7 +25,6 @@ $(document).ready(function () {
     },
     submitHandler: function (form, event) {
       event.preventDefault();
-      form.reset();
       event.target.classList.remove("uk-position-center-right")
       event.target.classList.remove("uk-position-center-left")
       const type = document.querySelector("#tabs > li.uk-active > a");
@@ -53,6 +52,7 @@ $(document).ready(function () {
  * @param {String} query 
  */
 async function searchShow(query) {
+  console.log(query)
   const response = await Fetch.get("/search/shows/", query);
   if (response.status === 400) {
     Spinner.stopSpinner("#spinner");
@@ -76,6 +76,7 @@ async function searchShow(query) {
  * @param {String} query 
  */
 async function searchMovie(query) {
+  console.log(query)
   const response = await Fetch.get("/search/movies/", query);
   if (response.status === 400) {
     Spinner.stopSpinner("#spinner");
