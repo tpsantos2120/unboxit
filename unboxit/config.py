@@ -1,7 +1,12 @@
 import os
 from dotenv import load_dotenv
 
+
 class Config(object):
+    """
+        Load generic environment variables which are extended by 
+        one of the server environments below.
+    """
     load_dotenv()
     ENV = os.environ.get('ENV')
     IMDB_API_HOST = os.environ.get('IMDB_API_HOST')
@@ -22,6 +27,9 @@ class Config(object):
 
 
 class ProductionConfig(Config):
+    """
+        Override Environment Variables for production.
+    """
     DEBUG = False
     TESTING = False
     FLASK_ENV = "production"
@@ -30,12 +38,19 @@ class ProductionConfig(Config):
 
 
 class DevelopmentConfig(Config):
+    """
+        Override Environment Variables for development.
+    """
     DEBUG = True
     MONGODB_SETTINGS = {
         'host': os.environ.get('MONGODB_DEVELOPMENT')
     }
 
+
 class TestingConfig(Config):
+    """
+        Override Environment Variables for testing.
+    """
     load_dotenv()
     TESTING = True
     MONGODB_SETTINGS = {

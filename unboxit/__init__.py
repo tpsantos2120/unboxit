@@ -15,6 +15,10 @@ app = Flask(__name__)
 
 load_dotenv()
 
+"""
+    Set configurations based on what the ENV variable holds.
+    Production, Testing and Development.
+"""
 if os.environ.get("ENV") == "production":
     app.config.from_object(ProductionConfig())
 elif os.environ.get("ENV") == "development":
@@ -32,7 +36,13 @@ app.register_error_handler(401, ErrorHandler.not_authorized)
 api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
 
-from unboxit.resources.routes.routes import initialize_routes
+
+""" 
+    This import here is because the routes has to be imported
+    after Restful initiallization, otherwise there is circular issues.   
+"""
+with app.app_context():
+    from unboxit.resources.routes.routes import initialize_routes
 
 initialize_jwt(app)
 initialize_db(app)
