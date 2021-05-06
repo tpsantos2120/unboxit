@@ -340,6 +340,10 @@ I have written 20 tests in total for all the DB APIs for the app, except the API
 
 In order to run the tests the ENV in the environment file must be set to testing so the correct database is used for it. More details in the deployment section.
 
+If you wish to run the tests locally make sure **ENV** in the **.env** file is set to **testing**, then use the following command to run them:
+
+- `python -m unittest --buffer -v`
+
 ## User Stories Tests
 
 **User Story** *- As a user, I will have to sign up if I wish to be able to save movies or tv series to my watchlist.*
