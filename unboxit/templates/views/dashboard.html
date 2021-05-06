@@ -2,8 +2,10 @@
 <section class="wrapper background-section">
   <div class="uk-card uk-card-secondary uk-card-body uk-padding-large-top">
     <h1 class="uk-heading-divider">Welcome {{first_name}}!</h1>
-    <p>I hope you will have a great time with us. 
-      Please, feel free to review your watchlist movies or tv shows.</p>
+    <p>
+      I hope you will have a great time with us. Please, feel free to review
+      your watchlist movies or tv shows.
+    </p>
   </div>
   <div class="uk-card uk-card-secondary uk-card-body uk-margin-large-top">
     <h1 class="uk-heading-divider">Watchlist</h1>
@@ -14,14 +16,16 @@
       tabindex="-1"
       uk-slider="sets: true"
     >
-      <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-child-width-1-4@l uk-child-width-1-6@xl">
+      <ul
+        class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-child-width-1-4@l uk-child-width-1-6@xl"
+      >
         {% for data in watchlist %}
         <li>
           <div class="">
             <div class="uk-inline-clip uk-transition-toggle" tabindex="0">
               <img src="{{data.poster}}" alt="{{data.title}}" />
               <div
-                class="uk-card uk-card-secondary uk-card-body uk-transition-scale-up uk-position-cover uk-overlay uk-overlay-primary uk-overflow-auto"
+                class="uk-card uk-card-secondary uk-card-body uk-transition-scale-up uk-position-cover uk-overlay uk-overlay-primary uk-overflow-auto uk-animation-fade"
               >
                 <h3 class="uk-card-title">{{data.title}}</h3>
                 <h6>Plot</h6>
@@ -123,7 +127,7 @@
       ></a>
     </div>
     {% else: %}
-      <h4>Please add movies from the search menu.</h4>
+    <h4>Please add movies from the search menu.</h4>
     {% endif %}
   </div>
   <!-- User Recommendations -->
@@ -136,25 +140,16 @@
       tabindex="-1"
       uk-slider="sets: true"
     >
-      <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-child-width-1-4@l uk-child-width-1-6@xl">
+      <ul
+        class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-child-width-1-4@l uk-child-width-1-6@xl"
+      >
         {% for data in recommendation %}
         <div class="uk-inline-clip uk-transition-toggle" tabindex="0">
-          <img src="{{data.poster}}" alt="{{data.title}}" />
-          <!-- <div
-            class="uk-card uk-card-secondary uk-card-body uk-transition-scale-up uk-position-cover uk-overlay uk-overlay-primary uk-overflow-auto"
-          >
-            <h3 class="uk-card-title">{{data.title}}</h3>
-            <p>{{data.description}}</p>
-            <h6>Details</h6>
-            <ul>
-              <li>Year: {{data.year}}</li>
-              <li>IMDB Rating: {{data.imdb_rating}}</li>
-              <li>Vote Count: {{data.vote_count}}</li>
-              <li>Release Date: {{data.release_date}}</li>
-              <li>Popularity: {{data.popularity}}</li>
-              <li>Runtime: {{data.runtime}}mins</li>
-            </ul>
-          </div> -->
+          <img
+            src="{{data.poster}}"
+            alt="{{data.title}}"
+            class="uk-animation-fade"
+          />
         </div>
         {% endfor %}
       </ul>
@@ -172,7 +167,10 @@
       ></a>
     </div>
     {% else: %}
-      <h4>Please add a Movie or Show to your watchlist in order to get recommendations.</h4>
+    <h4>
+      Please add a Movie or Show to your watchlist in order to get
+      recommendations.
+    </h4>
     {% endif %}
   </div>
   <!-- Movies Trending -->
@@ -185,25 +183,16 @@
       tabindex="-1"
       uk-slider="sets: true"
     >
-      <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-child-width-1-4@l uk-child-width-1-6@xl">
+      <ul
+        class="uk-slider-items uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-child-width-1-4@l uk-child-width-1-6@xl"
+      >
         {% for data in trending_movies %}
         <div class="uk-inline-clip uk-transition-toggle" tabindex="0">
-          <img src="{{data.poster}}" alt="{{data.title}}" />
-          <!-- <div
-            class="uk-card uk-card-secondary uk-card-body uk-transition-scale-up uk-position-cover uk-overlay uk-overlay-primary uk-overflow-auto"
-          >
-            <h3 class="uk-card-title">{{data.title}}</h3>
-            <p>{{data.description}}</p>
-            <h6>Details</h6>
-            <ul>
-              <li>Year: {{data.year}}</li>
-              <li>IMDB Rating: {{data.imdb_rating}}</li>
-              <li>Vote Count: {{data.vote_count}}</li>
-              <li>Release Date: {{data.release_date}}</li>
-              <li>Popularity: {{data.popularity}}</li>
-              <li>Runtime: {{data.runtime}}mins</li>
-            </ul>
-          </div> -->
+          <img
+            src="{{data.poster}}"
+            alt="{{data.title}}"
+            class="uk-animation-fade"
+          />
         </div>
         {% endfor %}
       </ul>
@@ -223,13 +212,11 @@
     </div>
     {% else: %}
     <h4>We could not get trending movies and shows.</h4>
-  {% endif %}
+    {% endif %}
   </div>
 </section>
 <div id="dashboard-feedback" class="uk-flex-top" data-uk-modal>
-  <div
-    class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding"
-  >
+  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical uk-padding">
     <div class="uk-position-top-center">
       <div id="dashboard-spinner" class="uk-padding"></div>
     </div>
