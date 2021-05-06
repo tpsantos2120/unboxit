@@ -112,7 +112,7 @@ class Dashboard(Resource):
         if len(watchlist_cache) > 0:
             if not len(recommendation_cache) > 0:
                 recommendation_cache = Dashboard.fetch_recommendations()
-            cache.set("recommendation_cache", recommendation_cache)
+                cache.set("recommendation_cache", recommendation_cache)
         elif len(watchlist_cache) == 0:
             cache.delete("recommendation_cache")
 
