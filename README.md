@@ -1,38 +1,35 @@
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/images/responsive_image_QEYtHwm-be-.PNG)
 
-# Table of Contents
-
-- [Table of Contents](#table-of-contents)
 - [User Experience Design - UX](#user-experience-design---ux)
 	- [Project Goal](#project-goal)
 	- [Strategy](#strategy)
 	- [Scope](#scope)
 	- [Structure & Skeleton](#structure--skeleton)
 	- [Surface](#surface)
-		- [Design Choices](#design-choices)
+		- [**Design Choices**](#design-choices)
 - [Technologies Used](#technologies-used)
 - [Resources](#resources)
 - [Implementation](#implementation)
-	- [Planning](#planning)
-	- [Development](#development)
-	- [Project Structure](#project-structure)
-	- [API Routes](#api-routes)
-	- [Database Structure](#database-structure)
-	- [Flask App Configuration](#flask-app-configuration)
-	- [Emailing](#emailing)
-	- [Implementation Issues, Bugs and Learnings](#implementation-issues-bugs-and-learnings)
+	- [**Planning**](#planning)
+	- [**Development**](#development)
+	- [**Project Structure**](#project-structure)
+	- [**API Routes**](#api-routes)
+	- [**Database Structure**](#database-structure)
+	- [**Flask App Configuration**](#flask-app-configuration)
+	- [**Emailing**](#emailing)
+	- [**Implementation Issues, Bugs and Learnings**](#implementation-issues-bugs-and-learnings)
 - [Testing](#testing)
 	- [Unit Tests](#unit-tests)
 	- [User Stories Tests](#user-stories-tests)
 	- [Form Validations](#form-validations)
-	- [Responsiveness](#responsiveness)
-	- [Authentication](#authentication)
-	- [Password Reset](#password-reset)
+	- [Responsiveness  Test](#responsiveness--test)
+	- [Authentication Test](#authentication-test)
+	- [Password Reset Test](#password-reset-test)
 - [Deployment](#deployment)
 	- [MongoDB](#mongodb)
-		- [Create cluster project](#create-cluster-project)
-		- [Create Database User and Setup Network Access.](#create-database-user-and-setup-network-access)
-		- [Get database credentials.](#get-database-credentials)
+		- [STEP 1 - Create cluster project](#step-1---create-cluster-project)
+		- [STEP 2 - Create Database User and Setup Network Access.](#step-2---create-database-user-and-setup-network-access)
+		- [STEP 3 - Get database credentials.](#step-3---get-database-credentials)
 	- [SendGrid](#sendgrid)
 	- [IMDB API](#imdb-api)
 	- [Local Deployment](#local-deployment)
@@ -48,6 +45,10 @@
 ## Project Goal
 
 This is **UNBOXIT** a website where it allows you to search for Movies and TV Series to add to a watchlist where you can use as a tracker, and once you have watched you can tick off your list. It also comes with Recommendations and Trending in the cinematography world, you will be able to watch trailers and also know more trivial information about your favourite Movies and TV Series. In addition, I will use IMDB endpoint from Rapid API to consume their huge database of Movies and TV Series. 
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 ## Strategy
 
@@ -74,11 +75,19 @@ This is **UNBOXIT** a website where it allows you to search for Movies and TV Se
 	- As a user, I will be able to see trending movies and tv series.
 	- As a user, I will be able to get recommended movies or tv series based on my watchlist.
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 ## Scope
 
 **Functional Specifications & Content Requirements**
 
 The functional specification will be based on the [assessment criteria](https://drive.google.com/file/d/1GBoEwg5ODXp1Gg3oJJdXYpELdO7_s3MP/view?usp=sharing) and user stories. The content required to bring value to a product so I would say is crucial to have them set out. The written content has to be concise and to the point, relevant to the section of the game. It has to follow the same typography to maintain consistency throughout the website. The imagery has to be consistent throughout the website in terms of colours and sizes. The colours has to be consistent with the logo colours to bring a theme based to the visitors. The typography will have consistency between written content and logo. It is important that the game will have one typography for the logo and one for the content. The logo has to bring set the tone for the look and feel of the game so that the other parts can follow it nicely. All information to have the right amount of contrast between foreground and background to avoid distractions.
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 ## Structure & Skeleton
 
@@ -166,9 +175,13 @@ I have designed the database structure during the planning stage to help me stru
 >     - GET   /api/users/id
 >     - POST  /api/users
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 ## Surface
 
-### Design Choices
+### **Design Choices**
 
 **Colours** - you can view my colour palette. The palette was created based on the Netflix website. I believe it brings the right colours for movie and tv series enthusiasts.
 <p align="center">
@@ -179,6 +192,10 @@ I have designed the database structure during the planning stage to help me stru
 **Images** - I will use images that are provided with the API Endpoints. Each movie or tv series will have their own poster image. 
 **Logo** - I used [Canva](https://www.canva.com) to design logo and favicon. You can view this under **Resources** in this document.  The fonts used for the logo are Mont Thin and Alta which both are also from canva.
 	**Icons** - I will be using icons from Font Awesome. more in the **Resources** section in this document.
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 # Technologies Used
 
@@ -207,6 +224,10 @@ I have designed the database structure during the planning stage to help me stru
 - **[Flask](https://flask.palletsprojects.com/en/1.1.x/)**
 - **[PyMongo](https://api.mongodb.com/python/current/tutorial.html)**
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 # Resources
 
 - **[Font Awesome](https://fontawesome.com/)**
@@ -231,18 +252,29 @@ I have designed the database structure during the planning stage to help me stru
 - **[Flask Configuration Files](https://pythonise.com/series/learning-flask/flask-configuration-files)** 
 - **[SendGrid](https://sendgrid.com/blog/sending-emails-from-python-flask-applications-with-twilio-sendgrid/)** 
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 # Implementation
 
-## Planning
+## **Planning**
 
-The implementation will start by the backend working through the frontend. I will be setting up Python and Flask folders and environment. Next, I will setup MongoDB using the database structure planned in the Structure & Skeleton section. Once I am happy with these setups I will configure my environment variables and connect to the database. Afterwards, all API routes would then be written whilst performing some tests along the way to check if it works. When I have all API routes, I will create the HTML files templates files based on the Wireframes. Next I will use IMDB from Rapid API to consume all the APIs needed when users are searching for movies and tv series.   
+The implementation will start by the backend working through the frontend. I will be setting up Python and Flask folders and environment. Next, I will setup MongoDB using the database structure planned in the Structure & Skeleton section. Once I am happy with these setups I will configure my environment variables and connect to the database. Afterwards, all API routes would then be written whilst performing some tests along the way to check if it works. When I have all API routes, I will create the HTML files templates files based on the Wireframes. Next I will use IMDB from Rapid API to consume all the APIs needed when users are searching for movies and tv series.
 
-## Development
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## **Development**
 
 The development was implemented by working from the backend towards the frontend, unless I required a view to visualise results, but in general it was developed in that manner. All API was tested as they were being developed by using **POSTMAN**. During implementation I tried to follow a MVC pattern as much as possible, so I have split my files in several folders, though all of it could and will be refactored I believe I did a good job in getting things more maintainable and readable than I would without splitting the logic from view and so on.
 
-## Project Structure
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## **Project Structure**
 
 The project was structured in 5 folders, each folder contains files and or subfolder to structure the project in a easy and maintainable manner. Below you will find the project structure and what each one of them do:
 
@@ -270,7 +302,11 @@ The project was structured in 5 folders, each folder contains files and or subfo
 - **Templates**
 	- **[templates](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/templates)** - All HTML files were split into 3 folders Views, Layout and Components. I have chosen to split them in folders to make it easier to understand as it currently contains 23 files this way it makes a bit easier to cope with bugs, if any.
 
-## API Routes
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## **API Routes**
 
 The API routes initially proposed were changed in the development stage, this is because it did not work well with what the app wanted to achieve through IMDB API. I will be adding the new APIs below, so there is a reference to how they are actually implemented. I have taken the decision to change some of the routes because I found issues as I was handling IMDB API that at times when I had to query 3 to 4 APIs to get the resources I required so I tried to simplify as much as possible. Also, I was using hyphen in some of the url segments pointed by my mentor therefore I decided to make them more standardized.
 
@@ -285,8 +321,11 @@ The API routes initially proposed were changed in the development stage, this is
 >     - POST		/api/auth/reset/password
 >     - POST		/api/auth/forgot
 
+<hr>
 
-## Database Structure
+[Back To Top](#user-experience-design---ux)
+
+## **Database Structure**
 
 The database structure was changed the reason was that it was becoming resource intensive with querying different APIs from IMDB. So to economise resources I decided to have one watchlist holding both movies and shows, most fields are the same for both, so I discarded the fields that were different and kept the fields that were the same, so now it is all in one place, plus I have added two extra fields, one to hold images so I don't have to query IMDB for it and   the other is to distinguish if it is a movie or show, that field is called media_type.
 
@@ -324,7 +363,7 @@ The database structure was changed the reason was that it was becoming resource 
 | added_by | Array|
 
 
-## Flask App Configuration
+## **Flask App Configuration**
 
 The environment structure and app configuration has had several refactors as I saw through documentation that a better way could be implemented until I reached the refactoring that I was happy with it.
 
@@ -332,7 +371,11 @@ I have setup the app by having three files **run.py**, **config.py** and **__ini
 
 In the config file I have three environments setup production, development and testing each has more or less the same configuration apart from the Mongo URI, each has its own database in this way we don't mix databases.
 
-## Emailing
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## **Emailing**
 
 The emailing feature for users to reset password is fully functional, the email templates are basic but it all works fine. I took the decision to implement it to give users the option to reset the password since the information gathered during registration includes email it only makes sense to implement it.
 
@@ -342,8 +385,11 @@ In order to implement email service I had to configure Flask Mail which is the e
   <img src="https://ik.imagekit.io/xsenqx8yi/images/xoxo_X5pKjT-LqS-.gif">
 </p>
 
+<hr>
 
-## Implementation Issues, Bugs and Learnings
+[Back To Top](#user-experience-design---ux)
+
+## **Implementation Issues, Bugs and Learnings**
 
 **Restful APIs**
 
@@ -370,6 +416,14 @@ The issues I have had with MongoEngine was when handling errors until I saw in t
 
 The great thing about MongoEngine is that its classed based and as I have prior understanding of it from JS for me it was straight forward, It is something I would definitely use in the future. 
 
+**Mixed Content Image Warning**
+
+There is a error that is displayed to console that says images are being loaded as HTTP over HTTPS. Unfortunately, this is something out my control as all images are from IMDB and that is how they have their images. Also there are some images that cannot be loaded once they reach client side as there is no way for me to check if image exists once they are loaded in the browser there will be a console log error saying image could not be downloaded. To enhance experience in this situation I attempt to not display them.
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 # Testing
 
 ## Unit Tests
@@ -385,6 +439,10 @@ In order to run the tests the ENV in the environment file must be set to testing
 If you wish to run the tests locally make sure **ENV** in the **.env** file is set to **testing**, then use the following command to run them:
 
 - `python -m unittest --buffer -v`
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 ## User Stories Tests
 
@@ -475,6 +533,10 @@ If you wish to run the tests locally make sure **ENV** in the **.env** file is s
 
 **Test** - [Recommendations](https://ik.imagekit.io/xsenqx8yi/user_stories_test/add_movie__xqgom_HAT.gif)
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 ## Form Validations
 
 The form validations are implemented in all forms, I have used jQuery Form Validator plugin as it gives me the functionality I needed to achieve the validations as well as other features in the app.
@@ -509,7 +571,9 @@ The form validations are implemented in all forms, I have used jQuery Form Valid
 
 <hr>
 
-## Responsiveness
+[Back To Top](#user-experience-design---ux)
+
+## Responsiveness  Test
 
 The responsiveness of all UI components are good since it resizes in all screen sizes. To achieve this I have used the UIkit Framework where similar to Bootstrap I have used components to reduce CSS usage and repetitiveness. I have verified this on Chrome, Safari, Firefox and Edge they all behaved appropriate to screen sizes. On addition to this I have used Google Dev tools in the inspection mode to valuate how the app would look like when displayed in smaller sizes. Below I have tested the dashboard, forms and homepage.
 
@@ -518,7 +582,11 @@ The responsiveness of all UI components are good since it resizes in all screen 
 - [Responsiveness Forms](https://ik.imagekit.io/xsenqx8yi/Responsiveness_Tests/forms_responsiviness_test_Asn498lgIGZ.gif)
 - [Responsiveness Home Page](https://ik.imagekit.io/xsenqx8yi/Responsiveness_Tests/home_responsiviness_test_s2GP0S_TT.gif)
 
-## Authentication
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## Authentication Test
 
 The authentication was implemented using JWT which are created for the user when they login in or register. All tokens generated during these operations lasts for 7 days, after that user has to login again. Tokens are stores in cookies and accessed via the app to check if user is logged in or not.
 
@@ -527,12 +595,19 @@ The authentication was implemented using JWT which are created for the user when
 - [Email Already Exists](https://ik.imagekit.io/xsenqx8yi/authentication/register_details_email_already_exist_EcSTl433w.gif)
 - [Cannot Access Home Logged In](https://ik.imagekit.io/xsenqx8yi/authentication/cannot_access_home_when_logged_in_CkPk1DzA1ZLK.gif)
 
-## Password Reset
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## Password Reset Test
 
 The password reset feature was tested multiple times with Gmail, Outlook and Yahoo to check if users receive the reset email and if it works, below you will find a gif showing that it works and that a user can reset their password this test was done with Gmail.
 
 - [Email Reset Password](https://ik.imagekit.io/xsenqx8yi/form_validation/forgot_form_validation_QWwwx61dShV.gif)
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 # Deployment
 
@@ -540,16 +615,20 @@ The password reset feature was tested multiple times with Gmail, Outlook and Yah
 
  This project requires MongoDB URI, so it is important to have it setup before pulling the project. I have split into 3 steps below showing how MongoDB can be setup. 
 	
-### Create cluster project
+### STEP 1 - Create cluster project
 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_1_fbk2OzG_xPCb.gif)
 
 
-### Create Database User and Setup Network Access.
+### STEP 2 - Create Database User and Setup Network Access.
 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_1_fbk2OzG_xPCb.gif)
 
 
-### Get database credentials.
+###  STEP 3 - Get database credentials.
 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_3_AjIeUVHn-.gif)
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 ## SendGrid
 
@@ -557,12 +636,20 @@ To setup Flask Mail with SendGrid you must create an account with them and then 
 
 ![enter image description here](https://ik.imagekit.io/xsenqx8yi/send_grid/settings_form_DE8RdoGc7K2.gif)
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 ## IMDB API
 
 This App currently make use of IMDB API database to fetch for movie content, and it is required that a KEY provided by them is set the environment variables so the app can function properly. Please follow these steps to obtain the IMDB API Key:
 - Step 1 - Register with RAPID API [here](https://rapidapi.com/auth/sign-up). 
 - Step 2 -  Subscribe for IMDB API [here](https://rapidapi.com/amrelrafie/api/movies-tvshows-data-imdb). 
 Once these steps have been carried out after you have subscribed you will be provided with a KEY which will be placed in your .env file. 
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
 
 ## Local Deployment
 
@@ -620,6 +707,10 @@ Once you have cloned using your favourite IDE and obtained all necessary Keys, U
 
 If all went correctly the app should be served at `http://127.0.0.1:5000/`.
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 ## Heroku Deployment
 
 To deploy the app publicly you will have to create an account with Heroku and create a new app before deploying it.
@@ -642,6 +733,10 @@ To deploy the app publicly you will have to create an account with Heroku and cr
 7. Connect your Github account to Heroku by going to Deploy tab and select Github as a **Deployment Method**.
 8. Under the deploy tab, click on **Deploy Branch**.
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 # Credits
 
 - [Background SVG Image](https://www.svgbackgrounds.com/)
@@ -650,8 +745,16 @@ To deploy the app publicly you will have to create an account with Heroku and cr
 -   I would like to thank my mentor [Simen](https://github.com/Eventyret)  for his tips about how to develop better software that is maintainable and readable.
 - All documentation of all Flask extensions that I have used throughout the project. I have attached them in the **Resources Section** of this readme.
 
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
 # Acknowledgements
 
 -  I would like to mention my mentor here. Thank you [Simen](https://www.linkedin.com/in/simendaehlin/) for the support and guidance throughout the project. I believe you were crucial in helping and guiding me through all the ins and outs and I would like to recognise your Grandmaster title from yet another student. 
 
 - Last but not least, I would like to thank the [Code Institute](https://codeinstitute.net/) for the course content and amazing support they have always provided me!
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
