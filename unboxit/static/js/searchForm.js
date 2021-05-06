@@ -52,7 +52,6 @@ $(document).ready(function () {
  * @param {String} query 
  */
 async function searchShow(query) {
-  console.log(query)
   const response = await Fetch.get("/search/shows/", query);
   if (response.status === 400) {
     Spinner.stopSpinner("#spinner");
@@ -76,7 +75,6 @@ async function searchShow(query) {
  * @param {String} query 
  */
 async function searchMovie(query) {
-  console.log(query)
   const response = await Fetch.get("/search/movies/", query);
   if (response.status === 400) {
     Spinner.stopSpinner("#spinner");
