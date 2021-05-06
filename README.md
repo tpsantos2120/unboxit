@@ -210,9 +210,9 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 - **Resources**
 - 
-	- **[app_api](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/app_api)** -  In this folder, it holds all the files that has **API Resources** that are related to the app itself not the backend. For example, routes to dashboard or home.
+	- **[app_routes](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/app_api)** -  In this folder, it holds all the files that has **API Resources** that are related to the app itself not the backend. For example, routes to dashboard or home.
 	
-	- **[db_api](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/db_api)** - On the other hand this folder which also reference **API** is directly related to resources that are accessed from or to **MongoDB Atlas**. For example, logging and registering a user or adding movies or tv shows.
+	- **[api_routes](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/db_api)** - On the other hand this folder which also reference **API** is directly related to resources that are accessed from or to **MongoDB Atlas**. For example, logging and registering a user or adding movies or tv shows.
 
 	- **[routes](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/resources/routes)** - This folder is directly related to the **APIs** mentioned above, as this has a **routes file** where all routes are registered using **Flask Restful**.
 
@@ -542,7 +542,10 @@ Once these steps have been carried out after you have subscribed you will be pro
 
 **IMPORTANT**
 
-Please make sure the your .env file is added to your gitignore file so your API Keys are not exposed if you commit to Github, though regardless environment files must always be included in the gitignore.
+Please make sure the your .env file is added to your gitignore file so your **API Keys** are not exposed if you commit to **Github**, though regardless environment files must always be included in the gitignore and .env file must be added to the top root folder.
+
+The **JWT_SECRET_KEY** and ***SECRET_KEY*** can be generated using this  [password generator](https://passwordsgenerator.net/), or any other generator of your choice.
+
 
     ENV="development"
     IP="0.0.0.0"
@@ -562,7 +565,37 @@ Please make sure the your .env file is added to your gitignore file so your API 
     MAIL_PASSWORD="YOUR API KEY PROVIDED BY SENDGRID"
     MAIL_DEFAULT_SENDER="YOUR DEFAULT SENDER EMAIL"
 
+### Installing Dependencies and Running The App
+
+Once you have cloned using your favourite IDE and obtained all necessary Keys, URI and setup the .env file, you will be ready to install all dependencies and run the app, execute the following in your IDE integrated terminal:
+
+1.  `$ pip install -r requirements.txt`
+2. `python run.py`
+
+If all went correctly the app should be served at `http://127.0.0.1:5000/`.
+
 ## Heroku Deployment
+
+To deploy the app publicly you will have to create an account with Heroku and create a new app before deploying it.
+
+1.  Ensure the Procfile and requirements.txt files exist are present and up-to-date in your local repository.  
+    Requirements:
+    
+    ```
+    pip3 freeze --local > requirements.txt
+    ```
+    
+2.  The Procfile should contain the following line:
+    ```
+    web: gunicorn --timeout=90 --workers=2 run:app
+    ```
+3. Once your app is created in Heroku navigate to the settings.
+4. Click on the button **Reveal Config Vars**.
+5. Add all your environment variables that was created during **Local Deployment**.
+6. Make sure that you have pushed the app to github.
+7. Connect your Github account to Heroku by going to Deploy tab and select Github as a **Deployment Method**.
+8. Under the deploy tab, click on **Deploy Branch**.
+
 
 # Acknowledgements
 
