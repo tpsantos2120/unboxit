@@ -423,7 +423,7 @@ The great thing about MongoEngine is that its classed based and as I have prior 
 
 **Mixed Content Image Warning**
 
-There is a error that is displayed to console that says images are being loaded as HTTP over HTTPS. Unfortunately, this is something out my control as all images are from IMDB and that is how they have their images. Also there are some images that cannot be loaded once they reach client side as there is no way for me to check if image exists once they are loaded in the browser there will be a console log error saying image could not be downloaded. To enhance experience in this situation I attempt to not display them.
+There is an error that is displayed to console that says images are being loaded as HTTP over HTTPS. Unfortunately, this is something out my control as all images are from IMDB and that is how they have their images. Also there are some images that cannot be loaded once they reach client side as there is no way for me to check if image exists once they are loaded in the browser there will be a console log error saying image could not be downloaded. To enhance experience in this situation I attempt to not display them.
 
 <hr>
 
