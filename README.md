@@ -29,6 +29,7 @@
 	- [Authentication](#authentication)
 	- [Password Reset](#password-reset)
 	- [Pycodestyle (PEP8)](#pycodestyle-pep8)
+	- [Handling Exceptions](#handling-exceptions)
 - [Deployment](#deployment)
 	- [MongoDB](#mongodb)
 		- [STEP 1 - Create cluster project](#step-1---create-cluster-project)
@@ -620,6 +621,20 @@ with PEP8. I have used Pycodestyle as I have seen online and even my IDE informe
 be replacing PEP8, my IDE installed it automatically. If you wish to run it against the code use this command:
 
 - <code>pycodestyles DIRECTORY OR FILE NAME</code>
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## Handling Exceptions
+
+The app handles at the moment 401, 404 and 500 errors by directing user to a relevant page to let them
+know what has occoured. I could not test 500 errors but when the debug mode is turned off if it happens
+the Application Factory approach should be able to handle it. Below I have attached 401 and 404 errors.
+
+- [404 Error](https://ik.imagekit.io/xsenqx8yi/server_error/404_error_uZDRrqEpa2.gif)
+
+- [401 Error](https://ik.imagekit.io/xsenqx8yi/server_error/401_error_wUStqrNeLIn.gif)
 
 <hr>
 
