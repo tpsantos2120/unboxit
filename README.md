@@ -299,7 +299,7 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 - **Services**
 
-	- **[mail_service](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/services/mail_service.py)** - The implementation for emailing was to offer users the feature to reset their passwords. In order to do this, I have used **Flask Mail** and **SendGrid**. The way this works is that **Flask Framework** uses **Flask Mail** extension to send emails through **SendGrid**. In addition, **SendGrid** is configured to use my personal email that I created for the purpose of this project, unboxit@tsantos.dev.
+	- **[mail_service](https://github.com/tpsantos2120/unboxit/blob/main/unboxit/services/mail_service.py)** - The implementation for emailing was to offer users the feature to reset their passwords. In order to do this, I have used **Flask Mail** and **SendGrid**. The way this works is that **Flask Framework** uses **Flask Mail** extension to send emails through **SendGrid**. In addition, **SendGrid** is configured to use my personal email that I created for the purpose of this project, contact@tsantos.dev.
 
 - **Static**
 	- **[static](https://github.com/tpsantos2120/unboxit/tree/main/unboxit/static)** - This folder is where the assets are located. I have used quite a bit of JavaScript to handle dynamic content, so I have split them in several files, each file will be doing something specific.
