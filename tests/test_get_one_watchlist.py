@@ -10,7 +10,7 @@ class TestGetOneWatchlist(BaseCase):
 
     def test_get_one_watchlist_successful(self):
         """
-            Register user and insert watchlist record, then 
+            Register user and insert watchlist record, then
             try to retirve that one record.
         """
         first_name = "Darth"
@@ -27,15 +27,23 @@ class TestGetOneWatchlist(BaseCase):
             "password": password
         })
 
-        response = self.app.post('/api/auth/register',
-                                 headers={"Content-Type": "application/json"},
-                                 data=payload_register)
+        response = self.app.post(
+            '/api/auth/register',
+            headers={"Content-Type": "application/json"},
+            data=payload_register)
 
         payload_entry = json.dumps({
             "poster": "https://movie.poster.com",
             "media_type": "movies",
             "title": "Ad Astra",
-            "description": "The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown.",
+            "description": "The near future, a time when"
+            + "both hope and hardships drive humanity to"
+            + "look to the stars and beyond. While a mysterious"
+            + "phenomenon menaces to destroy life on planet Earth,"
+            + "astronaut Roy McBride undertakes a mission across the"
+            + "immensity of space and its many perils to uncover the"
+            + "truth about a lost expedition that decades before boldly"
+            + "faced emptiness and silence in search of the unknown.",
             "year": "2019",
             "release_date": "2019-09-17",
             "imdb_id": "tt2935510",

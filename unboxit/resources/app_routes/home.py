@@ -20,6 +20,9 @@ class Home(Resource):
         identity = get_jwt_identity()
         if not identity:
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/home.html', title="Homepage"), 200, headers)
+            return make_response(render_template('views/home.html',
+                                                 title="Homepage"),
+                                 200,
+                                 headers)
         else:
             return make_response(redirect(url_for('dashboard')))

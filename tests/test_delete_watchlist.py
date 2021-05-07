@@ -5,13 +5,13 @@ from tests.base_test import BaseCase
 
 class TestDeleteWatchlist(BaseCase):
     """
-        Test cases for DELETE request 
+        Test cases for DELETE request
     """
 
     def test_delete_watchlist_successful(self):
-        """ 
+        """
             Register user, insert a movie to watchlist, then get watchlist id,
-            and delete entry. 
+            and delete entry.
         """
         first_name = "Darth"
         last_name = "Vader"
@@ -35,7 +35,14 @@ class TestDeleteWatchlist(BaseCase):
             "poster": "https://movie.poster.com",
             "media_type": "movies",
             "title": "Ad Astra",
-            "description": "The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown.",
+            "description": "The near future, a time when both hope and"
+            + "hardships drive humanity to look to the stars and beyond."
+            + "While a mysterious phenomenon menaces to destroy life on"
+            + "planet Earth, astronaut Roy McBride undertakes a mission across"
+            + "the immensity of space and its many perils to uncover the truth"
+            + "about a lost expedition that decades"
+            + "before boldly faced emptiness"
+            + "and silence in search of the unknown.",
             "year": "2019",
             "release_date": "2019-09-17",
             "imdb_id": "tt2935510",
@@ -62,17 +69,20 @@ class TestDeleteWatchlist(BaseCase):
             "creators": []
         })
 
-        response = self.app.post('/api/watchlists',
-                                 headers={"Content-Type": "application/json"},
-                                 data=payload_entry)
+        response = self.app.post(
+            '/api/watchlists',
+            headers={"Content-Type": "application/json"},
+            data=payload_entry)
 
-        response = self.app.get('/api/watchlists',
-                                headers={"Content-Type": "application/json"})
+        response = self.app.get(
+            '/api/watchlists',
+            headers={"Content-Type": "application/json"})
 
         id = response.json[0]['_id']['$oid']
 
-        response = self.app.delete('/api/watchlist/' + id,
-                                   headers={"Content-Type": "application/json"})
+        response = self.app.delete(
+            '/api/watchlist/' + id,
+            headers={"Content-Type": "application/json"})
 
         self.assertEqual("Movie was deleted successfully.",
                          response.json['message'])
@@ -80,7 +90,7 @@ class TestDeleteWatchlist(BaseCase):
 
     def test_delete_watchlist_no_id(self):
         """
-            Create user and insert movie, but provide no valid ID 
+            Create user and insert movie, but provide no valid ID
         """
         first_name = "Darth"
         last_name = "Vader"
@@ -104,7 +114,15 @@ class TestDeleteWatchlist(BaseCase):
             "poster": "https://movie.poster.com",
             "media_type": "movies",
             "title": "Ad Astra",
-            "description": "The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown.",
+            "description": "The near future, a time"
+            + "when both hope and hardships drive humanity"
+            + "to look to the stars and beyond. While a"
+            + "mysterious phenomenon menaces to destroy life"
+            + "on planet Earth, astronaut Roy McBride undertakes"
+            + "a mission across the immensity of space and its many"
+            + "perils to uncover the truth about a lost expedition that"
+            + "decades before boldly faced emptiness and silence in"
+            + "search of the unknown.",
             "year": "2019",
             "release_date": "2019-09-17",
             "imdb_id": "tt2935510",
@@ -131,15 +149,18 @@ class TestDeleteWatchlist(BaseCase):
             "creators": []
         })
 
-        response = self.app.post('/api/watchlists',
-                                 headers={"Content-Type": "application/json"},
-                                 data=payload_entry)
+        response = self.app.post(
+            '/api/watchlists',
+            headers={"Content-Type": "application/json"},
+            data=payload_entry)
 
-        response = self.app.get('/api/watchlists',
-                                headers={"Content-Type": "application/json"})
+        response = self.app.get(
+            '/api/watchlists',
+            headers={"Content-Type": "application/json"})
 
-        response = self.app.delete('/api/watchlist/' + "notvalid",
-                                   headers={"Content-Type": "application/json"})
+        response = self.app.delete(
+            '/api/watchlist/' + "notvalid",
+            headers={"Content-Type": "application/json"})
 
         self.assertEqual("Entry with given id doesn't exist",
                          response.json['message'])

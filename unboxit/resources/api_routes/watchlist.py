@@ -5,8 +5,10 @@ from werkzeug.utils import redirect
 from unboxit.models.models import Watchlist, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource
-from mongoengine.errors import DoesNotExist, NotUniqueError, ValidationError, FieldDoesNotExist
-from unboxit.resources.utils.errors import EntryAlreadyExistsError, SchemaValidationError, EntryNotExistsError
+from mongoengine.errors import DoesNotExist, NotUniqueError, \
+    ValidationError, FieldDoesNotExist
+from unboxit.resources.utils.errors import EntryAlreadyExistsError, \
+    SchemaValidationError, EntryNotExistsError
 from unboxit.resources.utils.cache import cache
 from unboxit.resources.utils.jwt import jwt
 import json
@@ -15,7 +17,8 @@ import json
 class WatchlistsApi(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods
+        it has match a HTTP request method.
     """
     @jwt_required(locations=['headers', 'cookies'])
     def get(self):
@@ -71,19 +74,19 @@ class WatchlistsApi(Resource):
         data = {"id": add_to_cache["imdb_id"],
                 "type": add_to_cache["media_type"]}
 
-        if watchlist_cache == None:
+        if watchlist_cache is None:
             watchlist_cache = []
             cache.set('watchlist_cache', watchlist_cache)
 
-        if recommend == None:
+        if recommend is None:
             recommend = []
             cache.set('recommend', watchlist_cache)
 
-        if not add_to_cache in watchlist_cache:
+        if add_to_cache not in watchlist_cache:
             watchlist_cache.append(add_to_cache)
             cache.set('watchlist_cache', watchlist_cache)
 
-        if not data in recommend:
+        if data not in recommend:
             recommend.append(data.copy())
             cache.set('recommend', recommend)
 
@@ -91,7 +94,8 @@ class WatchlistsApi(Resource):
 class WatchlistApi(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods
+        t has match a HTTP request method.
     """
     @jwt_required(locations=['headers', 'cookies'])
     def delete(self, id):
@@ -119,7 +123,7 @@ class WatchlistApi(Resource):
         """
         watchlist_cache = cache.get('watchlist_cache')
         recommend = cache.get('recommend')
-        if id and not watchlist_cache == None and not recommend == None:
+        if id and watchlist_cache is not None and recommend is not None:
             for watchlist in watchlist_cache:
                 if watchlist['_id']['$oid'] == id:
                     print(watchlist['_id']['$oid'], id)
@@ -145,7 +149,7 @@ class WatchlistApi(Resource):
     @jwt_required(locations=['headers', 'cookies'])
     def put(self, id):
         """
-            Perform PUT request for adding and editing review, 
+            Perform PUT request for adding and editing review,
             when done update cache.
         """
         try:
@@ -166,7 +170,7 @@ class WatchlistApi(Resource):
             Update cache upon updating database.
         """
         watchlist_cache = cache.get('watchlist_cache')
-        if not watchlist_cache == None:
+        if watchlist_cache is not None:
             updated_watchlist = json.loads(watchlist.to_json())
             for i in range(len(watchlist_cache)):
                 if watchlist_cache[i]['_id']['$oid'] == id:

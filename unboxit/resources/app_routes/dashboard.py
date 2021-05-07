@@ -11,33 +11,40 @@ import random
 class Dashboard(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods
+        it has match a HTTP request method.
     """
     @jwt_required(locations=['headers', 'cookies'])
     def get(self):
         """
-            GET request to load dashboard if token exists and generate view 
-            with watchlist, recommendations and trending. Cache results from DB.
+            GET request to load dashboard if token exists and generate view
+            with watchlist, recommendations and trending.
+            Cache results from DB.
         """
         cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'])
         identity = get_jwt_identity()
         if cookie_exist:
             Dashboard.cache_data()
-            watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
-                "watchlist_cache", "recommendation_cache", "trending_movies_cache")
-            return make_response(render_template('views/dashboard.html',
-                                                 trending_movies=trending_movies_cache,
-                                                 watchlist=watchlist_cache,
-                                                 recommendation=recommendation_cache,
-                                                 title="Dashboard",
-                                                 logged_in=True,
-                                                 first_name=identity['first_name'],
-                                                 last_name=identity['last_name']))
+            watchlist_cache, \
+                recommendation_cache, \
+                trending_movies_cache = cache.get_many(
+                    "watchlist_cache",
+                    "recommendation_cache",
+                    "trending_movies_cache")
+            return make_response(
+                render_template('views/dashboard.html',
+                                trending_movies=trending_movies_cache,
+                                watchlist=watchlist_cache,
+                                recommendation=recommendation_cache,
+                                title="Dashboard",
+                                logged_in=True,
+                                first_name=identity['first_name'],
+                                last_name=identity['last_name']))
 
     def fetch_watchlist():
         """
             Get watchlist iterate through IDs cache them
-            for the fetch recommendations. Cache whataver the 
+            for the fetch recommendations. Cache whataver the
             DB gives back.
         """
         recommend = []
@@ -72,7 +79,7 @@ class Dashboard(Resource):
             Recommend as long as there is at least one watchlist document.
         """
         recommend = cache.get("recommend")
-        if not recommend == None and len(recommend) > 0:
+        if recommend is not None and len(recommend) > 0:
             data = random.choice(recommend)
             recommendations_response = requests.post(
                 request.url_root + 'recommend', data=data)
@@ -94,18 +101,22 @@ class Dashboard(Resource):
             check also if watchlist has records if yes recommend if not
             do not recommend.
         """
-        watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
-            "watchlist_cache", "recommendation_cache", "trending_movies_cache")
+        watchlist_cache, \
+            recommendation_cache, \
+            trending_movies_cache = cache.get_many(
+                "watchlist_cache",
+                "recommendation_cache",
+                "trending_movies_cache")
 
-        if watchlist_cache == None:
+        if watchlist_cache is None:
             watchlist_cache = Dashboard.fetch_watchlist()
             cache.set('watchlist_cache', watchlist_cache)
 
-        if recommendation_cache == None:
+        if recommendation_cache is None:
             recommendation_cache = Dashboard.fetch_recommendations()
             cache.set('recommendation_cache', recommendation_cache)
 
-        if trending_movies_cache == None:
+        if trending_movies_cache is None:
             trending_movies_cache = Dashboard.fetch_trending_movies()
             cache.set('trending_movies_cache', trending_movies_cache)
 
@@ -122,28 +133,35 @@ class Dashboard(Resource):
 class DashboardSearch(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods
+        it has match a HTTP request method.
     """
     @jwt_required(locations=['headers', 'cookies'])
     def get(self):
         """
-            Load dashboard search, ensure cache exists for 
+            Load dashboard search, ensure cache exists for
             watchlist, recommend and trending.
         """
         cookie_exist = verify_jwt_in_request(locations=['headers', 'cookies'])
         if cookie_exist:
-            watchlist_cache, recommendation_cache, trending_movies_cache = cache.get_many(
-                "watchlist_cache", "recommendation_cache", "trending_movies_cache")
-            if watchlist_cache == None:
+            watchlist_cache, \
+                recommendation_cache, \
+                trending_movies_cache = cache.get_many(
+                    "watchlist_cache",
+                    "recommendation_cache",
+                    "trending_movies_cache")
+            if watchlist_cache is None:
                 watchlist_cache = Dashboard.fetch_watchlist()
                 cache.set('watchlist_cache', watchlist_cache)
-            if recommendation_cache == None:
+            if recommendation_cache is None:
                 recommendation_cache = Dashboard.fetch_recommendations()
                 cache.set('recommendation_cache', recommendation_cache)
-            if trending_movies_cache == None:
+            if trending_movies_cache is None:
                 trending_movies_cache = Dashboard.fetch_trending_movies()
                 cache.set('trending_movies_cache', trending_movies_cache)
             headers = {'Content-Type': 'text/html'}
-            return make_response(render_template('views/dashboard_search.html', title="Dashboard Search", logged_in=True), 200, headers)
+            return make_response(render_template('views/dashboard_search.html',
+                                                 title="Dashboard Search",
+                                                 logged_in=True), 200, headers)
         else:
             return redirect(url_for('home'))

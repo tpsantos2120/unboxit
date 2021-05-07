@@ -4,6 +4,7 @@ from werkzeug.utils import redirect
 
 jwt = JWTManager()
 
+
 def initialize_jwt(app):
     """
         Register the JWT instance with the Flask app.

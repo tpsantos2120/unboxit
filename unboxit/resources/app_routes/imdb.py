@@ -25,12 +25,19 @@ class SearchMovies(Resource):
         if movies['search_results'] > 0:
             for movie in movies['movie_results']:
                 querystring = {
-                    "type": "get-movies-images-by-imdb", "imdb": movie['imdb_id']}
+                    "type": "get-movies-images-by-imdb",
+                    "imdb": movie['imdb_id']}
                 response = imdb.request_query(url, headers, querystring)
                 movies_images = response.json()
                 response_result.append(movies_images)
             headers = {'Content-Type': 'text/html'}
-            return make_response(jsonify(render_template('views/view_results.html', type="movies", results=response_result, view=True)), 200, headers)
+            return make_response(jsonify(render_template(
+                'views/view_results.html',
+                type="movies",
+                results=response_result,
+                view=True)),
+                200,
+                headers)
         else:
             return{"response": "Movie Not Found", "status": 400}
 
@@ -59,9 +66,10 @@ class SearchMovieDetails(Resource):
         movie_details.pop('status')
         movie_details.pop('status_message')
         headers = {'Content-Type': 'text/html'}
-        return make_response(jsonify(render_template('components/view_result_details.html',
-                                                     logged_in=logged_in,
-                                                     result=movie_details)), 200, headers)
+        return make_response(jsonify(render_template(
+            'components/view_result_details.html',
+            logged_in=logged_in,
+            result=movie_details)), 200, headers)
 
 
 class SearchTvShows(Resource):
@@ -89,7 +97,13 @@ class SearchTvShows(Resource):
                 tv_shows_images = response.json()
                 response_result.append(tv_shows_images)
             headers = {'Content-Type': 'text/html'}
-            return make_response(jsonify(render_template('views/view_results.html', type="shows", results=response_result, view=True)), 200, headers)
+            return make_response(jsonify(render_template(
+                'views/view_results.html',
+                type="shows",
+                results=response_result,
+                view=True)),
+                200,
+                headers)
         else:
             return{"response": "Movie Not Found", "status": 400}
 
@@ -115,7 +129,12 @@ class SearchShowDetails(Resource):
         tv_show_details.pop('status')
         tv_show_details.pop('status_message')
         headers = {'Content-Type': 'text/html'}
-        return make_response(jsonify(render_template('components/view_result_details.html', logged_in=logged_in, result=tv_show_details)), 200, headers)
+        return make_response(jsonify(render_template(
+            'components/view_result_details.html',
+            logged_in=logged_in,
+            result=tv_show_details)),
+            200,
+            headers)
 
 
 class SearchTrendingMovies(Resource):
@@ -130,16 +149,16 @@ class SearchTrendingMovies(Resource):
             1. Query trending movies returns all IDs.
             2. Iterate IDs and fetch all poster images.
         """
-        response = SearchTrendingMovies.trending_movies()
+        response = self.trending_movies()
         movies = response
         trending_movies = []
         for movie in movies['movie_results'][0:10]:
-            images = SearchTrendingMovies.trending_movies_images(
+            images = self.trending_movies_images(
                 movie['imdb_id'])
             trending_movies.append(images)
         return jsonify(trending_movies)
 
-    def trending_movies_images(id):
+    def trending_movies_images(self, id):
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
@@ -148,7 +167,7 @@ class SearchTrendingMovies(Resource):
         response = imdb.request_query(url, headers, querystring).json()
         return response
 
-    def trending_movies():
+    def trending_movies(self):
         imdb = IMDBConfigs()
         url = imdb.get_url()
         headers = imdb.get_headers()
@@ -174,10 +193,10 @@ class Recommend(Resource):
         shows = []
         movies = []
         if media_type == "movies":
-            recommended_movies = Recommend.fetch_similar_movies(id)
+            recommended_movies = self.fetch_similar_movies(id)
             if not recommended_movies.get('results') == 0:
                 for imdb_id in recommended_movies['movie_results'][0:10]:
-                    recommended = Recommend.fetch_images_movies(
+                    recommended = self.fetch_images_movies(
                         imdb_id['imdb_id'])
                     movies.append(recommended)
                 return make_response(jsonify(movies), 200)
@@ -185,10 +204,10 @@ class Recommend(Resource):
                 response = {"message": "movie not found"}
                 return make_response(jsonify(response), 400)
         elif media_type == "shows":
-            recommended_shows = Recommend.fetch_similar_shows(id)
+            recommended_shows = self.fetch_similar_shows(id)
             if not recommended_shows.get('results') == 0:
                 for imdb_id in recommended_shows['tv_results'][0:10]:
-                    recommended = Recommend.fetch_images_shows(
+                    recommended = self.fetch_images_shows(
                         imdb_id['imdb_id'])
                     shows.append(recommended)
                 return make_response(jsonify(shows), 200)
@@ -196,7 +215,7 @@ class Recommend(Resource):
                 response = {"message": "show not found"}
                 return make_response(jsonify(response), 400)
 
-    def fetch_similar_movies(id):
+    def fetch_similar_movies(self, id):
         """
             Query similar movies from IMBD API
         """
@@ -208,7 +227,7 @@ class Recommend(Resource):
         response = imdb.request_query(url, headers, querystring).json()
         return response
 
-    def fetch_images_movies(id):
+    def fetch_images_movies(self, id):
         """
             Query movies images from IMBD API
         """
@@ -220,7 +239,7 @@ class Recommend(Resource):
         response = imdb.request_query(url, headers, querystring).json()
         return response
 
-    def fetch_similar_shows(id):
+    def fetch_similar_shows(self, id):
         """
             Query similar shows from IMBD API
         """
@@ -232,7 +251,7 @@ class Recommend(Resource):
         response = imdb.request_query(url, headers, querystring).json()
         return response
 
-    def fetch_images_shows(id):
+    def fetch_images_shows(self, id):
         """
             Query images of shows from IMBD API
         """
@@ -247,7 +266,7 @@ class Recommend(Resource):
 
 class IMDBConfigs():
     """
-        Configure headers, url and request tyo minimise 
+        Configure headers, url and request tyo minimise
         repetitive code.
     """
 

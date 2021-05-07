@@ -37,9 +37,9 @@ api = Api(app, errors=errors)
 bcrypt = Bcrypt(app)
 
 
-""" 
+"""
     This import here is because the routes has to be imported
-    after Restful initiallization, otherwise there is circular issues.   
+    after Restful initiallization, otherwise there is circular issues.
 """
 with app.app_context():
     from unboxit.resources.routes.routes import initialize_routes

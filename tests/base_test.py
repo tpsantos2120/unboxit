@@ -4,8 +4,8 @@ from unboxit.models.db import db
 
 
 class BaseCase(unittest.TestCase):
-    """ 
-        Abstract the use of the methods below so ti does 
+    """
+        Abstract the use of the methods below so ti does
         not have to repeat in every file test.
     """
 

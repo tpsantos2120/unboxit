@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 class Config(object):
     """
-        Load generic environment variables which are extended by 
+        Load generic environment variables which are extended by
         one of the server environments below.
     """
     load_dotenv()

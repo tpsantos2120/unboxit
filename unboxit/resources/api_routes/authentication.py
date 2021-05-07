@@ -17,12 +17,13 @@ from unboxit.resources.utils.errors import EmailDoesNotExistsError, \
 class RegisterUserApi(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods it has match
+        a HTTP request method.
     """
 
     def post(self):
         """
-            Insert user details to Mongo via POST and handle possible excepts 
+            Insert user details to Mongo via POST and handle possible excepts
             that might entail.
         """
         try:
@@ -56,13 +57,14 @@ class RegisterUserApi(Resource):
 class LoginUserApi(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods it has match
+        a HTTP request method.
     """
 
     def post(self):
         """
             Make post requests to Mongo to login a user and generate JWT token.
-            Handle exceptions Mongo might throw depending on how request is 
+            Handle exceptions Mongo might throw depending on how request is
             sent.
         """
         try:
@@ -95,13 +97,15 @@ class LoginUserApi(Resource):
 class ResetPassword(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods it has match
+        a HTTP request method.
     """
     @jwt_required(locations=['headers', 'cookies'])
     def post(self):
         """
-            Reset password request when user is logged in via the seetings navbar menu.
-            Handle exceptions if there is any and protect route.
+            Reset password request when user is logged in via the
+            seetings navbar menu.Handle exceptions if there
+            is any and protect route.
         """
         try:
             identity = get_jwt_identity()
@@ -129,7 +133,8 @@ class ResetPassword(Resource):
 class ResetFogottenPassword(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods
+        it has match a HTTP request method.
     """
     @jwt_required(locations=['headers'])
     def post(self):
@@ -177,7 +182,8 @@ class ResetFogottenPassword(Resource):
 class ForgotPassword(Resource):
     """
         Make this a Resource by extending Flask Restfull Resource class,
-        then this resource be executed when the methods it has match a HTTP request method. 
+        then this resource be executed when the methods
+        it has match a HTTP request method.
     """
 
     def post(self):
