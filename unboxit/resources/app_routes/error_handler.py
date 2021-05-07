@@ -11,16 +11,10 @@ class ErrorHandler():
         """
             Handle 404 errors.
         """
-        return render_template('components/error_404.html'), 404
+        return render_template('components/404.html'), 404
 
     def internal_error(e):
         """
             Handle 500 errors.
         """
-        return render_template('components/error_500.html'), 500
-
-    def not_authorized(e):
-        """
-            Handle 401 errors.
-        """
-        return render_template('components/error_401.html'), 401
+        return render_template('components/500.html'), 500
