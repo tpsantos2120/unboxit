@@ -32,9 +32,9 @@
 	- [Handling Exceptions](#handling-exceptions)
 - [Deployment](#deployment)
 	- [MongoDB](#mongodb)
-		- [STEP 1 - Create cluster project](#step-1---create-cluster-project)
-		- [STEP 2 - Create Database User and Setup Network Access.](#step-2---create-database-user-and-setup-network-access)
-		- [STEP 3 - Get database credentials.](#step-3---get-database-credentials)
+		- [Create cluster project](#create-cluster-project)
+		- [Create Database User and Setup Network Access.](#create-database-user-and-setup-network-access)
+		- [Get database credentials.](#get-database-credentials)
 	- [SendGrid](#sendgrid)
 	- [IMDB API](#imdb-api)
 	- [Local Deployment](#local-deployment)
@@ -646,15 +646,15 @@ the Application Factory approach should be able to handle it. Below I have attac
 
  This project requires MongoDB URI, so it is important to have it setup before pulling the project. I have split into 3 steps below showing how MongoDB can be setup. 
 	
-### STEP 1 - Create cluster project
+### Create cluster project
 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_1_fbk2OzG_xPCb.gif)
 
 
-### STEP 2 - Create Database User and Setup Network Access.
+### Create Database User and Setup Network Access.
 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_1_fbk2OzG_xPCb.gif)
 
 
-###  STEP 3 - Get database credentials.
+### Get database credentials.
 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_3_AjIeUVHn-.gif)
 
 <hr>
