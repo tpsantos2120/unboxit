@@ -28,6 +28,7 @@
 	- [Responsiveness](#responsiveness)
 	- [Authentication](#authentication)
 	- [Password Reset](#password-reset)
+	- [Pycodestyle (PEP8)](#pycodestyle-pep8)
 - [Deployment](#deployment)
 	- [MongoDB](#mongodb)
 		- [STEP 1 - Create cluster project](#step-1---create-cluster-project)
@@ -607,6 +608,18 @@ The authentication was implemented using JWT which are created for the user when
 The password reset feature was tested multiple times with Gmail, Outlook and Yahoo to check if users receive the reset email and if it works, below you will find a gif showing that it works and that a user can reset their password this test was done with Gmail.
 
 - [Email Reset Password](https://ik.imagekit.io/xsenqx8yi/form_validation/forgot_form_validation_QWwwx61dShV.gif)
+
+<hr>
+
+[Back To Top](#user-experience-design---ux)
+
+## Pycodestyle (PEP8)
+
+All files has been checked using Pycodestyle for code styles and some logic errors, all python files are complied 
+with PEP8. I have used Pycodestyle as I have seen online and even my IDE informed me that Pycodestyles would
+be replacing PEP8, my IDE installed it automatically. If you wish to run it against the code use this command:
+
+- <code>pycodestyles DIRECTORY OR FILE NAME</code>
 
 <hr>
 
