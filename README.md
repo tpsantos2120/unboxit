@@ -53,7 +53,7 @@ This is **UNBOXIT** a website where it allows you to search for Movies and TV Se
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Strategy
 
@@ -82,7 +82,7 @@ This is **UNBOXIT** a website where it allows you to search for Movies and TV Se
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Scope
 
@@ -92,7 +92,7 @@ The functional specification will be based on the [assessment criteria](https://
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Structure & Skeleton
 
@@ -182,7 +182,7 @@ I have designed the database structure during the planning stage to help me stru
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Surface
 
@@ -200,7 +200,7 @@ I have designed the database structure during the planning stage to help me stru
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 # Technologies Used
 
@@ -231,7 +231,7 @@ I have designed the database structure during the planning stage to help me stru
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 # Resources
 
@@ -259,7 +259,7 @@ I have designed the database structure during the planning stage to help me stru
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 # Implementation
 
@@ -269,7 +269,7 @@ The implementation will start by the backend working through the frontend. I wil
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Development
 
@@ -277,7 +277,7 @@ The development was implemented by working from the backend towards the frontend
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Project Structure
 
@@ -309,7 +309,7 @@ The project was structured in 5 folders, each folder contains files and or subfo
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## API Routes
 
@@ -328,7 +328,7 @@ The API routes initially proposed were changed in the development stage, this is
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Database Structure
 
@@ -378,7 +378,7 @@ In the config file I have three environments setup production, development and t
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Emailing
 
@@ -392,7 +392,7 @@ In order to implement email service I had to configure Flask Mail which is the e
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Implementation Issues, Bugs and Learnings
 
@@ -427,7 +427,7 @@ There is a error that is displayed to console that says images are being loaded 
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 # Testing
 
@@ -447,7 +447,7 @@ If you wish to run the tests locally make sure **ENV** in the **.env** file is s
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## User Stories Tests
 
@@ -540,7 +540,7 @@ If you wish to run the tests locally make sure **ENV** in the **.env** file is s
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Form Validations
 
@@ -576,7 +576,7 @@ The form validations are implemented in all forms, I have used jQuery Form Valid
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Responsiveness
 
@@ -589,7 +589,7 @@ The responsiveness of all UI components are good since it resizes in all screen 
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Authentication
 
@@ -602,7 +602,7 @@ The authentication was implemented using JWT which are created for the user when
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Password Reset
 
@@ -612,7 +612,7 @@ The password reset feature was tested multiple times with Gmail, Outlook and Yah
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Pycodestyle (PEP8)
 
@@ -624,7 +624,7 @@ be replacing PEP8, my IDE installed it automatically. If you wish to run it agai
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Handling Exceptions
 
@@ -638,7 +638,7 @@ the Application Factory approach should be able to handle it. Below I have attac
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 # Deployment
 
@@ -659,7 +659,7 @@ the Application Factory approach should be able to handle it. Below I have attac
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## SendGrid
 
@@ -669,7 +669,7 @@ To setup Flask Mail with SendGrid you must create an account with them and then 
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## IMDB API
 
@@ -680,7 +680,7 @@ Once these steps have been carried out after you have subscribed you will be pro
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Local Deployment
 
@@ -740,7 +740,7 @@ If all went correctly the app should be served at `http://127.0.0.1:5000/`.
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 ## Heroku Deployment
 
@@ -766,7 +766,7 @@ To deploy the app publicly you will have to create an account with Heroku and cr
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 # Credits
 
@@ -778,7 +778,7 @@ To deploy the app publicly you will have to create an account with Heroku and cr
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
 
 # Acknowledgements
 
@@ -788,4 +788,4 @@ To deploy the app publicly you will have to create an account with Heroku and cr
 
 <hr>
 
-[Back To Top](#user-experience-design---ux)
+[Back To Top](#table-of-contents)
