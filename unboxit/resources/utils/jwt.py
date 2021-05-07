@@ -1,6 +1,5 @@
-from flask import make_response, url_for, render_template
+from flask import make_response, render_template
 from flask_jwt_extended import JWTManager
-from werkzeug.utils import redirect
 
 jwt = JWTManager()
 
