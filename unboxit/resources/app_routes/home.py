@@ -18,11 +18,12 @@ class Home(Resource):
             reirect to dashboard.
         """
         identity = get_jwt_identity()
-        if not identity:
+        if identity:
+            print("shit is happening")
+            return make_response(redirect(url_for('dashboard')))
+        else:
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template('views/home.html',
                                                  title="Homepage"),
                                  200,
                                  headers)
-        else:
-            return make_response(redirect(url_for('dashboard')))
